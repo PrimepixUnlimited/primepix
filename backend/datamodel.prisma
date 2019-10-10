@@ -1,4 +1,18 @@
+enum Permission {
+  SUPERADMIN
+  ADMIN
+  USER
+  ARTIST
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
 type User {
   id: ID! @id
-  name: String!
+  email: String! @unique
+  password: String!
+  token: String
+  permissions: [Permission]! @scalarList(strategy: RELATION)
 }
