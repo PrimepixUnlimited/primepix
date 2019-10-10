@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
 
+const UNIT = 15;
+
 const colors = {
   primary: '#d91c71',
   secondary: '#FF1301',
@@ -11,6 +13,8 @@ const colors = {
 const greyScale = {
   black1: '#18191C',
   black2: '#202124',
+  white: '#fff',
+  white4: '#3b423b',
 };
 
 const common = StyleSheet.create({
@@ -19,13 +23,44 @@ const common = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: greyScale.black1,
-    paddingVertical: 30,
+    paddingVertical: UNIT * 3,
   },
+  fullHeight: {
+    height: '100%',
+  },
+  contentPaddingHorizontal: {
+    paddingHorizontal: 15,
+  },
+});
+
+const form = StyleSheet.create({
+  checkbox: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    marginLeft: 0,
+    paddingHorizontal: 0,
+  },
+  input: {
+    color: greyScale.white,
+  },
+  label: {
+    color: greyScale.white,
+  },
+});
+
+const space = StyleSheet.create({
+  xs: {marginBottom: UNIT / 2},
+  s: {marginBottom: UNIT},
+  m: {marginBottom: UNIT * 2},
+  l: {marginBottom: UNIT * 3},
+  xl: {marginBottom: UNIT * 4},
+  xxl: {marginBottom: UNIT * 5},
 });
 
 const text = StyleSheet.create({
   body: {
-    color: 'white',
+    color: greyScale.white,
+    fontSize: 16,
   },
 });
 
@@ -46,10 +81,19 @@ const theme = {
   },
 };
 
+const utils = {
+  noHorizontalPadding: {
+    paddingHorizontal: 0,
+  },
+};
+
 export default {
   colors,
   greyScale,
   common,
+  form,
+  space,
   text,
   theme,
+  utils,
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import {PricingCard} from 'react-native-elements';
 import {ScrollView} from 'react-native';
 
 import Header from '../../components/Header';
+import PricingCard from '../../components/PricingCard';
 
 import styles from '../../constants/styles';
 
@@ -23,7 +23,7 @@ const LoginScreen = ({navigation: {navigate}}) => {
 };
 
 LoginScreen.navigationOptions = ({navigation}) => ({
-  header: <Header title="Login" />,
+  header: <Header showBack title="Login" />,
 });
 
 export default LoginScreen;

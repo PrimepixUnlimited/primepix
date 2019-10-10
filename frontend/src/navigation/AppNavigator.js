@@ -2,20 +2,15 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 
 // Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
 // goes here.
-import AppStack from './AppStack';
-import AuthStack from './AuthStack';
+import App from './AppStack';
+import Auth from './AuthStack';
 
 const AppNavigator = createAppContainer(
-  createSwitchNavigator(
-    {
-      // AuthLoading: AuthLoadingScreen,
-      app: AppStack,
-      auth: AuthStack,
-    },
-    {
-      initialRouteName: 'auth',
-    },
-  ),
+  createSwitchNavigator({
+    // AuthLoading: AuthLoadingScreen,
+    auth: Auth,
+    app: App,
+  }),
 );
 
 export default AppNavigator;

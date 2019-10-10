@@ -17,8 +17,8 @@ const HeaderComponent = ({
   title,
 }) => {
   const handleBackPress = e => goBack();
-  const handleHomePress = e => navigate('homeTab');
   const handleMenuPress = e => navigate('menu');
+  const handleProfilePress = e => navigate('profile');
 
   const Left = () => {
     return (
@@ -66,7 +66,7 @@ const HeaderComponent = ({
         name="ios-person"
         color="white"
         type="ionicon"
-        onPress={handleHomePress}
+        onPress={handleProfilePress}
         underlayColor={styles.greyScale.black2}
       />
     );

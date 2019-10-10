@@ -6,9 +6,12 @@ const tokenConfig = {
   maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
 }
 
-const signup = async (parent, { email, password, isArtist }, ctx, info) => {
+const signup = async (parent, args, ctx, info) => {
+  const { email, password, confirmPassword, isArtist } = args
+  // compare passwords
+  if (password !== confirmPassword) throw new Error(`Passwords don't match!`)
   // lowercase their email
-  email = email.toLowerCase()
+  const formattedEmail = email.toLowerCase()
   // hash their password
   const securePassword: string = await bcrypt.hash(password, 10)
   // set permissions
@@ -20,7 +23,7 @@ const signup = async (parent, { email, password, isArtist }, ctx, info) => {
   const user = await ctx.db.mutation.createUser(
     {
       data: {
-        email,
+        email: formattedEmail,
         password: securePassword,
         permissions
       }
