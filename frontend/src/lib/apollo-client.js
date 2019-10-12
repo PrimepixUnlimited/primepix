@@ -1,11 +1,11 @@
-import {ApolloClient} from 'apollo-client';
+import {ApolloClient} from 'apollo-boost';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {HttpLink} from 'apollo-link-http';
 
 // Instantiate required constructor fields
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'http://localhost:4000/',
+  uri: 'http://localhost:4444/',
 });
 
 // Create the client as outlined in the setup guide
@@ -15,8 +15,8 @@ const client = new ApolloClient({
   link: link,
 
   // Provide some optional constructor fields
-  name: 'react-web-client',
-  version: '1.3',
+  name: 'primepix-app',
+  version: '0.1',
   queryDeduplication: false,
   defaultOptions: {
     watchQuery: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {Text} from 'react-native-elements';
+import gql from 'graphql-tag';
 
 import Header from '../../components/Header';
 import SubHeading from '../../components/SubHeading';

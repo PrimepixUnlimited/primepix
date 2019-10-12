@@ -23,6 +23,7 @@ const MainTabs = createBottomTabNavigator(
       },
       {
         navigationOptions: {
+          header: null,
           tabBarIcon: ({focused}) => (
             <TabBarIcon name="home" type="font-awesome" focused={focused} />
           ),
@@ -38,6 +39,7 @@ const MainTabs = createBottomTabNavigator(
       },
       {
         navigationOptions: {
+          header: null,
           tabBarIcon: ({focused}) => (
             <TabBarIcon name="photo" type="font-awesome" focused={focused} />
           ),
@@ -53,6 +55,7 @@ const MainTabs = createBottomTabNavigator(
       },
       {
         navigationOptions: {
+          header: null,
           tabBarIcon: ({focused}) => (
             <TabBarIcon
               name="camera"
@@ -74,6 +77,7 @@ const MainTabs = createBottomTabNavigator(
       },
       {
         navigationOptions: {
+          header: null,
           tabBarIcon: ({focused}) => (
             <TabBarIcon name="ios-wallet" type="ionicon" focused={focused} />
           ),
@@ -89,6 +93,7 @@ const MainTabs = createBottomTabNavigator(
       },
       {
         navigationOptions: {
+          header: null,
           tabBarIcon: ({focused}) => (
             <View>
               <TabBarIcon name="bell" type="font-awesome" focused={focused} />

@@ -16,7 +16,7 @@ const HeaderComponent = ({
   showProfile,
   title,
 }) => {
-  const handleBackPress = e => goBack();
+  const handleBackPress = e => goBack(null);
   const handleMenuPress = e => navigate('menu');
   const handleProfilePress = e => navigate('profile');
 

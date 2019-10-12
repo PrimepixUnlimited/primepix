@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const tokenConfig = {
+const TOKEN_CONFIG = {
   httpOnly: true,
   maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
 }
@@ -33,15 +33,13 @@ const signup = async (parent, args, ctx, info) => {
   // create the JWT token for the new user
   const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
   // we set the hwt as a cookie on the response
-  ctx.response.cookie('token', token, tokenConfig)
+  ctx.response.cookie('token', token, TOKEN_CONFIG)
 
-  return {
-    ...user,
-    token
-  }
+  return user
 }
 
 const signin = async (parent, { email, password }, ctx, info) => {
+  email = email.toLowerCase()
   // check if the email exists
   const user = await ctx.db.query.user({ where: { email } })
   if (!user) throw new Error(`No such user found for email ${email}`)
@@ -51,14 +49,9 @@ const signin = async (parent, { email, password }, ctx, info) => {
   // generate JWT token
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
   // set the cookie with the token
-  ctx.response.cookie('token', token, tokenConfig)
+  ctx.response.cookie('token', token, TOKEN_CONFIG)
 
-  console.log(user)
-
-  return {
-    ...user,
-    token
-  }
+  return user
 }
 
 const signout = async (parent, args, ctx, info) => {

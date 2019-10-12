@@ -4,7 +4,7 @@ const { Prisma } = require('./prisma.ts')
 const db = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',
   endpoint: process.env.PRISMA_ENDPOINT,
-  debug: false
+  debug: true
 })
 
 export default db

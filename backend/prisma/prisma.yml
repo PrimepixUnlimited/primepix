@@ -1,0 +1,8 @@
+datamodel: datamodel.prisma
+
+endpoint: ${env:PRISMA_ENDPOINT}
+
+hooks:
+  post-deploy:
+    - graphql get-schema -p prisma
+    - graphql codegen

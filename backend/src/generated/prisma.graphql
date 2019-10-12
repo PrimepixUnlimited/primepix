@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Oct 10 2019 10:25:27 GMT+0100 (British Summer Time)
+# timestamp: Sat Oct 12 2019 13:24:07 GMT+0100 (British Summer Time)
 
 type AggregateUser {
   count: Int!
@@ -83,7 +83,6 @@ type User implements Node {
   id: ID!
   email: String!
   password: String!
-  token: String
   permissions: [Permission!]!
 }
 
@@ -101,7 +100,6 @@ input UserCreateInput {
   id: ID
   email: String!
   password: String!
-  token: String
   permissions: UserCreatepermissionsInput
 }
 
@@ -125,15 +123,12 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  token_ASC
-  token_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   email: String!
   password: String!
-  token: String
   permissions: [Permission!]!
 }
 
@@ -177,14 +172,12 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
-  token: String
   permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
-  token: String
   permissions: UserUpdatepermissionsInput
 }
 
@@ -321,46 +314,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  token: String
-
-  """All values that are not equal to given value."""
-  token_not: String
-
-  """All values that are contained in given list."""
-  token_in: [String!]
-
-  """All values that are not contained in given list."""
-  token_not_in: [String!]
-
-  """All values less than the given value."""
-  token_lt: String
-
-  """All values less than or equal the given value."""
-  token_lte: String
-
-  """All values greater than the given value."""
-  token_gt: String
-
-  """All values greater than or equal the given value."""
-  token_gte: String
-
-  """All values containing the given string."""
-  token_contains: String
-
-  """All values not containing the given string."""
-  token_not_contains: String
-
-  """All values starting with the given string."""
-  token_starts_with: String
-
-  """All values not starting with the given string."""
-  token_not_starts_with: String
-
-  """All values ending with the given string."""
-  token_ends_with: String
-
-  """All values not ending with the given string."""
-  token_not_ends_with: String
 }
 
 input UserWhereUniqueInput {

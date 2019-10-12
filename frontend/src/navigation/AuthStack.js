@@ -12,6 +12,9 @@ const AuthStack = createStackNavigator(
   },
   {
     initialRouteName: 'landing',
+    navigationOptions: () => ({
+      header: null,
+    }),
   },
 );
 

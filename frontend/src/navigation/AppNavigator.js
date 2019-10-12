@@ -6,11 +6,18 @@ import App from './AppStack';
 import Auth from './AuthStack';
 
 const AppNavigator = createAppContainer(
-  createSwitchNavigator({
-    // AuthLoading: AuthLoadingScreen,
-    auth: Auth,
-    app: App,
-  }),
+  createSwitchNavigator(
+    {
+      // AuthLoading: AuthLoadingScreen,
+      auth: Auth,
+      app: App,
+    },
+    {
+      navigationOptions: () => ({
+        header: null,
+      }),
+    },
+  ),
 );
 
 export default AppNavigator;

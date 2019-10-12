@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView, View} from 'react-native';
+import {useMutation} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import Header from '../../components/Header';
 import SubHeading from '../../components/SubHeading';
@@ -9,20 +11,46 @@ import Checkbox from '../../components/Checkbox';
 
 import styles from '../../constants/styles';
 
+const SIGNUP_MUTATION = gql`
+  mutation SIGNUP_MUTATION(
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+    $isArtist: Boolean!
+  ) {
+    signup(
+      email: $email
+      password: $password
+      confirmPassword: $confirmPassword
+      isArtist: $isArtist
+    ) {
+      id
+      email
+    }
+  }
+`;
+
 const RegisterSCreen = ({navigation: {navigate}}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [isArtist, setIsArtist] = useState(true);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
-  const handleSubmit = e => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    // navigate('main')
+  const [signup] = useMutation(SIGNUP_MUTATION);
+
+  const handleSubmit = async e => {
+    try {
+      setSubmitLoading(true);
+      await signup({
+        variables: {email, password, confirmPassword, isArtist},
+      });
+      setSubmitLoading(false);
+      navigate('main');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -37,6 +65,7 @@ const RegisterSCreen = ({navigation: {navigate}}) => {
           containerStyle={styles.space.m}
           label="Your email address"
           leftIconName="email"
+          onChangeText={val => setEmail(val)}
           placeholder="Email"
           textContentType="username"
           value={email}
@@ -45,6 +74,7 @@ const RegisterSCreen = ({navigation: {navigate}}) => {
           containerStyle={styles.space.m}
           label="Password"
           leftIconName="lock"
+          onChangeText={val => setPassword(val)}
           placeholder="Password"
           secureTextEntry
           textContentType="password"
@@ -54,6 +84,7 @@ const RegisterSCreen = ({navigation: {navigate}}) => {
           containerStyle={styles.space.s}
           label="Confirm password"
           leftIconName="lock"
+          onChangeText={val => setConfirmPassword(val)}
           placeholder="Confirm password"
           secureTextEntry
           textContentType="password"
@@ -70,12 +101,17 @@ const RegisterSCreen = ({navigation: {navigate}}) => {
           onPress={() => setAcceptTerms(!acceptTerms)}
           title="Accept our Terms & Conditions"
         />
-        <Button loading={loading} onPress={handleSubmit} title="Register" />
+        <Button
+          loading={submitLoading}
+          onPress={handleSubmit}
+          title="Register"
+        />
         <Button
           onPress={e => navigate('signin')}
           title="Have an account? Sign in"
           type="clear"
         />
+        <View style={styles.space.xxl} />
       </View>
     </ScrollView>
   );

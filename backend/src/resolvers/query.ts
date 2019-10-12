@@ -1,18 +1,16 @@
-const me = async (parent, args, ctx, info) => {
-  // authentication check
-  if (!ctx.request.userId) return null
+import auth, { Context } from '../lib/auth'
 
-  return ctx.db.query.user(
+const me = async (parent, args, context: Context, info) => {
+  const userId = auth.getUserId(context)
+  return context.prisma.query.user(
     {
-      where: { id: ctx.request.userId }
+      where: { id: userId }
     },
     info
   )
 }
 
 const users = async (parent, args, ctx, info) => {
-  // authentication check
-  // if (!ctx.request.userId) throw new Error('You must be logged in')
   // check permissions
 
   return ctx.db.query.users({}, info)

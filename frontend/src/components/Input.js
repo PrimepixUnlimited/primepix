@@ -23,6 +23,7 @@ const InputWrapper = ({
   rightIconName,
   rightIconContainerStyle,
   secureTextEntry,
+  ...props
 }) => {
   const leftIcon = {
     color: styles.greyScale.white4,
@@ -36,18 +37,22 @@ const InputWrapper = ({
   };
   return (
     <Input
+      {...props}
       containerStyle={StyleSheet.flatten([
         styles.utils.noHorizontalPadding,
         containerStyle,
       ])}
       disabled={disabled}
       disabledInputStyle={disabledInputStyle}
-      inputContainerStyle={inputContainerStyle}
+      inputContainerStyle={StyleSheet.flatten([
+        inputContainerStyle,
+        {borderColor: styles.greyScale.black2},
+      ])}
       errorMessage={errorMessage}
       errorStyle={errorStyle}
       errorProps={errorProps}
       inputComponent={inputComponent}
-      inputStyle={inputStyle}
+      inputStyle={StyleSheet.flatten([inputStyle, {borderColor: '#ccc'}])}
       label={label}
       labelStyle={labelStyle}
       labelProps={labelProps}
