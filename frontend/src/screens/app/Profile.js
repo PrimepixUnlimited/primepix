@@ -1,5 +1,7 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
+import {useMutation} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import Header from '../../components/Header';
 import SubHeading from '../../components/SubHeading';
@@ -7,10 +9,25 @@ import Button from '../../components/Button';
 
 import styles from '../../constants/styles';
 
+const SIGNOUT_MUTATION = gql`
+  mutation SIGNOUT_MUTATION {
+    signout {
+      message
+    }
+  }
+`;
+
 const ProfileScreen = ({navigation: {navigate}}) => {
-  const handleSignOut = () => {
+  const [signout] = useMutation(SIGNOUT_MUTATION);
+
+  const handleSignOut = async () => {
+    const {data} = await signout();
+    if (data.signout.message) {
+      console.log(data.signout.message);
+    }
     navigate('landing');
   };
+
   return (
     <ScrollView
       style={[styles.common.screenContainer, styles.common.fullHeight]}>

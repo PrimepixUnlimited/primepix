@@ -18,18 +18,23 @@ const greyScale = {
 };
 
 const common = StyleSheet.create({
+  screenStyle: {
+    flexGrow: 1,
+  },
   screenContainer: {
     backgroundColor: greyScale.black2,
   },
   contentContainer: {
     backgroundColor: greyScale.black1,
     paddingVertical: UNIT * 3,
-  },
-  fullHeight: {
-    height: '100%',
+    flex: 1,
   },
   contentPaddingHorizontal: {
     paddingHorizontal: 15,
+  },
+  centeredItems: {
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 
