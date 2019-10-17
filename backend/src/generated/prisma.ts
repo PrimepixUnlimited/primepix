@@ -58,6 +58,8 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 """
 The \`Long\` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -105,9 +107,6 @@ enum Permission {
   ADMIN
   USER
   ARTIST
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
   PERMISSIONUPDATE
 }
 
@@ -131,6 +130,10 @@ type User implements Node {
   id: ID!
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: [Permission!]!
 }
 
@@ -148,6 +151,10 @@ input UserCreateInput {
   id: ID
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
 }
 
@@ -171,12 +178,24 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  emailConfirmToken_ASC
+  emailConfirmToken_DESC
+  emailConfirmed_ASC
+  emailConfirmed_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: [Permission!]!
 }
 
@@ -220,12 +239,20 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
 
@@ -362,6 +389,94 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  emailConfirmToken: String
+
+  """All values that are not equal to given value."""
+  emailConfirmToken_not: String
+
+  """All values that are contained in given list."""
+  emailConfirmToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  emailConfirmToken_not_in: [String!]
+
+  """All values less than the given value."""
+  emailConfirmToken_lt: String
+
+  """All values less than or equal the given value."""
+  emailConfirmToken_lte: String
+
+  """All values greater than the given value."""
+  emailConfirmToken_gt: String
+
+  """All values greater than or equal the given value."""
+  emailConfirmToken_gte: String
+
+  """All values containing the given string."""
+  emailConfirmToken_contains: String
+
+  """All values not containing the given string."""
+  emailConfirmToken_not_contains: String
+
+  """All values starting with the given string."""
+  emailConfirmToken_starts_with: String
+
+  """All values not starting with the given string."""
+  emailConfirmToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  emailConfirmToken_ends_with: String
+
+  """All values not ending with the given string."""
+  emailConfirmToken_not_ends_with: String
+  emailConfirmed: Boolean
+
+  """All values that are not equal to given value."""
+  emailConfirmed_not: Boolean
 }
 
 input UserWhereUniqueInput {
@@ -381,20 +496,46 @@ export type UserOrderByInput =   'id_ASC' |
   'email_ASC' |
   'email_DESC' |
   'password_ASC' |
-  'password_DESC'
+  'password_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'emailConfirmToken_ASC' |
+  'emailConfirmToken_DESC' |
+  'emailConfirmed_ASC' |
+  'emailConfirmed_DESC'
+
+export type MutationType =   'CREATED' |
+  'UPDATED' |
+  'DELETED'
 
 export type Permission =   'SUPERADMIN' |
   'ADMIN' |
   'USER' |
   'ARTIST' |
-  'ITEMCREATE' |
-  'ITEMUPDATE' |
-  'ITEMDELETE' |
   'PERMISSIONUPDATE'
 
-export type MutationType =   'CREATED' |
-  'UPDATED' |
-  'DELETED'
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  createdAt?: DateTime
+  updatedAt?: DateTime
+  emailConfirmToken?: String
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+}
+
+export interface UserCreateInput {
+  id?: ID_Input
+  email: String
+  password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed?: Boolean
+  permissions?: UserCreatepermissionsInput
+}
 
 export interface UserWhereInput {
   AND?: UserWhereInput[] | UserWhereInput
@@ -442,38 +583,47 @@ export interface UserWhereInput {
   password_not_starts_with?: String
   password_ends_with?: String
   password_not_ends_with?: String
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
-}
-
-export interface UserCreateInput {
-  id?: ID_Input
-  email: String
-  password: String
-  permissions?: UserCreatepermissionsInput
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  emailConfirmToken?: String
+  emailConfirmToken_not?: String
+  emailConfirmToken_in?: String[] | String
+  emailConfirmToken_not_in?: String[] | String
+  emailConfirmToken_lt?: String
+  emailConfirmToken_lte?: String
+  emailConfirmToken_gt?: String
+  emailConfirmToken_gte?: String
+  emailConfirmToken_contains?: String
+  emailConfirmToken_not_contains?: String
+  emailConfirmToken_starts_with?: String
+  emailConfirmToken_not_starts_with?: String
+  emailConfirmToken_ends_with?: String
+  emailConfirmToken_not_ends_with?: String
+  emailConfirmed?: Boolean
+  emailConfirmed_not?: Boolean
 }
 
 export interface UserCreatepermissionsInput {
   set?: Permission[] | Permission
 }
 
-export interface UserUpdateInput {
+export interface UserWhereUniqueInput {
+  id?: ID_Input
   email?: String
-  password?: String
-  permissions?: UserUpdatepermissionsInput
-}
-
-export interface UserUpdatepermissionsInput {
-  set?: Permission[] | Permission
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String
-  password?: String
-  permissions?: UserUpdatepermissionsInput
 }
 
 export interface UserSubscriptionWhereInput {
@@ -487,6 +637,20 @@ export interface UserSubscriptionWhereInput {
   node?: UserWhereInput
 }
 
+export interface UserUpdateManyMutationInput {
+  email?: String
+  password?: String
+  createdAt?: DateTime
+  updatedAt?: DateTime
+  emailConfirmToken?: String
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+}
+
+export interface UserUpdatepermissionsInput {
+  set?: Permission[] | Permission
+}
+
 /*
  * An object with an ID
 
@@ -495,10 +659,38 @@ export interface Node {
   id: ID_Output
 }
 
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface BatchPayload {
+  count: Long
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
 export interface User extends Node {
   id: ID_Output
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed?: Boolean
   permissions: Permission[]
 }
 
@@ -523,36 +715,21 @@ export interface PageInfo {
   endCursor?: String
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
-}
-
-export interface AggregateUser {
-  count: Int
-}
-
-export interface BatchPayload {
-  count: Long
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
-}
-
 export interface UserPreviousValues {
   id: ID_Output
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed?: Boolean
   permissions: Permission[]
 }
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -561,19 +738,16 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Boolean = boolean
+export type String = string
+
+export type DateTime = Date | string
 
 /*
 The `Long` scalar type represents non-fractional signed whole numeric values.

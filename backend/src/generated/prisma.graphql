@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Oct 12 2019 13:24:07 GMT+0100 (British Summer Time)
+# timestamp: Thu Oct 17 2019 21:22:03 GMT+0100 (British Summer Time)
 
 type AggregateUser {
   count: Int!
@@ -9,6 +9,8 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -57,9 +59,6 @@ enum Permission {
   ADMIN
   USER
   ARTIST
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
   PERMISSIONUPDATE
 }
 
@@ -83,6 +82,10 @@ type User implements Node {
   id: ID!
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: [Permission!]!
 }
 
@@ -100,6 +103,10 @@ input UserCreateInput {
   id: ID
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
 }
 
@@ -123,12 +130,24 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  emailConfirmToken_ASC
+  emailConfirmToken_DESC
+  emailConfirmed_ASC
+  emailConfirmed_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   email: String!
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: [Permission!]!
 }
 
@@ -172,12 +191,20 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  emailConfirmToken: String
+  emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
 
@@ -314,6 +341,94 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  emailConfirmToken: String
+
+  """All values that are not equal to given value."""
+  emailConfirmToken_not: String
+
+  """All values that are contained in given list."""
+  emailConfirmToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  emailConfirmToken_not_in: [String!]
+
+  """All values less than the given value."""
+  emailConfirmToken_lt: String
+
+  """All values less than or equal the given value."""
+  emailConfirmToken_lte: String
+
+  """All values greater than the given value."""
+  emailConfirmToken_gt: String
+
+  """All values greater than or equal the given value."""
+  emailConfirmToken_gte: String
+
+  """All values containing the given string."""
+  emailConfirmToken_contains: String
+
+  """All values not containing the given string."""
+  emailConfirmToken_not_contains: String
+
+  """All values starting with the given string."""
+  emailConfirmToken_starts_with: String
+
+  """All values not starting with the given string."""
+  emailConfirmToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  emailConfirmToken_ends_with: String
+
+  """All values not ending with the given string."""
+  emailConfirmToken_not_ends_with: String
+  emailConfirmed: Boolean
+
+  """All values that are not equal to given value."""
+  emailConfirmed_not: Boolean
 }
 
 input UserWhereUniqueInput {

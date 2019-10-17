@@ -3,9 +3,6 @@ enum Permission {
   ADMIN
   USER
   ARTIST
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
   PERMISSIONUPDATE
 }
 
@@ -13,5 +10,9 @@ type User {
   id: ID! @id
   email: String! @unique
   password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  emailConfirmToken: String!
+  emailConfirmed: Boolean
   permissions: [Permission]! @scalarList(strategy: RELATION)
 }

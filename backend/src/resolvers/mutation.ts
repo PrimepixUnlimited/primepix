@@ -1,42 +1,79 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+import * as bcrypt from 'bcryptjs'
+import * as jwt from 'jsonwebtoken'
+import { GraphQLResolveInfo } from 'graphql'
+import { v4 as uuid } from 'uuid'
+import * as moment from 'moment'
+
+import Config from '../config'
+import { Context } from '../lib/utils'
+import { User, UserCreateInput } from '../generated/prisma'
 
 const TOKEN_CONFIG = {
   httpOnly: true,
   maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
 }
 
-const signup = async (parent, args, ctx, info) => {
+const generateToken = (user: User, ctx: Context) => jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+const getHashedPassword = (value: string) => bcrypt.hash(value, 10)
+
+const sendEmail = async (mailer, options: any) => {
+  if (mailer) {
+    try {
+      await mailer.send(options);
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+}
+
+const signup = async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
   const { email, password, confirmPassword, isArtist } = args
   // compare passwords
-  if (password !== confirmPassword) throw new Error(`Passwords don't match!`)
-  // lowercase their email
-  const formattedEmail = email.toLowerCase()
-  // hash their password
-  const securePassword: string = await bcrypt.hash(password, 10)
-  // set permissions
-  const permission = isArtist ? 'ARTIST' : 'USER'
-  const permissions = {
-    set: [permission]
+  if (password !== confirmPassword) {
+    throw new Error(`Passwords don't match!`)
+  }
+
+  const data: UserCreateInput = {
+    createdAt: moment().format(),
+    updatedAt: moment().format(),
+    // lowercase their email
+    email: email.toLowerCase(),
+    // hash their password
+    password: await getHashedPassword(password),
+    // set email verification token
+    emailConfirmed: false,
+    emailConfirmToken: uuid(),
+    // set permissions
+    permissions: {
+      set: [isArtist ? 'ARTIST' : 'USER']
+    }
   }
   // create the user in the database
-  const user = await ctx.db.mutation.createUser(
-    {
-      data: {
-        email: formattedEmail,
-        password: securePassword,
-        permissions
-      }
-    },
-    info
-  )
-  // create the JWT token for the new user
-  const token: string = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-  // we set the hwt as a cookie on the response
-  ctx.response.cookie('token', token, TOKEN_CONFIG)
+  const user: User = await ctx.db.mutation.createUser({ data }, info)
 
-  return user
+  // submit the verification code
+  sendEmail(ctx.mailer, {
+    template: 'signUpUser',
+    message: {
+      to: data.email
+    },
+    locals: {
+      mailAppUrl: Config.APP.url,
+      emailConfirmToken: data.emailConfirmToken,
+      email: data.email
+    }
+  })
+
+  // remove the verification token before returning the user
+  delete user.emailConfirmToken
+
+  return {
+    token: generateToken(user, ctx),
+    ...user
+  }
 }
+
+// const verifyEmail = async (parent: any, )
 
 const signin = async (parent, { email, password }, ctx, info) => {
   email = email.toLowerCase()
@@ -46,12 +83,11 @@ const signin = async (parent, { email, password }, ctx, info) => {
   // check if the password is correct
   const valid = await bcrypt.compare(password, user.password)
   if (!valid) throw new Error(`Invalid Password!`)
-  // generate JWT token
-  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-  // set the cookie with the token
-  ctx.response.cookie('token', token, TOKEN_CONFIG)
 
-  return user
+  return {
+    token: generateToken(user, ctx),
+    user
+  }
 }
 
 const signout = async (parent, args, ctx, info) => {

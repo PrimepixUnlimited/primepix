@@ -16,6 +16,7 @@ type Mutation {
     confirmPassword: String!
     isArtist: Boolean!
   ): User
+  verifyEmail(email: String!, emailConfirmToken: String!): User
   signin(email: String!, password: String!): User
   signout: SuccessMessage
 }
