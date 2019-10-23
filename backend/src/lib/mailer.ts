@@ -13,23 +13,34 @@ export default new Email({
   preview: false,
   transport: {
     // GMAIL setup
-    // host: 'smtp.gmail.com',
-    // port: 465,
-    // secure: true, // use SSL
-    // auth: {
-    //     user: 'yourusername@gmail.com',
-    //     pass: 'yourpassword'
-    // }
     host: process.env.MAIL_HOST,
-    port: process.env.MAIL_POST,
-    ssl: false,
-    tls: true,
+    port: process.env.MAIL_PORT,
+    secure: true, // use SSL
     auth: {
       user: process.env.MAIL_USERNAME,
       pass: process.env.MAIL_PASSWORD
     }
+    // MAILTRAP
+    // host: process.env.MAIL_HOST,
+    // port: process.env.MAIL_POST,
+    // ssl: false,
+    // tls: true,
+    // auth: {
+    //   user: process.env.MAIL_USERNAME,
+    //   pass: process.env.MAIL_PASSWORD
+    // }
   },
   views: {
     root: templatesPath
   }
 })
+
+export const sendEmail = async (mailer, options: any) => {
+  if (mailer) {
+    try {
+      await mailer.send(options)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+}

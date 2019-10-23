@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -8,13 +8,17 @@ import ScreenView from '../../components/ScreenView';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
+import asyncStorage from '../../lib/async-storage';
 import styles from '../../constants/styles';
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
-      id
-      email
+      token
+      user {
+        id
+        email
+      }
     }
   }
 `;
@@ -22,21 +26,23 @@ const SIGNIN_MUTATION = gql`
 const LoginScreen = ({navigation: {navigate}}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const [signin, {data}] = useMutation(SIGNIN_MUTATION);
+  const [signin, {loading}] = useMutation(SIGNIN_MUTATION);
 
   const handleSubmit = async e => {
     try {
-      setSubmitLoading(true);
-      const res = await signin({
-        variables: {email, password},
-      });
-      console.log(res);
-      setSubmitLoading(false);
-      navigate('main');
+      const variables = {email, password};
+      const {
+        data: {
+          signin: {token},
+        },
+      } = await signin({variables});
+      if (token) {
+        await asyncStorage.setToken(token);
+        navigate('main');
+      }
     } catch (err) {
-      console.log(err);
+      return Alert.alert('Error', err.message);
     }
   };
 
@@ -61,7 +67,7 @@ const LoginScreen = ({navigation: {navigate}}) => {
         textContentType="password"
         value={password}
       />
-      <Button loading={submitLoading} onPress={handleSubmit} title="Sign in" />
+      <Button loading={loading} onPress={handleSubmit} title="Sign in" />
       <Button
         onPress={e => navigate('signup')}
         title="Don't have an account? Register"

@@ -12,7 +12,7 @@ type User {
   password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  emailConfirmToken: String!
+  emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: [Permission]! @scalarList(strategy: RELATION)
 }

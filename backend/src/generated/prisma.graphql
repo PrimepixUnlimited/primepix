@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Oct 17 2019 21:22:03 GMT+0100 (British Summer Time)
+# timestamp: Mon Oct 21 2019 06:15:54 GMT+0100 (British Summer Time)
 
 type AggregateUser {
   count: Int!
@@ -84,7 +84,7 @@ type User implements Node {
   password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  emailConfirmToken: String!
+  emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: [Permission!]!
 }
@@ -105,7 +105,7 @@ input UserCreateInput {
   password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  emailConfirmToken: String!
+  emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
 }
@@ -146,7 +146,7 @@ type UserPreviousValues {
   password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  emailConfirmToken: String!
+  emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: [Permission!]!
 }
@@ -193,7 +193,7 @@ input UserUpdateInput {
   password: String
   createdAt: DateTime
   updatedAt: DateTime
-  emailConfirmToken: String
+  emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
@@ -203,7 +203,7 @@ input UserUpdateManyMutationInput {
   password: String
   createdAt: DateTime
   updatedAt: DateTime
-  emailConfirmToken: String
+  emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
 }
@@ -385,46 +385,28 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  emailConfirmToken: String
+  emailConfirmToken: Float
 
   """All values that are not equal to given value."""
-  emailConfirmToken_not: String
+  emailConfirmToken_not: Float
 
   """All values that are contained in given list."""
-  emailConfirmToken_in: [String!]
+  emailConfirmToken_in: [Float!]
 
   """All values that are not contained in given list."""
-  emailConfirmToken_not_in: [String!]
+  emailConfirmToken_not_in: [Float!]
 
   """All values less than the given value."""
-  emailConfirmToken_lt: String
+  emailConfirmToken_lt: Float
 
   """All values less than or equal the given value."""
-  emailConfirmToken_lte: String
+  emailConfirmToken_lte: Float
 
   """All values greater than the given value."""
-  emailConfirmToken_gt: String
+  emailConfirmToken_gt: Float
 
   """All values greater than or equal the given value."""
-  emailConfirmToken_gte: String
-
-  """All values containing the given string."""
-  emailConfirmToken_contains: String
-
-  """All values not containing the given string."""
-  emailConfirmToken_not_contains: String
-
-  """All values starting with the given string."""
-  emailConfirmToken_starts_with: String
-
-  """All values not starting with the given string."""
-  emailConfirmToken_not_starts_with: String
-
-  """All values ending with the given string."""
-  emailConfirmToken_ends_with: String
-
-  """All values not ending with the given string."""
-  emailConfirmToken_not_ends_with: String
+  emailConfirmToken_gte: Float
   emailConfirmed: Boolean
 
   """All values that are not equal to given value."""

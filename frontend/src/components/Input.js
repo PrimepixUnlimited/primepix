@@ -19,9 +19,11 @@ const InputWrapper = ({
   labelProps,
   leftIconName,
   leftIconContainerStyle,
+  leftIconType,
   placeholder,
   rightIconName,
   rightIconContainerStyle,
+  rightIconType,
   secureTextEntry,
   ...props
 }) => {
@@ -29,11 +31,13 @@ const InputWrapper = ({
     color: styles.greyScale.white4,
     name: leftIconName,
     size: 18,
+    type: leftIconType,
   };
   const rightIcon = {
     color: styles.greyScale.white4,
     name: rightIconName,
     size: 18,
+    type: rightIconType,
   };
   return (
     <Input

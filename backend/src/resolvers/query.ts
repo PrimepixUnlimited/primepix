@@ -1,10 +1,11 @@
 import auth from '../lib/auth'
 
 const me = async (parent, args, ctx, info) => {
-  // console.log(ctx.claims)
-  // return ctx.prisma.query.user(
+  const claims = await ctx.claims
+  console.log(claims)
+  // return ctx.db.query.user(
   //   {
-  //     where: { id: userId }
+  //     where: { id: ctx.request }
   //   },
   //   info
   // )

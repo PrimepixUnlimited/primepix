@@ -1,9 +1,9 @@
 projects:
   app:
-    schemaPath: src/resolvers/schema.graphql
+    schemaPath: 'src/resolvers/schema.graphql'
     extensions:
       endpoints:
-        default: http://localhost:4444
+        default: 'http://localhost:4444'
   prisma:
     schemaPath: src/generated/prisma.graphql
     extensions:

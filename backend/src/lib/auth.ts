@@ -1,14 +1,17 @@
 const jwt = require('jsonwebtoken')
 
 const getClaims = async (req: any) => {
-  let verifiedToken
+  let decodedToken
   try {
-    const { token } = req.request.cookies
-    verifiedToken = await jwt.verify(token, process.env.APP_SECRET)
+    const { authorization } = req.request.headers
+    console.log(authorization)
+    decodedToken = await jwt.verify(authorization, process.env.APP_SECRET)
+    console.log(decodedToken)
   } catch (err) {
+    console.log(err)
     return null
   }
-  return verifiedToken.claims
+  return decodedToken.claims
 }
 
 export default {

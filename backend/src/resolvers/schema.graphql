@@ -15,8 +15,13 @@ type Mutation {
     password: String!
     confirmPassword: String!
     isArtist: Boolean!
-  ): User
-  verifyEmail(email: String!, emailConfirmToken: String!): User
-  signin(email: String!, password: String!): User
+  ): User!
+  verifyEmail(email: String!, emailConfirmToken: Float!): LoginResponse!
+  signin(email: String!, password: String!): LoginResponse!
   signout: SuccessMessage
+}
+
+type LoginResponse {
+  token: String
+  user: User
 }
