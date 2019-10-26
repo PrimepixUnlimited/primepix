@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Oct 21 2019 06:15:54 GMT+0100 (British Summer Time)
+# timestamp: Wed Oct 23 2019 23:08:51 GMT+0100 (British Summer Time)
 
 type AggregateUser {
   count: Int!
@@ -103,8 +103,6 @@ input UserCreateInput {
   id: ID
   email: String!
   password: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
@@ -191,8 +189,6 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
-  createdAt: DateTime
-  updatedAt: DateTime
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
@@ -201,8 +197,6 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   email: String
   password: String
-  createdAt: DateTime
-  updatedAt: DateTime
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput

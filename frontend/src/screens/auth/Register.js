@@ -1,6 +1,5 @@
 import React, {Fragment, useState} from 'react';
 import {Alert} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -10,6 +9,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 
+import asyncStorage from '../../lib/async-storage';
 import styles from '../../constants/styles';
 
 const SIGNUP_MUTATION = gql`
@@ -79,7 +79,7 @@ const RegisterSCreen = ({navigation: {navigate}}) => {
         },
       } = await verifyEmail({variables});
       if (token) {
-        await AsyncStorage.setItem('token', token);
+        await asyncStorage.setToken(token);
         navigate('main');
       }
     } catch (err) {

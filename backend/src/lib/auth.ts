@@ -1,19 +1,43 @@
 const jwt = require('jsonwebtoken')
 
-const getClaims = async (req: any) => {
-  let decodedToken
+const userObj = '{ id, createdAt, email, password, permissions, updatedAt }'
+
+const findUserByEmail = async (db: any, email: string) => {
+  try {
+    // check if the email exists
+    const user = await db.query.user({ where: { email } }, userObj)
+    if (!user) throw new Error(`No such user found for email ${email}`)
+    return user
+  } catch (err) {
+    return err.message
+  }
+}
+
+const findUserById = async (db: any, id: string) => {
+  try {
+    const user = await db.query.user({ where: { id } }, userObj)
+    if (!user) throw new Error(`No such user found for id ${id}`)
+    return user
+  } catch (err) {
+    return err.message
+  }
+}
+
+const getUser = async (req: any, db: any) => {
   try {
     const { authorization } = req.request.headers
-    console.log(authorization)
-    decodedToken = await jwt.verify(authorization, process.env.APP_SECRET)
-    console.log(decodedToken)
+    const { userId } = await jwt.verify(authorization, process.env.APP_SECRET)
+    if (userId) {
+      const user = await findUserById(db, userId)
+      return user
+    }
   } catch (err) {
-    console.log(err)
     return null
   }
-  return decodedToken.claims
 }
 
 export default {
-  getClaims
+  findUserByEmail,
+  findUserById,
+  getUser
 }

@@ -21,7 +21,7 @@ const createServer = () =>
     context: req => ({
       ...req,
       db,
-      claims: auth.getClaims(req),
+      user: auth.getUser(req, db),
       mailer
     })
   })

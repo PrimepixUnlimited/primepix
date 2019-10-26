@@ -1,36 +1,46 @@
-import {ApolloClient, ApolloLink} from 'apollo-boost';
+import {ApolloClient} from 'apollo-boost';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {HttpLink} from 'apollo-link-http';
+import {setContext} from 'apollo-link-context';
+import {onError} from 'apollo-link-error';
 
 import asyncStorage from './async-storage';
 
 // Instantiate required constructor fields
 const cache = new InMemoryCache();
-const link = new HttpLink({
+const httpLink = new HttpLink({
   uri: 'http://localhost:4444/',
 });
 
-const getToken = async () => {
-  const token = await asyncStorage.getToken();
-  return token;
-};
+let token;
 
-const authLink = new ApolloLink((operation, forward) => {
-  const token = getToken();
-  console.log(token);
-  operation.setContext({
+const withToken = setContext(async request => {
+  if (!token) {
+    token = await asyncStorage.getToken();
+  }
+  return {
     headers: {
-      authorization: token ? `Barer ${token}` : '',
+      authorization: token,
     },
-  });
-  return forward(operation);
+  };
 });
+
+const resetToken = onError(({networkError}) => {
+  if (networkError && networkError.statusCode === 401) {
+    // remove cached token on 401 from the server
+    token = undefined;
+  }
+});
+
+const authFlowLink = withToken.concat(resetToken);
+
+const link = authFlowLink.concat(httpLink);
 
 // Create the client as outlined in the setup guide
 const client = new ApolloClient({
   // Provide required constructor fields
   cache: cache,
-  link: authLink.concat(link),
+  link: link,
 
   // Provide some optional constructor fields
   name: 'primepix-app',

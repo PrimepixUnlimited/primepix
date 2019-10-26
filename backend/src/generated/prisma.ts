@@ -151,8 +151,6 @@ input UserCreateInput {
   id: ID
   email: String!
   password: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
@@ -239,8 +237,6 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   password: String
-  createdAt: DateTime
-  updatedAt: DateTime
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
@@ -249,8 +245,6 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   email: String
   password: String
-  createdAt: DateTime
-  updatedAt: DateTime
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
@@ -581,8 +575,6 @@ export interface UserCreateInput {
   id?: ID_Input
   email: String
   password: String
-  createdAt: DateTime
-  updatedAt: DateTime
   emailConfirmToken: Float
   emailConfirmed?: Boolean
   permissions?: UserCreatepermissionsInput
@@ -595,8 +587,6 @@ export interface UserCreatepermissionsInput {
 export interface UserUpdateInput {
   email?: String
   password?: String
-  createdAt?: DateTime
-  updatedAt?: DateTime
   emailConfirmToken?: Float
   emailConfirmed?: Boolean
   permissions?: UserUpdatepermissionsInput
@@ -609,8 +599,6 @@ export interface UserUpdatepermissionsInput {
 export interface UserUpdateManyMutationInput {
   email?: String
   password?: String
-  createdAt?: DateTime
-  updatedAt?: DateTime
   emailConfirmToken?: Float
   emailConfirmed?: Boolean
   permissions?: UserUpdatepermissionsInput

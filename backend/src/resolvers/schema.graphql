@@ -22,6 +22,6 @@ type Mutation {
 }
 
 type LoginResponse {
-  token: String
-  user: User
+  token: String!
+  user: User!
 }

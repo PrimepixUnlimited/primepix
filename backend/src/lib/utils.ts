@@ -5,6 +5,7 @@ export interface Context {
   request?: any
   req?: any
   mailer?: any
+  user?: any
 }
 
 export const generateCode = () => {

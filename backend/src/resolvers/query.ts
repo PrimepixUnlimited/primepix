@@ -1,15 +1,6 @@
-import auth from '../lib/auth'
+import * as moment from 'moment'
 
-const me = async (parent, args, ctx, info) => {
-  const claims = await ctx.claims
-  console.log(claims)
-  // return ctx.db.query.user(
-  //   {
-  //     where: { id: ctx.request }
-  //   },
-  //   info
-  // )
-}
+import { me } from './auth'
 
 const users = async (parent, args, ctx, info) => {
   return ctx.db.query.users({}, info)

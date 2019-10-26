@@ -2,6 +2,8 @@ import React from 'react';
 import {Alert, ScrollView, View} from 'react-native';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import {Text} from 'react-native-elements';
+import moment from 'moment';
 
 import Header from '../../components/Header';
 import SubHeading from '../../components/SubHeading';
@@ -15,6 +17,8 @@ const ME_QUERY = gql`
     me {
       id
       email
+      permissions
+      updatedAt
     }
   }
 `;
@@ -31,8 +35,6 @@ const ProfileScreen = ({navigation: {navigate}}) => {
   const {data} = useQuery(ME_QUERY);
   const [signout, {loading}] = useMutation(SIGNOUT_MUTATION);
 
-  console.log(data);
-
   const handleSignOut = async () => {
     try {
       const {
@@ -41,7 +43,6 @@ const ProfileScreen = ({navigation: {navigate}}) => {
         },
       } = await signout();
       if (message) {
-        console.log(message);
         await asyncStorage.clearAll();
         navigate('landing');
       }
@@ -59,6 +60,20 @@ const ProfileScreen = ({navigation: {navigate}}) => {
           styles.common.contentContainer,
           styles.common.contentPaddingHorizontal,
         ]}>
+        {data && data.me && (
+          <View>
+            <Text style={styles.text.body}>{data.me.email}</Text>
+            <Text style={styles.text.body}>
+              Last login: {moment(data.me.updatedAt).format('DD/MM/YYYY HH:mm')}
+            </Text>
+            {data.me.permissions &&
+              data.me.permissions.map(permission => (
+                <Text key={permission} style={styles.text.body}>
+                  You're: {permission}
+                </Text>
+              ))}
+          </View>
+        )}
         <Button loading={loading} onPress={handleSignOut} title="Sign out" />
       </View>
     </ScrollView>
