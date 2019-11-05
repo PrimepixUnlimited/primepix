@@ -7,6 +7,8 @@ type SuccessMessage {
 type Query {
   users: [User!]!
   me: User
+  payment(id: String!): PaymentDetails
+  plans(billingCycle: String!): [Plan]
 }
 
 type Mutation {
@@ -19,9 +21,77 @@ type Mutation {
   verifyEmail(email: String!, emailConfirmToken: Float!): LoginResponse!
   signin(email: String!, password: String!): LoginResponse!
   signout: SuccessMessage
+  createPaymentMethod(tokenId: String!): User
+  createSubscription(planId: String!): User
+  updateSubscription(planId: String!): User
 }
 
 type LoginResponse {
   token: String!
   user: User!
+}
+
+type PaymentDetails {
+  id: String
+  object: String
+  address: Address
+  balance: Float
+  created: DateTime
+  currency: String
+  default_source: String
+  delinquent: Boolean
+  description: String
+  discount: String
+  email: String
+  invoice_prefix: String
+  invoice_settings: InvoiceSettings
+  livemode: Boolean
+  name: String
+  phone: String
+  preferred_locales: [String]
+  shipping: Shipping
+}
+
+type Address {
+  line1: String
+  city: String
+  country: String
+  line2: String
+  postal_code: String
+  state: String
+}
+
+type InvoiceSettings {
+  custom_fields: [String]
+  default_payment_method: String
+  footer: String
+}
+
+type Shipping {
+  address: Address
+  name: String
+  phone: String
+}
+
+type Plan {
+  id: String
+  object: String
+  active: Boolean
+  aggregate_usage: Float
+  amount: Float
+  amount_decimal: Float
+  billing_scheme: String
+  created: DateTime
+  currency: String
+  info: [String]
+  interval: String
+  interval_count: Float
+  livemode: Boolean
+  nickname: String
+  product: String
+  tiers: String
+  tiers_mode: String
+  transform_usage: Float
+  trial_period_days: Float
+  usage_type: String
 }

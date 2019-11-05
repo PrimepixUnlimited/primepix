@@ -1,25 +1,44 @@
 const jwt = require('jsonwebtoken')
 
-const userObj = '{ id, createdAt, email, password, permissions, updatedAt }'
+export const userObj = `
+{
+  id,
+  createdAt,
+  email,
+  emailConfirmed,
+  emailConfirmToken,
+  password,
+  payment {
+    customerId,
+  },
+  permissions,
+  subscription {
+    subscriptionId
+  },
+  updatedAt
+}`
 
 const findUserByEmail = async (db: any, email: string) => {
   try {
-    // check if the email exists
     const user = await db.query.user({ where: { email } }, userObj)
-    if (!user) throw new Error(`No such user found for email ${email}`)
+    if (!user) {
+      throw new Error(`No such user found for email ${email}`)
+    }
     return user
   } catch (err) {
-    return err.message
+    throw new TypeError(err.message)
   }
 }
 
 const findUserById = async (db: any, id: string) => {
   try {
     const user = await db.query.user({ where: { id } }, userObj)
-    if (!user) throw new Error(`No such user found for id ${id}`)
+    if (!user) {
+      throw new Error(`No such user found for id ${id}`)
+    }
     return user
   } catch (err) {
-    return err.message
+    throw new TypeError(err.message)
   }
 }
 

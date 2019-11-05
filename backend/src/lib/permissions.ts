@@ -5,8 +5,10 @@ import { Context } from './utils'
 
 // Rules
 const isAuthenticated = rule()(
-  (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
-    return ctx.user !== null
+  async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
+    const user = await ctx.user
+    console.log(ctx.user)
+    return user !== null
   }
 )
 
@@ -35,10 +37,13 @@ const isUser = rule()(
 const permissions = shield({
   Query: {
     users: and(isAuthenticated, isAdmin),
-    me: and(isAuthenticated)
+    me: and(isAuthenticated),
+    payment: and(isAuthenticated),
+    plans: and(isAuthenticated, isArtist)
   },
   Mutation: {
-    signout: and(isAuthenticated)
+    signout: and(isAuthenticated),
+    createPaymentMethod: and(isAuthenticated)
   }
 })
 

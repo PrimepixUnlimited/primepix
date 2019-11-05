@@ -40,7 +40,7 @@ export const sendEmail = async (mailer, options: any) => {
     try {
       await mailer.send(options)
     } catch (err) {
-      throw new Error(err)
+      throw new TypeError(err)
     }
   }
 }

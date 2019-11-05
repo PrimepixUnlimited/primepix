@@ -14,5 +14,18 @@ type User {
   updatedAt: DateTime! @updatedAt
   emailConfirmToken: Float!
   emailConfirmed: Boolean
+  payment: Payment @relation(link: INLINE)
   permissions: [Permission]! @scalarList(strategy: RELATION)
+  subscription: SubScription @relation(link: INLINE)
+}
+
+type Payment {
+  id: ID! @id
+  customerId: String!
+  user: User!
+}
+
+type SubScription {
+  id: ID! @id
+  subscriptionId: String!
 }

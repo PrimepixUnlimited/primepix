@@ -1,15 +1,10 @@
 {
-  "name": "primepix",
-  "version": "0.0.1",
-  "private": true,
   "scripts": {
+    "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator 'iPhone 11'",
-    "flow": "flow",
-    "start": "react-native start -- --reset-cache",
-    "flow-stop": "flow stop",
-    "test": "jest",
-    "lint": "eslint ."
+    "ios": "react-native run-ios",
+    "web": "expo start --web",
+    "postinstall": "jetify"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.2",
@@ -20,42 +15,52 @@
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
     "babel-plugin-inline-import": "^3.0.0",
+    "expo": "^35.0.0",
     "graphql-tag": "^2.10.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
-    "react": "16.9.0",
-    "react-native": "0.61.2",
-    "react-native-camera": "^3.7.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-native": "0.59.10",
+    "react-native-camera": "^3.8.0",
+    "react-native-config": "^0.11.7",
     "react-native-elements": "^1.2.5",
-    "react-native-gesture-handler": "^1.4.1",
+    "react-native-gesture-handler": "~1.3.0",
     "react-native-linear-gradient": "^2.5.6",
-    "react-native-reanimated": "^1.3.0",
+    "react-native-reanimated": "~1.2.0",
     "react-native-screens": "^1.0.0-alpha.23",
-    "react-native-svg": "^9.11.1",
+    "react-native-svg": "9.9.5",
+    "react-native-unimodules": "0.6.0",
     "react-native-vector-icons": "^6.6.0",
+    "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.9.3",
-    "react-navigation-tabs": "^2.5.5"
+    "react-navigation-stack": "^1.10.3",
+    "react-navigation-tabs": "^2.5.5",
+    "tipsi-stripe": "^7.5.1"
   },
   "devDependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@babel/cli": "^7.6.2",
     "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
     "@babel/preset-flow": "^7.0.0",
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
+    "@types/react": "^16.8.23",
+    "@types/react-native": "^0.57.65",
     "apollo-client": "^2.6.4",
     "babel-jest": "^24.9.0",
+    "babel-preset-expo": "^7.1.0",
     "eslint": "^6.5.1",
     "flow-bin": "^0.109.0",
     "graphql": "^14.5.8",
     "jest": "^24.9.0",
+    "jetifier": "^1.6.4",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-native-svg-transformer": "^0.13.0",
     "react-native-text-gradient": "^0.1.7",
-    "react-test-renderer": "16.9.0"
+    "react-test-renderer": "16.9.0",
+    "typescript": "^3.6.3"
   },
-  "jest": {
-    "preset": "react-native"
-  }
+  "private": true
 }

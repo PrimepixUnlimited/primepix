@@ -7,6 +7,7 @@ import { Context, generateCode } from '../lib/utils'
 import { sendEmail } from '../lib/mailer'
 import auth from '../lib/auth'
 import { getHashedPassword, generateToken } from './common'
+import stripe from '../lib/stripe'
 
 /*
  * QUERIES
@@ -17,7 +18,6 @@ export const me = async (parent, args, ctx, info) => {
     const user = await ctx.user
     return user
   } catch (err) {
-    console.warn(err)
     return err
   }
 }
@@ -80,37 +80,56 @@ export const verifyEmail = async (
   ctx: Context,
   info: GraphQLResolveInfo
 ) => {
-  email = email.toLowerCase()
-  const user = await auth.findUserByEmail(ctx.db, email)
-  // check if user has already verified their email
-  if (user.emailConfirmed) {
-    throw new Error(`Email already verified!`)
-  }
-  // validate the confirmation code
-  if (
-    user.emailConfirmToken !== emailConfirmToken ||
-    emailConfirmToken.toString().length !== 6
-  ) {
-    throw new Error(`Ivalid confirmation code!`)
-  }
-  // update the user
-  const updatedUser: User = await ctx.db.mutation.updateUser(
-    {
-      data: {
-        emailConfirmToken: 0,
-        emailConfirmed: true
-      },
-      where: {
+  try {
+    email = email.toLowerCase()
+    let customer
+    const user = await auth.findUserByEmail(ctx.db, email)
+    // check if user has already verified their email
+    if (user.emailConfirmed) {
+      throw new Error(`Email already verified!`)
+    }
+    // validate the confirmation code
+    if (
+      user.emailConfirmToken !== emailConfirmToken ||
+      emailConfirmToken.toString().length !== 6
+    ) {
+      throw new Error(`Ivalid confirmation code!`)
+    }
+    // create customer in stripe
+    if (user.permissions.includes('ARTIST')) {
+      customer = await stripe.customers.create({
         email
+      })
+    }
+    // create payment
+    const payment = customer && {
+      create: {
+        customerId: customer.id
       }
-    },
-    info
-  )
-  delete updatedUser.emailConfirmToken
-  delete updatedUser.emailConfirmed
-  return {
-    token: generateToken(user, ctx),
-    user: updatedUser
+    }
+    // update user data
+    const updatedUserData = {
+      emailConfirmToken: 0,
+      emailConfirmed: true,
+      payment
+    }
+    // update the user
+    const updatedUser: User = await ctx.db.mutation.updateUser(
+      {
+        data: updatedUserData,
+        where: {
+          email
+        }
+      },
+      '{ id, createdAt, email, password, permissions, updatedAt }'
+    )
+    // remove fields from the response
+    return {
+      token: generateToken(user, ctx),
+      user: updatedUser
+    }
+  } catch (err) {
+    throw new TypeError(err.message)
   }
 }
 
@@ -120,21 +139,25 @@ export const signin = async (
   ctx: Context,
   info: GraphQLResolveInfo
 ) => {
-  email = email.toLowerCase()
-  const user = await auth.findUserByEmail(ctx.db, email)
-  // check if the password is correct
-  const validPassword = await bcrypt.compare(password, user.password)
-  if (!validPassword) {
-    throw new Error(`Invalid Password!`)
-  }
+  try {
+    email = email.toLowerCase()
+    // find user
+    const user = await auth.findUserByEmail(ctx.db, email)
+    // check if the password is correct
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (!validPassword) {
+      throw new Error(`Invalid Password!`)
+    }
 
-  return {
-    token: generateToken(user, ctx),
-    user
+    return {
+      token: generateToken(user, ctx),
+      user
+    }
+  } catch (err) {
+    throw new TypeError(err.message)
   }
 }
 
 export const signout = async (parent, args, ctx, info) => {
-  ctx.response.clearCookie('token')
   return { message: 'Goodbye!' }
 }

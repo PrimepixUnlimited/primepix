@@ -1,7 +1,7 @@
 import { GraphQLServer } from 'graphql-yoga'
 
-import Mutation from '../resolvers/mutation'
-import Query from '../resolvers/query'
+import Mutation from '../resolvers/_mutations'
+import Query from '../resolvers/_queries'
 import db from './db'
 import auth from './auth'
 import permissions from './permissions'
