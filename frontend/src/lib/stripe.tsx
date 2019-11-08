@@ -1,8 +1,8 @@
-import stripe from 'tipsi-stripe';
-import Config from 'react-native-config';
+import stripe from 'tipsi-stripe'
+import { STRIPE_PUBLIC_KEY } from 'react-native-dotenv'
 
 export default () => {
   stripe.setOptions({
-    publishableKey: Config.STRIPE_PUBLIC_KEY,
-  });
-};
+    publishableKey: STRIPE_PUBLIC_KEY
+  })
+}

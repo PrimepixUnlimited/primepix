@@ -7,7 +7,6 @@ import { Context } from './utils'
 const isAuthenticated = rule()(
   async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
     const user = await ctx.user
-    console.log(ctx.user)
     return user !== null
   }
 )

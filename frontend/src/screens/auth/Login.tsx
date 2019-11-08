@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
-import { Alert, View } from 'react-native'
+import { Alert, GestureResponderEvent, View } from 'react-native'
 import { useMutation } from '@apollo/react-hooks'
 import {
-  NavigationScreenComponent,
-  NavigationScreenProps,
-  NavigationStackScreenOptions
+  NavigationParams,
+  NavigationRoute,
+  NavigationScreenProp
 } from 'react-navigation'
+import { NavigationStackScreenComponent } from 'react-navigation-stack'
 
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 import { SIGNIN_MUTATION } from '../../graphql/mutations'
 
 import ROUTES from '../../navigation/_routes'
@@ -19,13 +23,15 @@ import Input from '../../components/Input'
 import asyncStorage from '../../lib/async-storage'
 import styles from '../../constants/styles'
 
-const LoginScreen = ({ navigation: { navigate } }) => {
+const LoginScreen: NavigationStackScreenComponent<Props> = ({
+  navigation: { navigate }
+}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const [signin, { loading }] = useMutation(SIGNIN_MUTATION)
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: GestureResponderEvent) => {
     try {
       const variables = { email, password }
       const {
@@ -77,8 +83,8 @@ const LoginScreen = ({ navigation: { navigate } }) => {
   )
 }
 
-LoginScreen.navigationOptions = (): NavigationStackScreenOptions => ({
-  header: <Header showBack title="Login" />
-})
+LoginScreen.navigationOptions = {
+  header: () => <Header showBack title="Login" />
+}
 
 export default LoginScreen

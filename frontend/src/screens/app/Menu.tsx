@@ -8,6 +8,10 @@ import {
 } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
 
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
+
 import ROUTES from '../../navigation/_routes'
 
 import Header from '../../components/Header'
@@ -39,10 +43,6 @@ const SETTINGS = [
     route: ''
   }
 ]
-
-interface Props {
-  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
-}
 
 const MenuScreen: NavigationStackScreenComponent<Props> = ({
   navigation: { navigate }

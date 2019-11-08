@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
 import { Alert, Text, View } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
 import { useQuery } from '@apollo/react-hooks'
 
 import ROUTES from '../../navigation/_routes'
 
 import { ME_QUERY } from '../../graphql/queries'
 
+import asyncStorage from '../../lib/async-storage'
+
 const AuthLoadingScreen = ({ navigation: { navigate } }) => {
   const { error, data, loading } = useQuery(ME_QUERY)
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = await AsyncStorage.getItem('token')
+        const token = await asyncStorage.getToken()
         if (!loading) {
           if (!token || !data) {
             return navigate(ROUTES.Auth)

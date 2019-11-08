@@ -3,6 +3,7 @@ import { GraphQLResolveInfo } from 'graphql'
 import { Context } from '../lib/utils'
 import { User, UserCreateInput } from '../generated/prisma'
 import stripe from '../lib/stripe'
+import { currencySymbols } from '../config/currencies'
 
 export const createPaymentMethod = async (
   parent: any,
@@ -32,8 +33,12 @@ export const payment = async (
     payment: { customerId }
   } = await ctx.user
   const payment = await stripe.customers.retrieve(customerId)
-  console.log(payment)
-  return payment
+  const formattedPayment = {
+    ...payment,
+    currencySymbol: currencySymbols[payment.currency.toUpperCase()],
+    sources: payment.sources.data
+  }
+  return formattedPayment
 }
 
 export const createSubscription = async (

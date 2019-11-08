@@ -1,22 +1,27 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { FC, ReactChild } from 'react'
+import { StyleSheet, View } from 'react-native'
 
-import Heading from './Heading';
+interface Props {
+  children: string | number
+  size?: string
+}
 
-import styles from '../constants/styles';
+import Heading from './Heading'
 
-const SubHeading = ({children, size}) => (
+import styles from '../constants/styles'
+
+const SubHeading: FC<Props> = ({ children, size = 'h4' }) => (
   <View style={s.container}>
     <Heading size={size}>{children}</Heading>
   </View>
-);
+)
 
 const s = StyleSheet.create({
   container: {
     backgroundColor: styles.greyScale.black2,
     padding: 15,
-    paddingTop: 30,
-  },
-});
+    paddingTop: 30
+  }
+})
 
-export default SubHeading;
+export default SubHeading

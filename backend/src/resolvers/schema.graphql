@@ -7,7 +7,7 @@ type SuccessMessage {
 type Query {
   users: [User!]!
   me: User
-  payment(id: String!): PaymentDetails
+  payment: PaymentDetails
   plans(billingCycle: String!): [Plan]
 }
 
@@ -38,6 +38,7 @@ type PaymentDetails {
   balance: Float
   created: DateTime
   currency: String
+  currencySymbol: String
   default_source: String
   delinquent: Boolean
   description: String
@@ -50,6 +51,7 @@ type PaymentDetails {
   phone: String
   preferred_locales: [String]
   shipping: Shipping
+  sources: [Source]
 }
 
 type Address {
@@ -65,12 +67,6 @@ type InvoiceSettings {
   custom_fields: [String]
   default_payment_method: String
   footer: String
-}
-
-type Shipping {
-  address: Address
-  name: String
-  phone: String
 }
 
 type Plan {
@@ -94,4 +90,28 @@ type Plan {
   transform_usage: Float
   trial_period_days: Float
   usage_type: String
+}
+
+type Shipping {
+  address: Address
+  name: String
+  phone: String
+}
+
+type Source {
+  id: String
+  account_holder_name: String
+  account_holder_type: String
+  bank_name: String
+  country: String
+  cvc: Float
+  last4: Float
+  status: String
+  description: String
+  brand: String
+  exp_month: Float
+  exp_year: Float
+  funding: String
+  name: String
+  object: String
 }

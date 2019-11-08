@@ -2,6 +2,16 @@ import React, { useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { ButtonGroup } from 'react-native-elements'
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationScreenProp
+} from 'react-navigation'
+import { NavigationStackScreenComponent } from 'react-navigation-stack'
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
 import ROUTES from '../../navigation/_routes'
 
@@ -14,7 +24,9 @@ import PricingCard from '../../components/PricingCard'
 
 import styles from '../../constants/styles'
 
-const PlansScreen = ({ navigation: { navigate } }) => {
+const PlansScreen: NavigationStackScreenComponent<Props> = ({
+  navigation: { navigate }
+}) => {
   const buttons = ['Monthly', 'Annually']
   const [billingCycleIdx, setBillingCycleIdx] = useState(0)
   const [billingCycle, setBillingCycle] = useState('month')
@@ -82,8 +94,8 @@ const PlansScreen = ({ navigation: { navigate } }) => {
   )
 }
 
-PlansScreen.navigationOptions = ({ navigation }) => ({
-  header: <Header title="Plan" />
-})
+PlansScreen.navigationOptions = {
+  header: () => <Header title="Plan" />
+}
 
 export default PlansScreen

@@ -40,7 +40,7 @@ const ProfileScreen: NavigationStackScreenComponent<Props> = ({
         }
       } = await signout()
       if (message) {
-        await asyncStorage.clearAll()
+        await asyncStorage.removeToken()
         navigate(ROUTES.Landing)
       }
     } catch (err) {

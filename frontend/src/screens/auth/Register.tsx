@@ -1,7 +1,16 @@
 import React, { Fragment, useState } from 'react'
-import { Alert } from 'react-native'
+import { Alert, GestureResponderEvent } from 'react-native'
 import { useMutation } from '@apollo/react-hooks'
-import { NavigationStackScreenOptions } from 'react-navigation'
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationScreenProp
+} from 'react-navigation'
+import { NavigationStackScreenComponent } from 'react-navigation-stack'
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
 import { SIGNUP_MUTATION, VERIFY_EMAIL_MUTATION } from '../../graphql/mutations'
 
@@ -16,7 +25,9 @@ import Checkbox from '../../components/Checkbox'
 import asyncStorage from '../../lib/async-storage'
 import styles from '../../constants/styles'
 
-const RegisterSCreen = ({ navigation: { navigate } }) => {
+const RegisterSCreen: NavigationStackScreenComponent<Props> = ({
+  navigation: { navigate }
+}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -30,7 +41,7 @@ const RegisterSCreen = ({ navigation: { navigate } }) => {
     VERIFY_EMAIL_MUTATION
   )
 
-  const handleFormSubmit = async e => {
+  const handleFormSubmit = async (e: GestureResponderEvent) => {
     try {
       await signup({
         variables: { email, password, confirmPassword, isArtist }
@@ -41,7 +52,7 @@ const RegisterSCreen = ({ navigation: { navigate } }) => {
     }
   }
 
-  const handleCodeSubmit = async e => {
+  const handleCodeSubmit = async (e: GestureResponderEvent) => {
     try {
       const variables = {
         email,
@@ -146,8 +157,8 @@ const RegisterSCreen = ({ navigation: { navigate } }) => {
   )
 }
 
-RegisterSCreen.navigationOptions = (): NavigationStackScreenOptions => ({
-  header: <Header showBack title="Login" />
-})
+RegisterSCreen.navigationOptions = {
+  header: () => <Header showBack title="Login" />
+}
 
 export default RegisterSCreen

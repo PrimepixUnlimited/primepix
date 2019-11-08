@@ -28,6 +28,10 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F4F4A3B92375B8E000B3860F /* libStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4F4A3BB2375B90400B3860F /* libEXPaymentsStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXPaymentsStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4F4A3BD2375B97200B3860F /* libStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4F4A3BF2375B97600B3860F /* libEXPaymentsStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEXPaymentsStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5592A83FFF26C5B49C5FAF /* Pods-primepix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-primepix.release.xcconfig"; path = "Target Support Files/Pods-primepix/Pods-primepix.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +64,10 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4F4A3BF2375B97600B3860F /* libEXPaymentsStripe.a */,
+				F4F4A3BD2375B97200B3860F /* libStripe.a */,
+				F4F4A3BB2375B90400B3860F /* libEXPaymentsStripe.a */,
+				F4F4A3B92375B8E000B3860F /* libStripe.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -103,7 +111,6 @@
 				15C09D2D1EEFA675FB45B97C /* Pods-primepix.debug.xcconfig */,
 				FF5592A83FFF26C5B49C5FAF /* Pods-primepix.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -139,18 +146,13 @@
 			attributes = {
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Facebook;
-				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
-				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "primepix" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

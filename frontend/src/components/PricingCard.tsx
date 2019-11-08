@@ -1,14 +1,18 @@
-import React from 'react';
-import {PricingCard} from 'react-native-elements';
+import React, { FC } from 'react'
+import { PricingCard, PricingCardProps } from 'react-native-elements'
 
-const PricingCardWrapper = ({
+interface Props extends PricingCardProps {
+  // custom props
+}
+
+const PricingCardWrapper: FC<Props> = ({
   button,
   color,
   containerStyle,
   info,
   onButtonPress,
   price,
-  title,
+  title
 }) => (
   <PricingCard
     button={button}
@@ -19,6 +23,6 @@ const PricingCardWrapper = ({
     price={price}
     title={title}
   />
-);
+)
 
-export default PricingCardWrapper;
+export default PricingCardWrapper

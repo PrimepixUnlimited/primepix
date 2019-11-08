@@ -1,10 +1,14 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import React, { FC } from 'react'
+import { StyleSheet } from 'react-native'
+import { CheckBox, CheckBoxProps } from 'react-native-elements'
 
-import styles from '../constants/styles';
+interface Props extends CheckBoxProps {
+  // custom props
+}
 
-const CheckboxWrapper = ({
+import styles from '../constants/styles'
+
+const CheckboxWrapper: FC<Props> = ({
   iconType,
   Component,
   checked,
@@ -25,7 +29,7 @@ const CheckboxWrapper = ({
   checkedColor,
   uncheckedColor,
   checkedTitle,
-  fontFamily,
+  fontFamily
 }) => (
   <CheckBox
     iconType={iconType}
@@ -50,6 +54,6 @@ const CheckboxWrapper = ({
     checkedTitle={checkedTitle}
     fontFamily={fontFamily}
   />
-);
+)
 
-export default CheckboxWrapper;
+export default CheckboxWrapper

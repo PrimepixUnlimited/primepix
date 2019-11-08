@@ -1,6 +1,6 @@
-import React from 'react';
-import {Image} from 'react-native';
+import React from 'react'
+import { Image } from 'react-native'
 
-const ImageWrapper = ({image}) => <Image href={href} />;
+const ImageWrapper = ({ image }) => <Image href={href} />
 
-export default ImageWrapper;
+export default ImageWrapper

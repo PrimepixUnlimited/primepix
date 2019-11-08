@@ -4,20 +4,16 @@
 
 import React from 'react'
 import { AppRegistry } from 'react-native'
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ThemeProvider } from 'react-native-elements'
 
-import App from './src/App'
+import App from './App'
 import { name as appName } from './app.json'
-import client from './src/lib/apollo-client'
-import styles from './src/constants/styles'
 
-const Main = () => (
-  <ThemeProvider theme={styles.theme}>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </ThemeProvider>
-)
+import configureApp from './src/lib/app-config'
+import configureStripe from './src/lib/stripe'
+
+configureApp()
+configureStripe()
+
+const Main = () => <App />
 
 AppRegistry.registerComponent(appName, () => Main)

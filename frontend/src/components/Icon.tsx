@@ -1,14 +1,18 @@
-import React from 'react';
-import {Icon} from 'react-native-elements';
+import React, { FC } from 'react'
+import { Icon, IconProps } from 'react-native-elements'
 
-const IconWrapper = ({
+interface Props extends IconProps {
+  // custom props
+}
+
+const IconWrapper: FC<Props> = ({
   color,
   containerStyle,
   name,
   onPress,
   size,
   type,
-  underlayColor,
+  underlayColor
 }) => (
   <Icon
     color={color}
@@ -19,6 +23,6 @@ const IconWrapper = ({
     type={type}
     underlayColor={underlayColor}
   />
-);
+)
 
-export default IconWrapper;
+export default IconWrapper

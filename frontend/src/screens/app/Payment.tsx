@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet } from 'react-native'
-import stripe from 'tipsi-stripe'
 import { useMutation } from '@apollo/react-hooks'
+import stripe from 'tipsi-stripe'
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationScreenProp
+} from 'react-navigation'
+import { NavigationStackScreenComponent } from 'react-navigation-stack'
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
 import {
   CREATE_PAYMENT_METHOD_MUTATION,
@@ -16,25 +26,11 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 
 import styles from '../../constants/styles'
+import { formatNumber } from '../../lib/utils'
 
-const formatNumber = value => {
-  var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-  var matches = v.match(/\d{4,16}/g)
-  var match = (matches && matches[0]) || ''
-  var parts = []
-
-  for (let i = 0, len = match.length; i < len; i += 4) {
-    parts.push(match.substring(i, i + 4))
-  }
-
-  if (parts.length) {
-    return parts.join(' ')
-  } else {
-    return value
-  }
-}
-
-const PaymentScreen = ({ navigation: { getParam, navigate } }) => {
+const PaymentScreen: NavigationStackScreenComponent<Props> = ({
+  navigation: { getParam, navigate }
+}) => {
   const [createPaymentMethod, { loading: paymentMethodLoading }] = useMutation(
     CREATE_PAYMENT_METHOD_MUTATION
   )
@@ -95,7 +91,7 @@ const PaymentScreen = ({ navigation: { getParam, navigate } }) => {
         label="Expiry month"
         leftIconName="calendar"
         leftIconType="material-community"
-        onChangeText={val => setExpMonth(val)}
+        onChangeText={val => setExpMonth(formatNumber(val))}
         placeholder="MM"
         value={expMonth}
       />
@@ -104,7 +100,7 @@ const PaymentScreen = ({ navigation: { getParam, navigate } }) => {
         label="Expiry year"
         leftIconName="calendar"
         leftIconType="material-community"
-        onChangeText={val => setExpYear(val)}
+        onChangeText={val => setExpYear(formatNumber(val))}
         placeholder="YYYY"
         value={expYear}
       />
@@ -112,7 +108,7 @@ const PaymentScreen = ({ navigation: { getParam, navigate } }) => {
         containerStyle={styles.space.s}
         label="CVC"
         leftIconName="lock"
-        onChangeText={val => setCvc(val)}
+        onChangeText={val => setCvc(formatNumber(val))}
         placeholder="***"
         value={cvc}
       />
@@ -135,9 +131,9 @@ const PaymentScreen = ({ navigation: { getParam, navigate } }) => {
   )
 }
 
-PaymentScreen.navigationOptions = ({ navigation }) => ({
-  header: <Header showBack title="Plan" />
-})
+PaymentScreen.navigationOptions = {
+  header: () => <Header showBack title="Plan" />
+}
 
 const s = StyleSheet.create({
   field: {

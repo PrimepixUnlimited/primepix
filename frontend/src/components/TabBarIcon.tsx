@@ -1,20 +1,24 @@
-import React from 'react';
-import {Icon} from 'react-native-elements';
+import React, { FC } from 'react'
+import { Icon, IconProps } from 'react-native-elements'
 
-import styles from '../constants/styles';
+interface Props extends IconProps {
+  focused?: boolean
+}
 
-const TabBarIcon = ({focused, name, raised, size, type}) => {
-  const fontColor = focused ? styles.colors.primary : raised ? 'black' : '#ccc';
+import styles from '../constants/styles'
+
+const TabBarIcon: FC<Props> = ({ focused, name, raised, size, type }) => {
+  const fontColor = focused ? styles.colors.primary : raised ? 'black' : '#ccc'
   return (
     <Icon
       color={fontColor}
-      containerStyle={raised && {top: -30}}
+      containerStyle={raised && { top: -30 }}
       name={name}
       raised={raised}
       size={size}
       type={type}
     />
-  );
-};
+  )
+}
 
-export default TabBarIcon;
+export default TabBarIcon
