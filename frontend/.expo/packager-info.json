@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 48489,
-  "expoServerNgrokUrl": "https://3z-7mh.anonymous.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.3z-7mh.anonymous.frontend.exp.direct",
-  "ngrokPid": 48511
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

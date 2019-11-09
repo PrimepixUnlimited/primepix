@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Icon, IconProps } from 'react-native-elements'
 
 interface Props extends IconProps {
-  // custom props
+  type?: 'font-awesome' | 'material' | 'material-community' | 'ionicon'
 }
 
 const IconWrapper: FC<Props> = ({

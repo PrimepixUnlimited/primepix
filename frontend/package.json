@@ -19,6 +19,7 @@
     "expo": "^35.0.0",
     "expo-secure-store": "^7.0.0",
     "graphql-tag": "^2.10.1",
+    "hex-to-rgba": "^2.0.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "16.8.3",

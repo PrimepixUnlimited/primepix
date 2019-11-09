@@ -22,6 +22,7 @@ import Header from '../../components/Header'
 import ScreenView from '../../components/ScreenView'
 import PricingCard from '../../components/PricingCard'
 import LoadingPlans from '../../components/loading/Plans'
+import Panel from '../../components/Panel'
 
 import styles from '../../constants/styles'
 
@@ -33,7 +34,7 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
   const [billingCycle, setBillingCycle] = useState('month')
 
   const { data: user } = useQuery(ME_QUERY)
-  const { data, loading } = useQuery(PLANS_QUERY, {
+  const { data, error, loading } = useQuery(PLANS_QUERY, {
     variables: { billingCycle: billingCycle }
   })
   const [createSubscription, { loading: subscriptionLoading }] = useMutation(
@@ -56,50 +57,76 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
     }
   }
 
-  const renderPlans = () =>
-    data.plans.map((plan, idx: number) => {
-      const calcDiscount = plan.discount && (idx + 1) * plan.discount
-      return (
-        <PricingCard
-          discount={calcDiscount}
-          info={plan.info}
-          key={plan.id}
-          onSelect={() => onSelect(plan.id)}
-          price={`£${plan.amount}`}
-          title={plan.nickname}
-          period={plan.interval}
-        />
-      )
-    })
+  const renderPlans = () => (
+    <View>
+      <Text h2 style={styles.text.screenHeading}>
+        Our pricing is simple
+      </Text>
+      <View style={styles.space.m} />
+      <Text style={styles.text.screenSubHeading}>
+        No commitments. No credit cards required. Start your 14-day trial today!
+      </Text>
+      <View style={styles.space.m} />
+      <ButtonGroup
+        onPress={idx => {
+          setBillingCycleIdx(idx)
+          setBillingCycle(idx === 0 ? 'month' : 'year')
+        }}
+        selectedIndex={billingCycleIdx}
+        buttons={buttons}
+      />
+      <View style={styles.space.m} />
+      {data.plans.map((plan, idx: number) => {
+        const calcDiscount = plan.discount && (idx + 1) * plan.discount
+        return (
+          <PricingCard
+            discount={calcDiscount}
+            info={plan.info}
+            key={plan.id}
+            onSelect={() => onSelect(plan.id)}
+            price={`£${plan.amount}`}
+            title={plan.nickname}
+            period={plan.interval}
+          />
+        )
+      })}
+      <Text style={styles.text.screenSubHeading}>Need help?</Text>
+    </View>
+  )
+
+  if (loading) {
+    return (
+      <ScreenView heading="Select a plan" noPadding>
+        <View style={s.container}>
+          <LoadingPlans />
+        </View>
+      </ScreenView>
+    )
+  }
+
+  if (error) {
+    return (
+      <ScreenView heading="Select a plan" noPadding>
+        <View style={s.container}>
+          <Panel type="error">
+            {error.graphQLErrors.map(({ message }, i) => (
+              <Text key={i} style={styles.text.body}>
+                {message}
+              </Text>
+            ))}
+          </Panel>
+        </View>
+      </ScreenView>
+    )
+  }
 
   return (
     <ScreenView heading="Select a plan" noPadding>
       <View style={s.container}>
-        {loading ? (
-          <LoadingPlans />
+        {data.plans && data.plans.length > 0 ? (
+          renderPlans()
         ) : (
-          <View>
-            <Text h2 style={styles.text.screenHeading}>
-              Our pricing is simple
-            </Text>
-            <View style={styles.space.m} />
-            <Text style={styles.text.screenSubHeading}>
-              No commitments. No credit cards required. Start your 14-day trial
-              today!
-            </Text>
-            <View style={styles.space.m} />
-            <ButtonGroup
-              onPress={idx => {
-                setBillingCycleIdx(idx)
-                setBillingCycle(idx === 0 ? 'month' : 'year')
-              }}
-              selectedIndex={billingCycleIdx}
-              buttons={buttons}
-            />
-            <View style={styles.space.m} />
-            {renderPlans()}
-            <Text style={styles.text.screenSubHeading}>Need help?</Text>
-          </View>
+          <Text>No plans found...</Text>
         )}
       </View>
     </ScreenView>

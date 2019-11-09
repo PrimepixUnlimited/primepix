@@ -33,7 +33,7 @@ const LoginScreen: NavigationStackScreenComponent<Props> = ({
 
   const handleSubmit = async (e: GestureResponderEvent) => {
     try {
-      const variables = { email, password }
+      const variables: { email: string; password: string } = { email, password }
       const {
         data: {
           signin: { token, user }

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import hexToRgba from 'hex-to-rgba'
 
 const UNIT = 15
 
@@ -6,10 +7,16 @@ const colors = {
   primary: '#d91c71',
   secondary: '#FF1301',
   tertiary: '#7D00B3',
-  success: '#57c32c',
+  success: '#0bd685',
   warning: '#f9ad30',
   error: '#FF1301'
 }
+
+const colorsOpacity = (opacity: number) => ({
+  success: hexToRgba(colors.success, opacity),
+  warning: hexToRgba(colors.warning, opacity),
+  error: hexToRgba(colors.error, opacity)
+})
 
 const greyScale = {
   black1: '#000',
@@ -73,7 +80,8 @@ const space = StyleSheet.create({
 const text = StyleSheet.create({
   body: {
     color: greyScale.white,
-    fontSize: 16
+    fontSize: 16,
+    lineHeight: 30
   },
   important: {
     // fontFamily: require('typeface-nunito-sans'),
@@ -119,6 +127,7 @@ const utils = {
 
 export default {
   colors,
+  colorsOpacity,
   greyScale,
   greyScaleOpacity,
   common,
