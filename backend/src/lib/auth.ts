@@ -10,6 +10,7 @@ export const userObj = `
   password,
   payment {
     customerId,
+    methods
   },
   permissions,
   subscription {

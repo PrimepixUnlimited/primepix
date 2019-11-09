@@ -147,6 +147,7 @@ type PageInfo {
 type Payment implements Node {
   id: ID!
   customerId: String!
+  methods: [String!]!
   user: User!
 }
 
@@ -163,7 +164,12 @@ type PaymentConnection {
 input PaymentCreateInput {
   id: ID
   customerId: String!
+  methods: PaymentCreatemethodsInput
   user: UserCreateOneWithoutPaymentInput!
+}
+
+input PaymentCreatemethodsInput {
+  set: [String!]
 }
 
 input PaymentCreateOneWithoutUserInput {
@@ -174,6 +180,7 @@ input PaymentCreateOneWithoutUserInput {
 input PaymentCreateWithoutUserInput {
   id: ID
   customerId: String!
+  methods: PaymentCreatemethodsInput
 }
 
 """An edge in a connection."""
@@ -195,6 +202,7 @@ enum PaymentOrderByInput {
 type PaymentPreviousValues {
   id: ID!
   customerId: String!
+  methods: [String!]!
 }
 
 type PaymentSubscriptionPayload {
@@ -236,11 +244,17 @@ input PaymentSubscriptionWhereInput {
 
 input PaymentUpdateInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
   user: UserUpdateOneRequiredWithoutPaymentInput
 }
 
 input PaymentUpdateManyMutationInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
+}
+
+input PaymentUpdatemethodsInput {
+  set: [String!]
 }
 
 input PaymentUpdateOneWithoutUserInput {
@@ -254,6 +268,7 @@ input PaymentUpdateOneWithoutUserInput {
 
 input PaymentUpdateWithoutUserDataInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
 }
 
 input PaymentUpsertWithoutUserInput {
@@ -1194,6 +1209,11 @@ export interface PaymentCreateOneWithoutUserInput {
 export interface PaymentCreateWithoutUserInput {
   id?: ID_Input
   customerId: String
+  methods?: PaymentCreatemethodsInput
+}
+
+export interface PaymentCreatemethodsInput {
+  set?: String[] | String
 }
 
 export interface SubScriptionCreateOneInput {
@@ -1209,6 +1229,7 @@ export interface SubScriptionCreateInput {
 export interface PaymentCreateInput {
   id?: ID_Input
   customerId: String
+  methods?: PaymentCreatemethodsInput
   user: UserCreateOneWithoutPaymentInput
 }
 
@@ -1252,6 +1273,11 @@ export interface PaymentUpdateOneWithoutUserInput {
 
 export interface PaymentUpdateWithoutUserDataInput {
   customerId?: String
+  methods?: PaymentUpdatemethodsInput
+}
+
+export interface PaymentUpdatemethodsInput {
+  set?: String[] | String
 }
 
 export interface PaymentUpsertWithoutUserInput {
@@ -1279,6 +1305,7 @@ export interface SubScriptionUpsertNestedInput {
 
 export interface PaymentUpdateInput {
   customerId?: String
+  methods?: PaymentUpdatemethodsInput
   user?: UserUpdateOneRequiredWithoutPaymentInput
 }
 
@@ -1317,6 +1344,7 @@ export interface UserUpdateManyMutationInput {
 
 export interface PaymentUpdateManyMutationInput {
   customerId?: String
+  methods?: PaymentUpdatemethodsInput
 }
 
 export interface SubScriptionUpdateManyMutationInput {
@@ -1380,6 +1408,7 @@ export interface User extends Node {
 export interface Payment extends Node {
   id: ID_Output
   customerId: String
+  methods: String[]
   user: User
 }
 
@@ -1500,6 +1529,7 @@ export interface PaymentSubscriptionPayload {
 export interface PaymentPreviousValues {
   id: ID_Output
   customerId: String
+  methods: String[]
 }
 
 export interface SubScriptionSubscriptionPayload {

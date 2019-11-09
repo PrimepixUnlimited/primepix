@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import { Header } from 'react-native-elements'
 import {
@@ -68,10 +68,12 @@ const HeaderComponent: FC<Props> = ({
 
   const Middle = () =>
     showTitle && (
-      <Image
-        source={require('../assets/images/primepix-logo-darkmode.png')}
-        style={s.logo}
-      />
+      <TouchableOpacity onPress={() => navigate('landing')}>
+        <Image
+          source={require('../assets/images/primepix-logo-darkmode.png')}
+          style={s.logo}
+        />
+      </TouchableOpacity>
     )
 
   const Right = () =>

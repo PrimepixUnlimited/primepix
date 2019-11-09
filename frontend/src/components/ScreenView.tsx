@@ -4,13 +4,14 @@ import { ScrollView, View } from 'react-native'
 interface Props {
   children: ReactNode
   heading: string
+  noPadding?: boolean
 }
 
 import SubHeading from './SubHeading'
 
 import styles from '../constants/styles'
 
-const ScreenView: FC<Props> = ({ heading, children }) => (
+const ScreenView: FC<Props> = ({ heading, children, noPadding = false }) => (
   <ScrollView
     contentContainerStyle={styles.common.screenStyle}
     style={styles.common.screenContainer}
@@ -19,7 +20,7 @@ const ScreenView: FC<Props> = ({ heading, children }) => (
     <View
       style={[
         styles.common.contentContainer,
-        styles.common.contentPaddingHorizontal,
+        !noPadding && styles.common.contentPaddingHorizontal,
         styles.common.centeredItems
       ]}
     >

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 export const ME_QUERY = gql`
   query ME_QUERY {
@@ -7,6 +7,7 @@ export const ME_QUERY = gql`
       email
       payment {
         customerId
+        methods
       }
       permissions
       subscription {
@@ -15,4 +16,4 @@ export const ME_QUERY = gql`
       updatedAt
     }
   }
-`;
+`

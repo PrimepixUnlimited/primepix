@@ -13,10 +13,30 @@ export const createPaymentMethod = async (
 ) => {
   try {
     const user = await ctx.user
-    const customer = await stripe.customers.update(user.payment.customerId, {
+    // update stripe's customer
+    const {
+      sources: { data: paymentMethods }
+    } = await stripe.customers.update(user.payment.customerId, {
       source: args.tokenId
     })
-    return user
+    // generate a list of method ids
+    const methods = paymentMethods.map(method => method.id)
+    console.log(methods)
+    // update user
+    const updatedUser: User = await ctx.db.mutation.updatePayment(
+      {
+        data: {
+          methods: {
+            set: methods
+          }
+        },
+        where: {
+          id: user.payment.id
+        }
+      },
+      '{ id, createdAt, email, payment, permissions, updatedAt }'
+    )
+    return updatedUser
   } catch (e) {
     throw new TypeError(e.message)
   }
@@ -78,7 +98,7 @@ export const createSubscription = async (
           email: user.email
         }
       },
-      '{ id, createdAt, email, password, permissions, updatedAt }'
+      '{ id, createdAt, email, permissions, updatedAt }'
     )
     return updatedUser
   } catch (e) {

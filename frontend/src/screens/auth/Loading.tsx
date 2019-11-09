@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Alert, Text, View } from 'react-native'
+import { Alert, SafeAreaView, Text } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
 
 import ROUTES from '../../navigation/_routes'
@@ -30,9 +30,9 @@ const AuthLoadingScreen = ({ navigation: { navigate } }) => {
     checkAuth()
   }, [data, error, loading, navigate])
   return (
-    <View>
-      <Text>AuthLoadingScreen</Text>
-    </View>
+    <SafeAreaView>
+      <Text>Loading...</Text>
+    </SafeAreaView>
   )
 }
 

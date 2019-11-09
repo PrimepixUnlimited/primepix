@@ -22,6 +22,7 @@ type User {
 type Payment {
   id: ID! @id
   customerId: String!
+  methods: [String] @scalarList(strategy: RELATION)
   user: User!
 }
 

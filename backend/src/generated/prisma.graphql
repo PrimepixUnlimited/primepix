@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun Nov 03 2019 13:02:43 GMT+0000 (Western European Standard Time)
+# timestamp: Fri Nov 08 2019 15:44:46 GMT+0000 (Western European Standard Time)
 
 type AggregatePayment {
   count: Int!
@@ -77,6 +77,7 @@ type PageInfo {
 type Payment implements Node {
   id: ID!
   customerId: String!
+  methods: [String!]!
   user: User!
 }
 
@@ -93,7 +94,12 @@ type PaymentConnection {
 input PaymentCreateInput {
   id: ID
   customerId: String!
+  methods: PaymentCreatemethodsInput
   user: UserCreateOneWithoutPaymentInput!
+}
+
+input PaymentCreatemethodsInput {
+  set: [String!]
 }
 
 input PaymentCreateOneWithoutUserInput {
@@ -104,6 +110,7 @@ input PaymentCreateOneWithoutUserInput {
 input PaymentCreateWithoutUserInput {
   id: ID
   customerId: String!
+  methods: PaymentCreatemethodsInput
 }
 
 """An edge in a connection."""
@@ -125,6 +132,7 @@ enum PaymentOrderByInput {
 type PaymentPreviousValues {
   id: ID!
   customerId: String!
+  methods: [String!]!
 }
 
 type PaymentSubscriptionPayload {
@@ -166,11 +174,17 @@ input PaymentSubscriptionWhereInput {
 
 input PaymentUpdateInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
   user: UserUpdateOneRequiredWithoutPaymentInput
 }
 
 input PaymentUpdateManyMutationInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
+}
+
+input PaymentUpdatemethodsInput {
+  set: [String!]
 }
 
 input PaymentUpdateOneWithoutUserInput {
@@ -184,6 +198,7 @@ input PaymentUpdateOneWithoutUserInput {
 
 input PaymentUpdateWithoutUserDataInput {
   customerId: String
+  methods: PaymentUpdatemethodsInput
 }
 
 input PaymentUpsertWithoutUserInput {

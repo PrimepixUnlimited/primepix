@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
-import { ButtonGroup } from 'react-native-elements'
+import { Alert, GestureResponderEvent, StyleSheet, View } from 'react-native'
+import { ButtonGroup, Text } from 'react-native-elements'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import {
   NavigationParams,
@@ -19,8 +19,9 @@ import { ME_QUERY, PLANS_QUERY } from '../../graphql/queries'
 import { CREATE_SUBSCRIPTION_MUTATION } from '../../graphql/mutations'
 
 import Header from '../../components/Header'
-import SubHeading from '../../components/SubHeading'
+import ScreenView from '../../components/ScreenView'
 import PricingCard from '../../components/PricingCard'
+import LoadingPlans from '../../components/loading/Plans'
 
 import styles from '../../constants/styles'
 
@@ -39,63 +40,83 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
     CREATE_SUBSCRIPTION_MUTATION
   )
 
-  const onSelect = async planId => {
-    if (!user.me.payment) {
-      return navigate(ROUTES.Payment, { planId })
-    }
-    const { data: subscription } = await createSubscription({
-      variables: { planId }
-    })
-    if (subscription.createSubscription) {
-      return navigate(ROUTES.Main)
+  const onSelect = async (planId: string) => {
+    try {
+      if (!user.me.payment.methods.length) {
+        return navigate(ROUTES.Payment, { planId })
+      }
+      const { data: subscription } = await createSubscription({
+        variables: { planId }
+      })
+      if (subscription.createSubscription) {
+        return navigate(ROUTES.Main)
+      }
+    } catch (e) {
+      Alert.alert(e.message)
     }
   }
 
+  const renderPlans = () =>
+    data.plans.map((plan, idx: number) => {
+      const calcDiscount = plan.discount && (idx + 1) * plan.discount
+      return (
+        <PricingCard
+          discount={calcDiscount}
+          info={plan.info}
+          key={plan.id}
+          onSelect={() => onSelect(plan.id)}
+          price={`£${plan.amount}`}
+          title={plan.nickname}
+          period={plan.interval}
+        />
+      )
+    })
+
   return (
-    <ScrollView
-      style={[styles.common.screenContainer, styles.common.fullHeight]}
-    >
-      <SubHeading>Select a plan</SubHeading>
-      {loading ? (
-        <Text style={styles.text.body}>Loading ...</Text>
-      ) : (
-        <View>
-          <ButtonGroup
-            onPress={idx => {
-              setBillingCycleIdx(idx)
-              setBillingCycle(idx === 0 ? 'month' : 'year')
-            }}
-            selectedIndex={billingCycleIdx}
-            buttons={buttons}
-          />
-          {data.plans.map((plan, idx) => {
-            const cardContainerStyles = {
-              backgroundColor: styles.rainbow[idx],
-              borderWidth: 0
-            }
-            const cardColor =
-              idx !== 2 ? styles.colors.primary : styles.colors.tertiary
-            return (
-              <PricingCard
-                button={{ title: 'GET STARTED' }}
-                containerStyle={cardContainerStyles}
-                color={cardColor}
-                info={plan.info}
-                key={plan.nickname}
-                onButtonPress={e => onSelect(plan.id)}
-                price={`£${plan.amount}`}
-                title={plan.nickname}
-              />
-            )
-          })}
-        </View>
-      )}
-    </ScrollView>
+    <ScreenView heading="Select a plan" noPadding>
+      <View style={s.container}>
+        {loading ? (
+          <LoadingPlans />
+        ) : (
+          <View>
+            <Text h2 style={styles.text.screenHeading}>
+              Our pricing is simple
+            </Text>
+            <View style={styles.space.m} />
+            <Text style={styles.text.screenSubHeading}>
+              No commitments. No credit cards required. Start your 14-day trial
+              today!
+            </Text>
+            <View style={styles.space.m} />
+            <ButtonGroup
+              onPress={idx => {
+                setBillingCycleIdx(idx)
+                setBillingCycle(idx === 0 ? 'month' : 'year')
+              }}
+              selectedIndex={billingCycleIdx}
+              buttons={buttons}
+            />
+            <View style={styles.space.m} />
+            {renderPlans()}
+            <Text style={styles.text.screenSubHeading}>Need help?</Text>
+          </View>
+        )}
+      </View>
+    </ScreenView>
   )
 }
 
 PlansScreen.navigationOptions = {
   header: () => <Header title="Plan" />
 }
+
+const s = StyleSheet.create({
+  container: {
+    backgroundColor: '#55368e',
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 40
+  }
+})
 
 export default PlansScreen

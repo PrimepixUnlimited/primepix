@@ -79,7 +79,8 @@ type Plan {
   billing_scheme: String
   created: DateTime
   currency: String
-  info: [String]
+  discount: String
+  info: [PlanInfo]
   interval: String
   interval_count: Float
   livemode: Boolean
@@ -90,6 +91,11 @@ type Plan {
   transform_usage: Float
   trial_period_days: Float
   usage_type: String
+}
+
+type PlanInfo {
+  title: String
+  active: Boolean
 }
 
 type Shipping {

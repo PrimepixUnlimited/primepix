@@ -12,11 +12,17 @@ const colors = {
 }
 
 const greyScale = {
-  black1: '#18191C',
+  black1: '#000',
+  // black1: '#18191C',
   black2: '#202124',
   white: '#fff',
   white4: '#3b423b'
 }
+
+const greyScaleOpacity = (opacity: number) => ({
+  black1: `rgba(0, 0, 0, ${opacity})`,
+  white: `rgba(255, 255, 255, ${opacity})`
+})
 
 const rainbow = [greyScale.black1, colors.tertiary, colors.primary]
 
@@ -29,7 +35,6 @@ const common = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: greyScale.black1,
-    paddingVertical: UNIT * 3,
     flex: 1
   },
   contentPaddingHorizontal: {
@@ -73,6 +78,19 @@ const text = StyleSheet.create({
   important: {
     // fontFamily: require('typeface-nunito-sans'),
     fontSize: 22
+  },
+  screenHeading: {
+    color: greyScale.white,
+    fontSize: 42,
+    fontWeight: 'bold',
+    lineHeight: 60,
+    textAlign: 'center'
+  },
+  screenSubHeading: {
+    color: greyScaleOpacity(0.5).white,
+    fontSize: 18,
+    lineHeight: 30,
+    textAlign: 'center'
   }
 })
 
@@ -102,6 +120,7 @@ const utils = {
 export default {
   colors,
   greyScale,
+  greyScaleOpacity,
   common,
   form,
   rainbow,
