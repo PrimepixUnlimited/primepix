@@ -11,7 +11,7 @@ import styles from './constants/styles'
 import Navigation from './navigation'
 
 configureApp()
-// configureStripe()
+configureStripe()
 
 interface Props {
   skipLoadingScreen: boolean

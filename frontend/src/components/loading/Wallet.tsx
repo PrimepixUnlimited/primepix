@@ -5,7 +5,7 @@ import styles from '../../constants/styles'
 
 interface Props {}
 
-const LoadingPlans: React.FC<Props> = props => (
+const LoadingWallet: React.FC<Props> = props => (
   <View style={{ flexDirection: 'column', alignItems: 'center' }}>
     <View
       style={{
@@ -49,4 +49,4 @@ const LoadingPlans: React.FC<Props> = props => (
   </View>
 )
 
-export default LoadingPlans
+export default LoadingWallet

@@ -18,7 +18,7 @@ import { PAYMENT_QUERY } from '../../graphql/queries'
 
 import Header from '../../components/Header'
 import SubHeading from '../../components/SubHeading'
-import LoadingIndicator from '../../components/LoadingIndicator'
+import LoadingWallet from '../../components/loading/Wallet'
 import Card from '../../components/Card'
 import Icon from '../../components/Icon'
 import Button from '../../components/Button'
@@ -119,10 +119,18 @@ const WalletScreen: NavigationStackScreenComponent<Props> = () => {
       </View>
     )
 
+  if (loading && !data) {
+    return (
+      <ScrollView style={styles.common.screenContainer}>
+        <SubHeading>Wallet</SubHeading>
+        <LoadingWallet />
+      </ScrollView>
+    )
+  }
+
   return (
     <ScrollView style={styles.common.screenContainer}>
       <SubHeading>Wallet</SubHeading>
-      <LoadingIndicator loading={loading} />
       {renderContent()}
     </ScrollView>
   )

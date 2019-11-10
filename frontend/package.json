@@ -4,12 +4,16 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "postinstall": "jetify"
+    "postinstall": "jetify",
+    "test": "jest"
   },
   "rnpm": {
     "assets": [
       "./src/assets/fonts/"
     ]
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "dependencies": {
     "@selcouth-digital/react-native-action-sheet": "^1.2.0",

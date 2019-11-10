@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql'
 
 import { Context } from '../lib/utils'
-import { User, UserCreateInput } from '../generated/prisma'
+import { User, Payment } from '../generated/prisma'
 import stripe from '../lib/stripe'
 import { currencySymbols } from '../config/currencies'
 
@@ -21,8 +21,9 @@ export const createPaymentMethod = async (
     })
     // generate a list of method ids
     const methods = paymentMethods.map(method => method.id)
+    console.log(user.payment)
     // update user
-    const updatedUser: User = await ctx.db.mutation.updatePayment(
+    const updatedPayment: Payment = await ctx.db.mutation.updatePayment(
       {
         data: {
           methods: {
@@ -33,11 +34,11 @@ export const createPaymentMethod = async (
           id: user.payment.id
         }
       },
-      '{ id, createdAt, email, payment, permissions, updatedAt }'
+      info
     )
-    return updatedUser
+    return updatedPayment
   } catch (e) {
-    throw new TypeError(e.message)
+    throw new TypeError(e)
   }
 }
 
@@ -114,17 +115,51 @@ export const updateSubscription = async (
   try {
     // get current user
     const user = await ctx.user
+    // retrive subscription
+    const subscription = await stripe.subscriptions.retrieve(
+      user.subscription.subscriptionId
+    )
     // update subscription in stripe
-    const updateSubscription = await stripe.subscriptions.update({
-      customer: user.payment.customerId,
-      items: [
-        {
-          plan: planId
-        }
-      ]
-    })
+    const updateSubscription = await stripe.subscriptions.update(
+      user.subscription.subscriptionId,
+      {
+        items: [
+          {
+            id: subscription.items.data[0].id,
+            plan: planId
+          }
+        ]
+      }
+    )
     if (!updateSubscription) {
       throw new Error(`Could not update the subscription, try again later`)
+    }
+    return user
+  } catch (e) {
+    throw new TypeError(e.message)
+  }
+}
+
+export const cancelSubscription = async (
+  parent: any,
+  args: any,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
+  try {
+    // get current user
+    const user = await ctx.user
+    // retrive subscription
+    const subscription = await stripe.subscriptions.del(
+      user.subscription.subscriptionId
+    )
+    // update db
+    if (subscription) {
+      await ctx.db.mutation.deleteSubScription({
+        where: {
+          id: user.payment.id
+        }
+      })
     }
     return user
   } catch (e) {

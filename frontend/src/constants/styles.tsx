@@ -4,8 +4,8 @@ import hexToRgba from 'hex-to-rgba'
 const UNIT = 15
 
 const colors = {
-  primary: '#d91c71',
-  secondary: '#FF1301',
+  primary: '#2cd4c8',
+  secondary: '#7d69ff',
   tertiary: '#7D00B3',
   success: '#0bd685',
   warning: '#f9ad30',
@@ -19,8 +19,7 @@ const colorsOpacity = (opacity: number) => ({
 })
 
 const greyScale = {
-  black1: '#000',
-  // black1: '#18191C',
+  black1: '#18191C',
   black2: '#202124',
   black4: '#d7d9de',
   white: '#fff',

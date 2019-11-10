@@ -2,13 +2,13 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 import ROUTES from './_routes'
 
+import MenuScreen from '../screens/app/Menu'
 import PlansScreen from '../screens/app/Plans'
-import PaymentScreen from '../screens/app/Payment'
 
-const PlansStack = createStackNavigator(
+const MenuStack = createStackNavigator(
   {
-    [ROUTES.Plans]: PlansScreen,
-    [ROUTES.Payment]: PaymentScreen
+    [ROUTES.Menu]: MenuScreen,
+    [ROUTES.ChangePlan]: PlansScreen
   },
   {
     navigationOptions: () => ({
@@ -17,4 +17,4 @@ const PlansStack = createStackNavigator(
   }
 )
 
-export default PlansStack
+export default MenuStack

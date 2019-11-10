@@ -32,11 +32,6 @@ PODS:
   - Folly (2018.10.22.00):
     - boost-for-react-native
     - DoubleConversion
-    - Folly/Default (= 2018.10.22.00)
-    - glog
-  - Folly/Default (2018.10.22.00):
-    - boost-for-react-native
-    - DoubleConversion
     - glog
   - glog (0.3.5)
   - React (0.59.10):
@@ -173,7 +168,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - boost-for-react-native
     - Stripe
 
@@ -270,7 +265,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   EXAppLoaderProvider: 5d348813a9cf09b03bbe5b8b55437bc1bfbddbd1
   EXConstants: 857aa7b1c84e2878f8402d712061860bca16a697
   EXFileSystem: 7e53a2c30a2eb6987ba6d5158ab908f947523228
@@ -282,8 +277,8 @@ SPEC CHECKSUMS:
   EXSecureStore: bf94958c936b2b9e3813509d2e7e6b8a263d40df
   EXSQLite: ddc1e6727bd7d36e649f07590fe3ae5511c1f039
   EXWebBrowser: 18924c3d2a3a1aa95d413672f058beff589c80f4
-  Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
-  glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  Folly: de497beb10f102453a1afa9edbf8cf8a251890de
+  glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
@@ -307,4 +302,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 77f058fc5a46fef5da3693baf4b4af6ea062e5e0
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

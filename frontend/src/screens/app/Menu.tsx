@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
-import { ListItem, Text } from 'react-native-elements'
+import React from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { IconType, ListItem, Text } from 'react-native-elements'
 import {
   NavigationParams,
   NavigationRoute,
@@ -12,13 +12,20 @@ interface Props {
   navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
 }
 
+interface LinkProps {
+  title: string
+  icon: string
+  iconType?: IconType
+  route: string
+}
+
 import ROUTES from '../../navigation/_routes'
 
 import Header from '../../components/Header'
 
 import styles from '../../constants/styles'
 
-const MENU_LINKS = [
+const MENU_LINKS: LinkProps[] = [
   {
     title: 'Appointments',
     icon: 'av-timer',
@@ -31,10 +38,11 @@ const MENU_LINKS = [
   }
 ]
 
-const SETTINGS = [
+const SETTINGS: LinkProps[] = [
   {
     title: 'Change plan',
-    icon: 'edit',
+    icon: 'calendar',
+    iconType: 'font-awesome',
     route: ROUTES.ChangePlan
   },
   {
@@ -50,14 +58,18 @@ const MenuScreen: NavigationStackScreenComponent<Props> = ({
   const handleItemPress = (routeName: string) => navigate(routeName)
 
   const mapMenuLinks = (
-    { icon, title }: { icon: string; title: string },
+    {
+      icon,
+      iconType = 'material-community',
+      title
+    }: { icon: string; iconType?: IconType; title: string },
     i: number
   ) => (
     <ListItem
       containerStyle={s.container}
       key={i}
       title={title}
-      leftIcon={{ color: '#c8d0d8', name: icon }}
+      leftIcon={{ color: styles.colors.primary, name: icon }}
       bottomDivider
       chevron
       titleStyle={{ color: 'white' }}
@@ -65,14 +77,19 @@ const MenuScreen: NavigationStackScreenComponent<Props> = ({
   )
 
   const mapSettings = (
-    { icon, route, title }: { icon: string; route: string; title: string },
+    {
+      icon,
+      iconType,
+      route,
+      title
+    }: { icon: string; iconType?: IconType; route: string; title: string },
     i: number
   ) => (
     <ListItem
       containerStyle={s.container}
       key={i}
       title={title}
-      leftIcon={{ color: '#c8d0d8', name: icon }}
+      leftIcon={{ color: styles.colors.primary, name: icon, type: iconType }}
       bottomDivider
       chevron
       onPress={e => handleItemPress(route)}
@@ -82,13 +99,17 @@ const MenuScreen: NavigationStackScreenComponent<Props> = ({
 
   return (
     <ScrollView style={styles.common.screenContainer}>
-      <Text h4 style={styles.text.body}>
+      <View style={styles.space.m} />
+      <Text h4 style={[styles.text.body, s.heading]}>
         App
       </Text>
+      <View style={styles.space.s} />
       {MENU_LINKS.map(mapMenuLinks)}
-      <Text h4 style={styles.text.body}>
+      <View style={styles.space.m} />
+      <Text h4 style={[styles.text.body, s.heading]}>
         Settings
       </Text>
+      <View style={styles.space.s} />
       {SETTINGS.map(mapSettings)}
     </ScrollView>
   )
@@ -101,6 +122,9 @@ MenuScreen.navigationOptions = {
 const s = StyleSheet.create({
   container: {
     backgroundColor: styles.greyScale.black1
+  },
+  heading: {
+    marginHorizontal: 20
   }
 })
 

@@ -30,13 +30,18 @@ interface Plan {
 import ROUTES from '../../navigation/_routes'
 
 import { ME_QUERY, PLANS_QUERY } from '../../graphql/queries'
-import { CREATE_SUBSCRIPTION_MUTATION } from '../../graphql/mutations'
+import {
+  CREATE_SUBSCRIPTION_MUTATION,
+  UPDATE_SUBSCRIPTION_MUTATION
+} from '../../graphql/mutations'
 
 import Header from '../../components/Header'
 import ScreenView from '../../components/ScreenView'
 import PricingCard from '../../components/PricingCard'
 import LoadingPlans from '../../components/loading/Plans'
 import Panel from '../../components/Panel'
+import Button from '../../components/Button'
+import Icon from '../../components/Icon'
 
 import styles from '../../constants/styles'
 const { width: SCREEN_WIDTH } = Dimensions.get('screen')
@@ -44,7 +49,6 @@ const { width: SCREEN_WIDTH } = Dimensions.get('screen')
 const PlansScreen: NavigationStackScreenComponent<Props> = ({
   navigation: { navigate }
 }) => {
-  const buttons = ['Monthly', 'Annually']
   const [billingCycleVal, setBillingCycleVal] = useState(false)
   const [billingCycle, setBillingCycle] = useState('month')
   const [activeSlide, setActiveSlide] = useState(1)
@@ -57,6 +61,10 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
   const [createSubscription, { loading: subscriptionLoading }] = useMutation(
     CREATE_SUBSCRIPTION_MUTATION
   )
+  const [
+    updateSubscription,
+    { loading: updateSubscriptionLoading }
+  ] = useMutation(UPDATE_SUBSCRIPTION_MUTATION)
 
   const onBillingCycleChange = (val: boolean) => {
     setBillingCycleVal(val)
@@ -65,13 +73,21 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
 
   const onSelect = async (planId: string) => {
     try {
-      if (!user.me.payment.methods.length) {
+      if (!user.me.payment || !user.me.payment.methods) {
         return navigate(ROUTES.Payment, { planId })
       }
-      const { data: subscription } = await createSubscription({
+      if (!user.me.subscription || !user.me.subscription.subscriptionId) {
+        const { data: subscription } = await createSubscription({
+          variables: { planId }
+        })
+        if (subscription.createSubscription) {
+          return navigate(ROUTES.Main)
+        }
+      }
+      const { data: updatedSubscription } = await updateSubscription({
         variables: { planId }
       })
-      if (subscription.createSubscription) {
+      if (updatedSubscription.updateSubscription) {
         return navigate(ROUTES.Main)
       }
     } catch (e) {
@@ -170,11 +186,28 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
     const calcDiscount: number = plan.discount && (index + 1) * plan.discount
     return (
       <PricingCard
+        button={
+          <Button
+            loading={subscriptionLoading || updateSubscriptionLoading}
+            onPress={() => onSelect(plan.id)}
+            titleStyle={{ color: '#0bd685', fontSize: 14 }}
+            title={`Get started now`.toUpperCase()}
+            iconRight
+            icon={
+              <Icon
+                name="arrow-forward"
+                color="#0bd685"
+                size={18}
+                underlayColor={styles.greyScale.black2}
+              />
+            }
+            type="clear"
+          />
+        }
         currency={plan.currencySymbol}
         discount={calcDiscount}
         info={plan.info}
         key={plan.id}
-        onSelect={() => onSelect(plan.id)}
         price={`${plan.amount}`}
         title={plan.nickname}
         period={plan.interval}
@@ -232,7 +265,7 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
 }
 
 PlansScreen.navigationOptions = {
-  header: () => <Header title="Plan" />
+  header: () => <Header showBack title="Plan" />
 }
 
 const s = StyleSheet.create({

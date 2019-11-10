@@ -9,6 +9,7 @@ export const userObj = `
   emailConfirmToken,
   password,
   payment {
+    id
     customerId,
     methods
   },

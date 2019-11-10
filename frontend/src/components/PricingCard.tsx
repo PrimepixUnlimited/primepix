@@ -1,36 +1,43 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { PricingCard, PricingCardProps, Text } from 'react-native-elements'
+import { Text } from 'react-native-elements'
 
-import Button from './Button'
-import Icon from './Icon'
+import Badge from './Badge'
 
 import styles from '../constants/styles'
 
 interface Props {
+  button?: ReactNode
   currency: string
-  discount: number
+  discount?: number
   info: {
     title: string
     active: boolean
   }[]
-  period: string
+  isActive?: boolean
+  period?: string
   price: string
   title: string
-  onSelect: () => Promise<boolean>
 }
 
 const PricingCardWrapper: FC<Props> = ({
+  button,
   currency,
-  discount = null,
+  discount,
   info,
-  onSelect,
+  isActive,
   period,
   price,
   title
 }) => (
   <View style={s.container}>
     <View style={s.headingContainer}>
+      {isActive && (
+        <Badge
+          status="success"
+          containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+        />
+      )}
       <Text style={s.headingText}>{title}</Text>
     </View>
     <View style={{ padding: 20, alignItems: 'center' }}>
@@ -50,21 +57,7 @@ const PricingCardWrapper: FC<Props> = ({
           </Text>
         ))}
       </View>
-      <Button
-        onPress={onSelect}
-        titleStyle={{ color: '#0bd685', fontSize: 14 }}
-        title={`Get started now`.toUpperCase()}
-        iconRight
-        icon={
-          <Icon
-            name="arrow-forward"
-            color="#0bd685"
-            size={18}
-            underlayColor={styles.greyScale.black2}
-          />
-        }
-        type="clear"
-      />
+      {button}
     </View>
   </View>
 )
