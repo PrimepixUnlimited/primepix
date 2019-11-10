@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Alert, GestureResponderEvent, StyleSheet, View } from 'react-native'
-import { ButtonGroup, Text } from 'react-native-elements'
+import { Alert, Dimensions, StyleSheet, Switch, View } from 'react-native'
+import { Text } from 'react-native-elements'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import {
   NavigationParams,
@@ -8,9 +8,23 @@ import {
   NavigationScreenProp
 } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
+import Carousel, { Pagination } from 'react-native-snap-carousel'
 
 interface Props {
   navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
+
+interface Plan {
+  amount: number
+  currencySymbol: string
+  discount: number
+  id: string
+  info: {
+    title: string
+    active: boolean
+  }[]
+  interval: string
+  nickname: string
 }
 
 import ROUTES from '../../navigation/_routes'
@@ -25,13 +39,16 @@ import LoadingPlans from '../../components/loading/Plans'
 import Panel from '../../components/Panel'
 
 import styles from '../../constants/styles'
+const { width: SCREEN_WIDTH } = Dimensions.get('screen')
 
 const PlansScreen: NavigationStackScreenComponent<Props> = ({
   navigation: { navigate }
 }) => {
   const buttons = ['Monthly', 'Annually']
-  const [billingCycleIdx, setBillingCycleIdx] = useState(0)
+  const [billingCycleVal, setBillingCycleVal] = useState(false)
   const [billingCycle, setBillingCycle] = useState('month')
+  const [activeSlide, setActiveSlide] = useState(1)
+  let carousel
 
   const { data: user } = useQuery(ME_QUERY)
   const { data, error, loading } = useQuery(PLANS_QUERY, {
@@ -40,6 +57,11 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
   const [createSubscription, { loading: subscriptionLoading }] = useMutation(
     CREATE_SUBSCRIPTION_MUTATION
   )
+
+  const onBillingCycleChange = (val: boolean) => {
+    setBillingCycleVal(val)
+    setBillingCycle(!val ? 'month' : 'year')
+  }
 
   const onSelect = async (planId: string) => {
     try {
@@ -57,7 +79,7 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
     }
   }
 
-  const renderPlans = () => (
+  const renderHeading = () => (
     <View>
       <Text h2 style={styles.text.screenHeading}>
         Our pricing is simple
@@ -67,34 +89,110 @@ const PlansScreen: NavigationStackScreenComponent<Props> = ({
         No commitments. No credit cards required. Start your 14-day trial today!
       </Text>
       <View style={styles.space.m} />
-      <ButtonGroup
-        onPress={idx => {
-          setBillingCycleIdx(idx)
-          setBillingCycle(idx === 0 ? 'month' : 'year')
+    </View>
+  )
+
+  const renderSwitch = () => (
+    <View style={s.switchContainer}>
+      <Text
+        onPress={() => onBillingCycleChange(false)}
+        style={{
+          color: billingCycleVal
+            ? styles.greyScaleOpacity(0.5).white
+            : styles.greyScale.white,
+          fontSize: 16,
+          lineHeight: 20
         }}
-        selectedIndex={billingCycleIdx}
-        buttons={buttons}
+      >
+        Monthly
+      </Text>
+      <View style={{ marginHorizontal: 10 }}>
+        <Switch
+          ios_backgroundColor={styles.greyScaleOpacity(0.02).white}
+          thumbColor={styles.colors.success}
+          trackColor={{
+            false: styles.colors.success,
+            true: styles.greyScaleOpacity(0.02).white
+          }}
+          onValueChange={val => onBillingCycleChange(val)}
+          value={billingCycleVal}
+        />
+      </View>
+      <Text
+        onPress={() => onBillingCycleChange(true)}
+        style={{
+          color: !billingCycleVal
+            ? styles.greyScaleOpacity(0.5).white
+            : styles.greyScale.white,
+          fontSize: 16,
+          lineHeight: 20
+        }}
+      >
+        Anually
+      </Text>
+    </View>
+  )
+
+  const renderCarousel = () => (
+    <View>
+      <Pagination
+        dotsLength={data.plans.length}
+        activeDotIndex={activeSlide}
+        containerStyle={{ paddingVertical: 8 }}
+        dotColor={styles.colors.primary}
+        dotStyle={{ width: 8, height: 8, borderRadius: 4, marginHorizontal: 8 }}
+        inactiveDotColor={styles.greyScaleOpacity(0.5).white}
+        inactiveDotOpacity={0.4}
+        inactiveDotScale={0.6}
+        carouselRef={carousel}
+        tappableDots={!!carousel}
       />
+      <View style={styles.space.s} />
+      <Carousel
+        ref={c => {
+          carousel = c
+        }}
+        containerCustomStyle={{
+          marginLeft: -20
+        }}
+        data={data.plans}
+        renderItem={renderPlan}
+        sliderWidth={SCREEN_WIDTH}
+        itemWidth={SCREEN_WIDTH - 80}
+        firstItem={activeSlide}
+        activeSlideOffset={0}
+        onSnapToItem={index => setActiveSlide(index)}
+      />
+    </View>
+  )
+
+  const renderPlan = ({ item: plan, index }: { item: Plan; index: number }) => {
+    const calcDiscount: number = plan.discount && (index + 1) * plan.discount
+    return (
+      <PricingCard
+        currency={plan.currencySymbol}
+        discount={calcDiscount}
+        info={plan.info}
+        key={plan.id}
+        onSelect={() => onSelect(plan.id)}
+        price={`${plan.amount}`}
+        title={plan.nickname}
+        period={plan.interval}
+      />
+    )
+  }
+
+  const renderPlans = () => (
+    <View>
+      {renderHeading()}
+      {renderSwitch()}
       <View style={styles.space.m} />
-      {data.plans.map((plan, idx: number) => {
-        const calcDiscount = plan.discount && (idx + 1) * plan.discount
-        return (
-          <PricingCard
-            discount={calcDiscount}
-            info={plan.info}
-            key={plan.id}
-            onSelect={() => onSelect(plan.id)}
-            price={`£${plan.amount}`}
-            title={plan.nickname}
-            period={plan.interval}
-          />
-        )
-      })}
+      {renderCarousel()}
       <Text style={styles.text.screenSubHeading}>Need help?</Text>
     </View>
   )
 
-  if (loading) {
+  if (loading && !data) {
     return (
       <ScreenView heading="Select a plan" noPadding>
         <View style={s.container}>
@@ -143,6 +241,11 @@ const s = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 40
+  },
+  switchContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 })
 

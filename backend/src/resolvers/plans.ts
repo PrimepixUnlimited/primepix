@@ -3,6 +3,7 @@ import { GraphQLResolveInfo } from 'graphql'
 import { Context } from '../lib/utils'
 import { User, UserCreateInput } from '../generated/prisma'
 import stripe from '../lib/stripe'
+import { currencySymbols } from '../config/currencies'
 
 // TODO: store the plans info in the DB
 const BASIC_INFO: { title: string; active: boolean }[] = [
@@ -80,7 +81,10 @@ export const plans = async (
     )
     // shape the plans
     const shapedPlans = sortedPlans.map(
-      (plan: { amount: number; nickname: string }, idx: number) => {
+      (
+        plan: { amount: number; currency: string; nickname: string },
+        idx: number
+      ) => {
         // format the amount
         const amount = (plan.amount / 100).toFixed(2)
         // format plan title
@@ -94,6 +98,7 @@ export const plans = async (
         return {
           ...plan,
           amount,
+          currencySymbol: currencySymbols[plan.currency.toUpperCase()],
           discount,
           info,
           nickname

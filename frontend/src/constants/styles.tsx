@@ -22,6 +22,7 @@ const greyScale = {
   black1: '#000',
   // black1: '#18191C',
   black2: '#202124',
+  black4: '#d7d9de',
   white: '#fff',
   white4: '#3b423b'
 }

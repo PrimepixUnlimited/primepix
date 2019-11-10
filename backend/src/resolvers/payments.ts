@@ -21,7 +21,6 @@ export const createPaymentMethod = async (
     })
     // generate a list of method ids
     const methods = paymentMethods.map(method => method.id)
-    console.log(methods)
     // update user
     const updatedUser: User = await ctx.db.mutation.updatePayment(
       {

@@ -9,6 +9,7 @@ export const PLANS_QUERY = gql`
       amount_decimal
       billing_scheme
       created
+      currencySymbol
       discount
       info {
         title

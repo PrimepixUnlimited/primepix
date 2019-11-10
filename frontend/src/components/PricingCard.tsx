@@ -8,6 +8,7 @@ import Icon from './Icon'
 import styles from '../constants/styles'
 
 interface Props {
+  currency: string
   discount: number
   info: {
     title: string
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const PricingCardWrapper: FC<Props> = ({
+  currency,
   discount = null,
   info,
   onSelect,
@@ -32,12 +34,18 @@ const PricingCardWrapper: FC<Props> = ({
       <Text style={s.headingText}>{title}</Text>
     </View>
     <View style={{ padding: 20, alignItems: 'center' }}>
-      <Text style={s.priceText}>{price}</Text>
-      <Text style={s.periodText}>{period.toUpperCase()}</Text>
+      <View style={s.priceContainer}>
+        <Text style={s.currencyText}>{currency}</Text>
+        <Text style={s.priceText}>{price}</Text>
+        <Text style={[s.currencyText, { alignSelf: 'flex-end' }]}>.00</Text>
+      </View>
       {discount && <Text style={s.discountText}>Save up to {discount}%</Text>}
-      <View style={{ marginBottom: 25 }}>
-        {info.map(feature => (
-          <Text style={[s.featureText, style(feature.active).featureText]}>
+      <View style={{ marginVertical: 25 }}>
+        {info.map((feature, idx) => (
+          <Text
+            key={idx}
+            style={[s.featureText, style(feature.active).featureText]}
+          >
             {feature.title}
           </Text>
         ))}
@@ -63,11 +71,11 @@ const PricingCardWrapper: FC<Props> = ({
 
 const s = StyleSheet.create({
   container: {
-    backgroundColor: '#222',
+    backgroundColor: styles.greyScale.black2,
     marginBottom: 20
   },
   headingContainer: {
-    backgroundColor: '#2b2b2b',
+    backgroundColor: styles.greyScaleOpacity(0.05).white,
     alignItems: 'center',
     width: '100%'
   },
@@ -78,11 +86,20 @@ const s = StyleSheet.create({
     fontWeight: 'bold',
     padding: 20
   },
-  priceText: {
+  currencyText: {
     color: styles.greyScale.white,
-    fontSize: 52,
-    lineHeight: 60,
+    fontSize: 24,
+    marginTop: 8
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    height: 56,
     marginBottom: 10
+  },
+  priceText: {
+    color: styles.colors.success,
+    fontSize: 52
   },
   periodText: {
     color: styles.greyScaleOpacity(0.5).white,
@@ -93,8 +110,7 @@ const s = StyleSheet.create({
   discountText: {
     color: styles.greyScaleOpacity(0.5).white,
     fontSize: 16,
-    lineHeight: 20,
-    marginBottom: 25
+    lineHeight: 20
   },
   featureText: {
     textAlign: 'center',
