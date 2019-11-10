@@ -47,8 +47,10 @@ const WalletScreen: NavigationStackScreenComponent<Props> = () => {
         </Text>
       </View>
       <Text style={[styles.text.body, styles.text.important]}>
+        {console.log(data.payment.balance)}
         {formatMoney(data.payment.balance, {
-          symbol: data.payment.currencySymbol
+          symbol: data.payment.currencySymbol,
+          precision: 0
         })}
       </Text>
     </View>

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge snapshot renders correctly 1`] = `
+<View
+  style={Object {}}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "backgroundColor": "#52c41a",
+        "borderColor": "#fff",
+        "borderRadius": 9,
+        "borderWidth": 0.5,
+        "height": 18,
+        "justifyContent": "center",
+        "minWidth": 18,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 12,
+          "paddingHorizontal": 4,
+        }
+      }
+    >
+      123
+    </Text>
+  </View>
+</View>
+`;

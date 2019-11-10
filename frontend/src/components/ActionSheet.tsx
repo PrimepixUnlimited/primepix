@@ -3,11 +3,11 @@ import ActionSheet from '@selcouth-digital/react-native-action-sheet'
 
 interface Props {
   CancelButton: ReactNode
-  onDismiss: void
+  onDismiss: () => void
   options: {
-    onPress: void
+    onPress: () => void
     title: string
-  }
+  }[]
   visible: boolean
 }
 
