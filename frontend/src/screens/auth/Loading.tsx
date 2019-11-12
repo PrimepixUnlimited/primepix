@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
-import { Alert, SafeAreaView, Text } from 'react-native'
+import { Alert, Dimensions, SafeAreaView, Text } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
-
-import ROUTES from '../../navigation/_routes'
 
 import { ME_QUERY } from '../../graphql/queries'
 
+import Image from '../../components/Image'
+
+import ROUTES from '../../navigation/_routes'
 import asyncStorage from '../../lib/async-storage'
+const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('screen')
 
 const AuthLoadingScreen = ({ navigation: { navigate } }) => {
   const { error, data, loading } = useQuery(ME_QUERY)
@@ -30,9 +32,13 @@ const AuthLoadingScreen = ({ navigation: { navigate } }) => {
     checkAuth()
   }, [data, error, loading, navigate])
   return (
-    <SafeAreaView>
-      <Text>Loading...</Text>
-    </SafeAreaView>
+    <Image
+      style={{
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT
+      }}
+      source={require('../../assets/images/splash.png')}
+    />
   )
 }
 

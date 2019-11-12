@@ -38,7 +38,9 @@ const common = StyleSheet.create({
     flexGrow: 1
   },
   screenContainer: {
-    backgroundColor: greyScale.black2
+    // backgroundColor: greyScale.black2
+
+    backgroundColor: 'white'
   },
   contentContainer: {
     backgroundColor: greyScale.black1,

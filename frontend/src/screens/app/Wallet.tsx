@@ -22,6 +22,7 @@ import LoadingWallet from '../../components/loading/Wallet'
 import Card from '../../components/Card'
 import Icon from '../../components/Icon'
 import Button from '../../components/Button'
+import LinearGradient from '../../components/LinearGradient'
 
 import styles from '../../constants/styles'
 
@@ -114,11 +115,11 @@ const WalletScreen: NavigationStackScreenComponent<Props> = () => {
   const renderContent = () =>
     !loading &&
     data.payment && (
-      <View>
+      <LinearGradient>
         {renderBalance()}
         {renderPaymentMethods()}
         {renderInvoices()}
-      </View>
+      </LinearGradient>
     )
 
   if (loading && !data) {

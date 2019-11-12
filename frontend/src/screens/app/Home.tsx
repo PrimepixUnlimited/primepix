@@ -124,7 +124,13 @@ const HomeScreen: NavigationStackScreenComponent<Props> = () => {
 
   return (
     <ScrollView style={styles.common.screenContainer}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View
+        style={{
+          backgroundColor: styles.greyScale.black2,
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}
+      >
         <SubHeading>Followed artists</SubHeading>
         <View style={{ top: 35, right: 10 }}>
           <Icon

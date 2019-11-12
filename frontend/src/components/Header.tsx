@@ -1,26 +1,26 @@
-import React, { FC } from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { withNavigation } from 'react-navigation'
-import { Header } from 'react-native-elements'
+import React, { FC } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { withNavigation } from "react-navigation";
+import { Header } from "react-native-elements";
 import {
   NavigationParams,
   NavigationRoute,
   NavigationScreenProp
-} from 'react-navigation'
+} from "react-navigation";
 
-import ROUTES from '../navigation/_routes'
+import ROUTES from "../navigation/_routes";
 
-import Icon from './Icon'
+import Icon from "./Icon";
 
-import styles from '../constants/styles'
+import styles from "../constants/styles";
 
 interface Props {
-  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
-  showBack?: boolean
-  showTitle?: boolean
-  showMenu?: boolean
-  showProfile?: boolean
-  title?: string
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>;
+  showBack?: boolean;
+  showTitle?: boolean;
+  showMenu?: boolean;
+  showProfile?: boolean;
+  title?: string;
 }
 
 const HeaderComponent: FC<Props> = ({
@@ -31,11 +31,11 @@ const HeaderComponent: FC<Props> = ({
   showTitle = true,
   title
 }) => {
-  const handleBackPress = e => goBack(null)
-  const handleMenuPress = e => navigate(ROUTES.Menu)
-  const handleProfilePress = e => navigate(ROUTES.Profile)
+  const handleBackPress: () => void = () => goBack(null);
+  const handleMenuPress: () => void = () => navigate(ROUTES.Menu);
+  const handleProfilePress: () => void = () => navigate(ROUTES.Profile);
 
-  const Left = () => {
+  const Left: FC = () => {
     return (
       <View style={s.leftContainer}>
         {showBack && (
@@ -63,20 +63,20 @@ const HeaderComponent: FC<Props> = ({
           </Text>
         )} */}
       </View>
-    )
-  }
+    );
+  };
 
-  const Middle = () =>
+  const Middle: FC = () =>
     showTitle && (
-      <TouchableOpacity onPress={() => navigate('landing')}>
+      <TouchableOpacity onPress={() => navigate("landing")}>
         <Image
-          source={require('../assets/images/primepix-logo-darkmode.png')}
+          source={require("../assets/images/primepix-logo-darkmode.png")}
           style={s.logo}
         />
       </TouchableOpacity>
-    )
+    );
 
-  const Right = () =>
+  const Right: FC = () =>
     showProfile && (
       <Icon
         containerStyle={s.icon}
@@ -86,19 +86,19 @@ const HeaderComponent: FC<Props> = ({
         onPress={handleProfilePress}
         underlayColor={styles.greyScale.black2}
       />
-    )
+    );
 
   return (
     <Header
-      statusBarProps={{ barStyle: 'light-content' }}
+      statusBarProps={{ barStyle: "light-content" }}
       containerStyle={s.container}
     >
       <Left />
       <Middle />
       <Right />
     </Header>
-  )
-}
+  );
+};
 
 const s = StyleSheet.create({
   container: {
@@ -114,8 +114,8 @@ const s = StyleSheet.create({
     elevation: 23
   },
   leftContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     width: 150
   },
   icon: {
@@ -123,13 +123,13 @@ const s = StyleSheet.create({
   },
   logo: {
     height: 35,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     width: 70
   },
   titleText: {
-    color: 'white',
+    color: "white",
     marginLeft: 10
   }
-})
+});
 
-export default withNavigation(HeaderComponent)
+export default withNavigation(HeaderComponent);

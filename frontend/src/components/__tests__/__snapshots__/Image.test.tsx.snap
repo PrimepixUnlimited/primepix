@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image snapshot renders correctly 1`] = `
+<Image
+  source={
+    Object {
+      "uri": "../../assets/images/primepix-logo.png",
+    }
+  }
+/>
+`;

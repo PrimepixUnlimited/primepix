@@ -24,6 +24,7 @@
     "apollo-link-http": "^1.5.16",
     "babel-plugin-inline-import": "^3.0.0",
     "expo": "^35.0.0",
+    "expo-linear-gradient": "^7.0.1",
     "expo-secure-store": "^7.0.0",
     "graphql-tag": "^2.10.1",
     "hex-to-rgba": "^2.0.1",

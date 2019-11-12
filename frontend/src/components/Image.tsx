@@ -1,6 +1,14 @@
-import React from 'react'
-import { Image } from 'react-native'
+import React, { FC } from 'react'
+import { Image, ImageStyle } from 'react-native'
 
-const ImageWrapper = ({ image }) => <Image href={href} />
+interface Props {
+  href?: string
+  source?: { uri: string } | void
+  style?: ImageStyle
+}
+
+const ImageWrapper: FC<Props> = ({ href, source, style }) => (
+  <Image href={href} source={source} style={style} />
+)
 
 export default ImageWrapper

@@ -34,5 +34,7 @@ target 'primepix' do
   use_unimodules!
 
   pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
 end
 
