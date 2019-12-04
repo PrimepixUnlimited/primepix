@@ -1,4 +1,4 @@
-import { Options } from "graphql-yoga"
+import { Options } from 'graphql-yoga'
 import { formatError } from 'apollo-errors'
 
 require('dotenv').config({ path: '.env' })
@@ -15,7 +15,4 @@ const options: Options = {
   formatError
 }
 
-server.start(
-  options,
-  deets => console.log(`Server is running on http://localhost:${deets.port}`)
-)
+server.start(options, deets => console.log(`Server is running on http://localhost:${deets.port}`))

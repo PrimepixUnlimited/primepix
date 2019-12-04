@@ -42,12 +42,7 @@ export const createPaymentMethod = async (
   }
 }
 
-export const payment = async (
-  parent: any,
-  args: any,
-  ctx: Context,
-  info: GraphQLResolveInfo
-) => {
+export const payment = async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
   // get currently logged in user
   const {
     payment: { customerId }
@@ -116,21 +111,16 @@ export const updateSubscription = async (
     // get current user
     const user = await ctx.user
     // retrive subscription
-    const subscription = await stripe.subscriptions.retrieve(
-      user.subscription.subscriptionId
-    )
+    const subscription = await stripe.subscriptions.retrieve(user.subscription.subscriptionId)
     // update subscription in stripe
-    const updateSubscription = await stripe.subscriptions.update(
-      user.subscription.subscriptionId,
-      {
-        items: [
-          {
-            id: subscription.items.data[0].id,
-            plan: planId
-          }
-        ]
-      }
-    )
+    const updateSubscription = await stripe.subscriptions.update(user.subscription.subscriptionId, {
+      items: [
+        {
+          id: subscription.items.data[0].id,
+          plan: planId
+        }
+      ]
+    })
     if (!updateSubscription) {
       throw new Error(`Could not update the subscription, try again later`)
     }
@@ -150,9 +140,7 @@ export const cancelSubscription = async (
     // get current user
     const user = await ctx.user
     // retrive subscription
-    const subscription = await stripe.subscriptions.del(
-      user.subscription.subscriptionId
-    )
+    const subscription = await stripe.subscriptions.del(user.subscription.subscriptionId)
     // update db
     if (subscription) {
       await ctx.db.mutation.deleteSubScription({

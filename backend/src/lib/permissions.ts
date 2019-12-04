@@ -43,7 +43,8 @@ const permissions = shield({
   Mutation: {
     signout: and(isAuthenticated),
     createPaymentMethod: and(isAuthenticated),
-    updatePaymentMethod: and(isAuthenticated)
+    createSubscription: and(isAuthenticated),
+    updateSubscription: and(isAuthenticated)
   }
 });
 

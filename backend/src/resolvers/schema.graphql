@@ -12,12 +12,7 @@ type Query {
 }
 
 type Mutation {
-  signup(
-    email: String!
-    password: String!
-    confirmPassword: String!
-    isArtist: Boolean!
-  ): User!
+  signup(email: String!, password: String!, confirmPassword: String!, isArtist: Boolean!): User!
   verifyEmail(email: String!, emailConfirmToken: Float!): LoginResponse!
   signin(email: String!, password: String!): LoginResponse!
   signout: SuccessMessage

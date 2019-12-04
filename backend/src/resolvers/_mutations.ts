@@ -1,9 +1,5 @@
 import { signup, signin, signout, verifyEmail } from './auth'
-import {
-  createPaymentMethod,
-  createSubscription,
-  updateSubscription
-} from './payments'
+import { createPaymentMethod, createSubscription, updateSubscription } from './payments'
 
 const Mutation = {
   // auth

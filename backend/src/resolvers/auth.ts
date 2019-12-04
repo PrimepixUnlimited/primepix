@@ -26,12 +26,7 @@ export const me = async (parent, args, ctx, info) => {
  * MUTATIONS
  */
 
-export const signup = async (
-  parent: any,
-  args: any,
-  ctx: Context,
-  info: GraphQLResolveInfo
-) => {
+export const signup = async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
   const { email, password, confirmPassword, isArtist } = args
   // compare passwords
   if (password !== confirmPassword) {
@@ -89,10 +84,7 @@ export const verifyEmail = async (
       throw new Error(`Email already verified!`)
     }
     // validate the confirmation code
-    if (
-      user.emailConfirmToken !== emailConfirmToken ||
-      emailConfirmToken.toString().length !== 6
-    ) {
+    if (user.emailConfirmToken !== emailConfirmToken || emailConfirmToken.toString().length !== 6) {
       throw new Error(`Ivalid confirmation code!`)
     }
     // create customer in stripe

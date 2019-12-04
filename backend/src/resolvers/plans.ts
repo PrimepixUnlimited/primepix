@@ -72,19 +72,14 @@ export const plans = async (
   try {
     const { data } = await stripe.plans.list()
     // filter the plans by their period
-    const plans = data.filter(
-      (plan: { interval: string }) => plan.interval === billingCycle
-    )
+    const plans = data.filter((plan: { interval: string }) => plan.interval === billingCycle)
     // sort the plans by amount ASC
     const sortedPlans = plans.sort(
       (a: { amount: number }, b: { amount: number }) => a.amount - b.amount
     )
     // shape the plans
     const shapedPlans = sortedPlans.map(
-      (
-        plan: { amount: number; currency: string; nickname: string },
-        idx: number
-      ) => {
+      (plan: { amount: number; currency: string; nickname: string }, idx: number) => {
         // format the amount
         const amount = (plan.amount / 100).toFixed(2)
         // format plan title
@@ -92,8 +87,7 @@ export const plans = async (
         // set info (features)
         const info = PLANS_INFO[idx]
         // set discount
-        const discount =
-          billingCycle === 'year' ? ANNUAL_INFO_DISCOUNT[idx] : null
+        const discount = billingCycle === 'year' ? ANNUAL_INFO_DISCOUNT[idx] : null
         // set selected plan
         return {
           ...plan,
