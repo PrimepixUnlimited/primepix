@@ -48,8 +48,7 @@
     "hooks": {
       "pre-commit": "yarn lint",
       "post-checkout": "node ./scripts/post-checkout.ts",
-      "post-merge": "node ./scripts/post-checkout.ts",
-      "pre-push": "yarn test:ci"
+      "post-merge": "node ./scripts/post-checkout.ts"
     }
   }
 }
