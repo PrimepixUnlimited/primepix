@@ -8,7 +8,7 @@ interface Props extends IconProps {
 import styles from '../constants/styles'
 
 const TabBarIcon: FC<Props> = ({ focused, name, raised, size, type }) => {
-  const fontColor = focused ? styles.colors.primary : raised ? 'black' : '#ccc'
+  const fontColor = focused ? styles.colors.tertiary : raised ? 'black' : '#ccc'
   return (
     <Icon
       color={fontColor}

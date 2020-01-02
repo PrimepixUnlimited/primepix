@@ -8,19 +8,22 @@ enum Permission {
 
 type User {
   id: ID! @id
-  email: String! @unique
-  password: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  email: String! @unique
+  password: String!
   emailConfirmToken: Float!
   emailConfirmed: Boolean
   payment: Payment @relation(link: INLINE)
   permissions: [Permission]! @scalarList(strategy: RELATION)
+  photos: [Photo] @scalarList(strategy: RELATION)
   subscription: SubScription @relation(link: INLINE)
 }
 
 type Payment {
   id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   customerId: String!
   methods: [String] @scalarList(strategy: RELATION)
   user: User!
@@ -28,5 +31,22 @@ type Payment {
 
 type SubScription {
   id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   subscriptionId: String!
+}
+
+type Photo {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  shortDescription: String
+  description: String
+  price: Float
+  height: Float
+  width: Float
+  url: String
+  artist: User!
+  tags: [String] @scalarList(strategy: RELATION)
 }

@@ -24,6 +24,10 @@ type Mutation {
   createPaymentMethod(tokenId: String!): User
   createSubscription(planId: String!): User
   updateSubscription(planId: String!): User
+  createPhoto(file: File): Photo
+  updatePhoto(file: file): Photo
+  softRemovePhoto: SuccessMessage
+  removePhoto: SuccessMessage
 }
 
 type LoginResponse {

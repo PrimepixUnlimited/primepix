@@ -20,7 +20,7 @@ const AuthLoadingScreen = ({ navigation: { navigate } }) => {
           if (!token || !data) {
             return navigate(ROUTES.Auth)
           }
-          if (!data.me.subscription) {
+          if (!data.me.subscription && data.me.permissions.includes('ARTIST')) {
             return navigate(ROUTES.Plans)
           }
           return navigate(ROUTES.App)

@@ -6,7 +6,7 @@ const UNIT = 15
 const colors = {
   primary: '#2cd4c8',
   secondary: '#7d69ff',
-  tertiary: '#7D00B3',
+  tertiary: '#d81273',
   success: '#0bd685',
   warning: '#f9ad30',
   error: '#FF1301'
@@ -38,9 +38,7 @@ const common = StyleSheet.create({
     flexGrow: 1
   },
   screenContainer: {
-    // backgroundColor: greyScale.black2
-
-    backgroundColor: 'white'
+    backgroundColor: greyScale.black2
   },
   contentContainer: {
     backgroundColor: greyScale.black1,

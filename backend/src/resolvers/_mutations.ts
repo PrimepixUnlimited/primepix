@@ -4,6 +4,12 @@ import {
   createSubscription,
   updateSubscription
 } from './payments'
+import {
+  createPhoto,
+  updatePhoto,
+  softRemovePhoto,
+  removePhoto
+} from './photos'
 
 const Mutation = {
   // auth
@@ -14,7 +20,12 @@ const Mutation = {
   // payments
   createPaymentMethod,
   createSubscription,
-  updateSubscription
+  updateSubscription,
+  // photos
+  createPhoto,
+  updatePhoto,
+  softRemovePhoto,
+  removePhoto
 }
 
 export default Mutation
