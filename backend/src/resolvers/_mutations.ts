@@ -1,5 +1,6 @@
 import { signup, signin, signout, verifyEmail } from './auth'
 import { createPaymentMethod, createSubscription, updateSubscription } from './payments'
+import { createImage, updateImage, deleteImage } from './images'
 
 const Mutation = {
   // auth
@@ -10,7 +11,11 @@ const Mutation = {
   // payments
   createPaymentMethod,
   createSubscription,
-  updateSubscription
+  updateSubscription,
+  // images
+  createImage,
+  updateImage,
+  deleteImage
 }
 
 export default Mutation

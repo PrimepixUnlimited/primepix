@@ -6,12 +6,15 @@ import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 export interface Query {
     users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     payments: <T = Payment[]>(args: { where?: PaymentWhereInput, orderBy?: PaymentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    files: <T = File[]>(args: { where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     subScriptions: <T = SubScription[]>(args: { where?: SubScriptionWhereInput, orderBy?: SubScriptionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     payment: <T = Payment | null>(args: { where: PaymentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    file: <T = File | null>(args: { where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     subScription: <T = SubScription | null>(args: { where: SubScriptionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     paymentsConnection: <T = PaymentConnection>(args: { where?: PaymentWhereInput, orderBy?: PaymentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    filesConnection: <T = FileConnection>(args: { where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     subScriptionsConnection: <T = SubScriptionConnection>(args: { where?: SubScriptionWhereInput, orderBy?: SubScriptionOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
@@ -19,33 +22,41 @@ export interface Query {
 export interface Mutation {
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createPayment: <T = Payment>(args: { data: PaymentCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createFile: <T = File>(args: { data: FileCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createSubScription: <T = SubScription>(args: { data: SubScriptionCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updatePayment: <T = Payment | null>(args: { data: PaymentUpdateInput, where: PaymentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateFile: <T = File | null>(args: { data: FileUpdateInput, where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateSubScription: <T = SubScription | null>(args: { data: SubScriptionUpdateInput, where: SubScriptionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deletePayment: <T = Payment | null>(args: { where: PaymentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteFile: <T = File | null>(args: { where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteSubScription: <T = SubScription | null>(args: { where: SubScriptionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertPayment: <T = Payment>(args: { where: PaymentWhereUniqueInput, create: PaymentCreateInput, update: PaymentUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertFile: <T = File>(args: { where: FileWhereUniqueInput, create: FileCreateInput, update: FileUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertSubScription: <T = SubScription>(args: { where: SubScriptionWhereUniqueInput, create: SubScriptionCreateInput, update: SubScriptionUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateManyMutationInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyPayments: <T = BatchPayload>(args: { data: PaymentUpdateManyMutationInput, where?: PaymentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyFiles: <T = BatchPayload>(args: { data: FileUpdateManyMutationInput, where?: FileWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManySubScriptions: <T = BatchPayload>(args: { data: SubScriptionUpdateManyMutationInput, where?: SubScriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyPayments: <T = BatchPayload>(args: { where?: PaymentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyFiles: <T = BatchPayload>(args: { where?: FileWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManySubScriptions: <T = BatchPayload>(args: { where?: SubScriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {
     user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     payment: <T = PaymentSubscriptionPayload | null>(args: { where?: PaymentSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    file: <T = FileSubscriptionPayload | null>(args: { where?: FileSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     subScription: <T = SubScriptionSubscriptionPayload | null>(args: { where?: SubScriptionSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
   User: (where?: UserWhereInput) => Promise<boolean>
   Payment: (where?: PaymentWhereInput) => Promise<boolean>
+  File: (where?: FileWhereInput) => Promise<boolean>
   SubScription: (where?: SubScriptionWhereInput) => Promise<boolean>
 }
 
@@ -71,7 +82,11 @@ export interface BindingConstructor<T> {
  * Type Defs
 */
 
-const typeDefs = `type AggregatePayment {
+const typeDefs = `type AggregateFile {
+  count: Int!
+}
+
+type AggregatePayment {
   count: Int!
 }
 
@@ -90,6 +105,392 @@ type BatchPayload {
 
 scalar DateTime
 
+type File implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  height: Float
+  url: String!
+  filename: String!
+  mimetype: String!
+  width: Float
+}
+
+"""A connection to a list of items."""
+type FileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FileEdge]!
+  aggregate: AggregateFile!
+}
+
+input FileCreateInput {
+  id: ID
+  height: Float
+  url: String!
+  filename: String!
+  mimetype: String!
+  width: Float
+}
+
+"""An edge in a connection."""
+type FileEdge {
+  """The item at the end of the edge."""
+  node: File!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FileOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  height_ASC
+  height_DESC
+  url_ASC
+  url_DESC
+  filename_ASC
+  filename_DESC
+  mimetype_ASC
+  mimetype_DESC
+  width_ASC
+  width_DESC
+}
+
+type FilePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  height: Float
+  url: String!
+  filename: String!
+  mimetype: String!
+  width: Float
+}
+
+type FileSubscriptionPayload {
+  mutation: MutationType!
+  node: File
+  updatedFields: [String!]
+  previousValues: FilePreviousValues
+}
+
+input FileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FileWhereInput
+}
+
+input FileUpdateInput {
+  height: Float
+  url: String
+  filename: String
+  mimetype: String
+  width: Float
+}
+
+input FileUpdateManyMutationInput {
+  height: Float
+  url: String
+  filename: String
+  mimetype: String
+  width: Float
+}
+
+input FileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  width: Float
+
+  """All values that are not equal to given value."""
+  width_not: Float
+
+  """All values that are contained in given list."""
+  width_in: [Float!]
+
+  """All values that are not contained in given list."""
+  width_not_in: [Float!]
+
+  """All values less than the given value."""
+  width_lt: Float
+
+  """All values less than or equal the given value."""
+  width_lte: Float
+
+  """All values greater than the given value."""
+  width_gt: Float
+
+  """All values greater than or equal the given value."""
+  width_gte: Float
+}
+
+input FileWhereUniqueInput {
+  id: ID
+  url: String
+}
+
 """
 The \`Long\` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -99,21 +500,27 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createPayment(data: PaymentCreateInput!): Payment!
+  createFile(data: FileCreateInput!): File!
   createSubScription(data: SubScriptionCreateInput!): SubScription!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePayment(data: PaymentUpdateInput!, where: PaymentWhereUniqueInput!): Payment
+  updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   updateSubScription(data: SubScriptionUpdateInput!, where: SubScriptionWhereUniqueInput!): SubScription
   deleteUser(where: UserWhereUniqueInput!): User
   deletePayment(where: PaymentWhereUniqueInput!): Payment
+  deleteFile(where: FileWhereUniqueInput!): File
   deleteSubScription(where: SubScriptionWhereUniqueInput!): SubScription
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPayment(where: PaymentWhereUniqueInput!, create: PaymentCreateInput!, update: PaymentUpdateInput!): Payment!
+  upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
   upsertSubScription(where: SubScriptionWhereUniqueInput!, create: SubScriptionCreateInput!, update: SubScriptionUpdateInput!): SubScription!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyPayments(data: PaymentUpdateManyMutationInput!, where: PaymentWhereInput): BatchPayload!
+  updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
   updateManySubScriptions(data: SubScriptionUpdateManyMutationInput!, where: SubScriptionWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPayments(where: PaymentWhereInput): BatchPayload!
+  deleteManyFiles(where: FileWhereInput): BatchPayload!
   deleteManySubScriptions(where: SubScriptionWhereInput): BatchPayload!
 }
 
@@ -383,12 +790,15 @@ enum Permission {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   payments(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Payment]!
+  files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   subScriptions(where: SubScriptionWhereInput, orderBy: SubScriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubScription]!
   user(where: UserWhereUniqueInput!): User
   payment(where: PaymentWhereUniqueInput!): Payment
+  file(where: FileWhereUniqueInput!): File
   subScription(where: SubScriptionWhereUniqueInput!): SubScription
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   paymentsConnection(where: PaymentWhereInput, orderBy: PaymentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PaymentConnection!
+  filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
   subScriptionsConnection(where: SubScriptionWhereInput, orderBy: SubScriptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubScriptionConnection!
 
   """Fetches an object given its ID"""
@@ -401,6 +811,7 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   payment(where: PaymentSubscriptionWhereInput): PaymentSubscriptionPayload
+  file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   subScription(where: SubScriptionSubscriptionWhereInput): SubScriptionSubscriptionPayload
 }
 
@@ -610,10 +1021,10 @@ input SubScriptionWhereUniqueInput {
 
 type User implements Node {
   id: ID!
-  email: String!
-  password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  email: String!
+  password: String!
   emailConfirmToken: Float!
   emailConfirmed: Boolean
   payment: Payment
@@ -673,14 +1084,14 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
   emailConfirmToken_ASC
   emailConfirmToken_DESC
   emailConfirmed_ASC
@@ -689,10 +1100,10 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  email: String!
-  password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  email: String!
+  password: String!
   emailConfirmToken: Float!
   emailConfirmed: Boolean
   permissions: [Permission!]!
@@ -827,6 +1238,50 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   email: String
 
   """All values that are not equal to given value."""
@@ -907,50 +1362,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
   emailConfirmToken: Float
 
   """All values that are not equal to given value."""
@@ -995,14 +1406,14 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDe
 
 export type UserOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'password_ASC' |
-  'password_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'email_ASC' |
+  'email_DESC' |
+  'password_ASC' |
+  'password_DESC' |
   'emailConfirmToken_ASC' |
   'emailConfirmToken_DESC' |
   'emailConfirmed_ASC' |
@@ -1019,6 +1430,23 @@ export type PaymentOrderByInput =   'id_ASC' |
   'customerId_ASC' |
   'customerId_DESC'
 
+export type FileOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'height_ASC' |
+  'height_DESC' |
+  'url_ASC' |
+  'url_DESC' |
+  'filename_ASC' |
+  'filename_DESC' |
+  'mimetype_ASC' |
+  'mimetype_DESC' |
+  'width_ASC' |
+  'width_DESC'
+
 export type SubScriptionOrderByInput =   'id_ASC' |
   'id_DESC' |
   'subscriptionId_ASC' |
@@ -1027,6 +1455,10 @@ export type SubScriptionOrderByInput =   'id_ASC' |
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
+
+export interface PaymentCreatemethodsInput {
+  set?: String[] | String
+}
 
 export interface UserWhereInput {
   AND?: UserWhereInput[] | UserWhereInput
@@ -1046,6 +1478,22 @@ export interface UserWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
   email?: String
   email_not?: String
   email_in?: String[] | String
@@ -1074,22 +1522,6 @@ export interface UserWhereInput {
   password_not_starts_with?: String
   password_ends_with?: String
   password_not_ends_with?: String
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
   emailConfirmToken?: Float
   emailConfirmToken_not?: Float
   emailConfirmToken_in?: Float[] | Float
@@ -1102,6 +1534,77 @@ export interface UserWhereInput {
   emailConfirmed_not?: Boolean
   payment?: PaymentWhereInput
   subscription?: SubScriptionWhereInput
+}
+
+export interface UserCreateOneWithoutPaymentInput {
+  create?: UserCreateWithoutPaymentInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface SubScriptionWhereInput {
+  AND?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  OR?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  NOT?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  subscriptionId?: String
+  subscriptionId_not?: String
+  subscriptionId_in?: String[] | String
+  subscriptionId_not_in?: String[] | String
+  subscriptionId_lt?: String
+  subscriptionId_lte?: String
+  subscriptionId_gt?: String
+  subscriptionId_gte?: String
+  subscriptionId_contains?: String
+  subscriptionId_not_contains?: String
+  subscriptionId_starts_with?: String
+  subscriptionId_not_starts_with?: String
+  subscriptionId_ends_with?: String
+  subscriptionId_not_ends_with?: String
+}
+
+export interface UserUpdateOneRequiredWithoutPaymentInput {
+  create?: UserCreateWithoutPaymentInput
+  connect?: UserWhereUniqueInput
+  update?: UserUpdateWithoutPaymentDataInput
+  upsert?: UserUpsertWithoutPaymentInput
+}
+
+export interface UserUpdatepermissionsInput {
+  set?: Permission[] | Permission
+}
+
+export interface PaymentUpdateInput {
+  customerId?: String
+  methods?: PaymentUpdatemethodsInput
+  user?: UserUpdateOneRequiredWithoutPaymentInput
+}
+
+export interface UserCreateWithoutPaymentInput {
+  id?: ID_Input
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions?: UserCreatepermissionsInput
+  subscription?: SubScriptionCreateOneInput
+}
+
+export interface SubScriptionUpsertNestedInput {
+  update: SubScriptionUpdateDataInput
+  create: SubScriptionCreateInput
 }
 
 export interface PaymentWhereInput {
@@ -1139,50 +1642,59 @@ export interface PaymentWhereInput {
   user?: UserWhereInput
 }
 
-export interface SubScriptionWhereInput {
-  AND?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  OR?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  NOT?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
+export interface SubScriptionUpdateDataInput {
   subscriptionId?: String
-  subscriptionId_not?: String
-  subscriptionId_in?: String[] | String
-  subscriptionId_not_in?: String[] | String
-  subscriptionId_lt?: String
-  subscriptionId_lte?: String
-  subscriptionId_gt?: String
-  subscriptionId_gte?: String
-  subscriptionId_contains?: String
-  subscriptionId_not_contains?: String
-  subscriptionId_starts_with?: String
-  subscriptionId_not_starts_with?: String
-  subscriptionId_ends_with?: String
-  subscriptionId_not_ends_with?: String
 }
 
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
+export interface PaymentSubscriptionWhereInput {
+  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PaymentWhereInput
+}
+
+export interface SubScriptionUpdateOneInput {
+  create?: SubScriptionCreateInput
+  connect?: SubScriptionWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: SubScriptionUpdateDataInput
+  upsert?: SubScriptionUpsertNestedInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface PaymentUpsertWithoutUserInput {
+  update: PaymentUpdateWithoutUserDataInput
+  create: PaymentCreateWithoutUserInput
+}
+
+export interface FileUpdateManyMutationInput {
+  height?: Float
+  url?: String
+  filename?: String
+  mimetype?: String
+  width?: Float
+}
+
+export interface PaymentUpdatemethodsInput {
+  set?: String[] | String
 }
 
 export interface PaymentWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface SubScriptionWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -1197,8 +1709,20 @@ export interface UserCreateInput {
   subscription?: SubScriptionCreateOneInput
 }
 
+export interface SubScriptionWhereUniqueInput {
+  id?: ID_Input
+}
+
 export interface UserCreatepermissionsInput {
   set?: Permission[] | Permission
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
 }
 
 export interface PaymentCreateOneWithoutUserInput {
@@ -1206,114 +1730,18 @@ export interface PaymentCreateOneWithoutUserInput {
   connect?: PaymentWhereUniqueInput
 }
 
+export interface FileUpdateInput {
+  height?: Float
+  url?: String
+  filename?: String
+  mimetype?: String
+  width?: Float
+}
+
 export interface PaymentCreateWithoutUserInput {
   id?: ID_Input
   customerId: String
   methods?: PaymentCreatemethodsInput
-}
-
-export interface PaymentCreatemethodsInput {
-  set?: String[] | String
-}
-
-export interface SubScriptionCreateOneInput {
-  create?: SubScriptionCreateInput
-  connect?: SubScriptionWhereUniqueInput
-}
-
-export interface SubScriptionCreateInput {
-  id?: ID_Input
-  subscriptionId: String
-}
-
-export interface PaymentCreateInput {
-  id?: ID_Input
-  customerId: String
-  methods?: PaymentCreatemethodsInput
-  user: UserCreateOneWithoutPaymentInput
-}
-
-export interface UserCreateOneWithoutPaymentInput {
-  create?: UserCreateWithoutPaymentInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface UserCreateWithoutPaymentInput {
-  id?: ID_Input
-  email: String
-  password: String
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  permissions?: UserCreatepermissionsInput
-  subscription?: SubScriptionCreateOneInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  emailConfirmToken?: Float
-  emailConfirmed?: Boolean
-  permissions?: UserUpdatepermissionsInput
-  payment?: PaymentUpdateOneWithoutUserInput
-  subscription?: SubScriptionUpdateOneInput
-}
-
-export interface UserUpdatepermissionsInput {
-  set?: Permission[] | Permission
-}
-
-export interface PaymentUpdateOneWithoutUserInput {
-  create?: PaymentCreateWithoutUserInput
-  connect?: PaymentWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: PaymentUpdateWithoutUserDataInput
-  upsert?: PaymentUpsertWithoutUserInput
-}
-
-export interface PaymentUpdateWithoutUserDataInput {
-  customerId?: String
-  methods?: PaymentUpdatemethodsInput
-}
-
-export interface PaymentUpdatemethodsInput {
-  set?: String[] | String
-}
-
-export interface PaymentUpsertWithoutUserInput {
-  update: PaymentUpdateWithoutUserDataInput
-  create: PaymentCreateWithoutUserInput
-}
-
-export interface SubScriptionUpdateOneInput {
-  create?: SubScriptionCreateInput
-  connect?: SubScriptionWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: SubScriptionUpdateDataInput
-  upsert?: SubScriptionUpsertNestedInput
-}
-
-export interface SubScriptionUpdateDataInput {
-  subscriptionId?: String
-}
-
-export interface SubScriptionUpsertNestedInput {
-  update: SubScriptionUpdateDataInput
-  create: SubScriptionCreateInput
-}
-
-export interface PaymentUpdateInput {
-  customerId?: String
-  methods?: PaymentUpdatemethodsInput
-  user?: UserUpdateOneRequiredWithoutPaymentInput
-}
-
-export interface UserUpdateOneRequiredWithoutPaymentInput {
-  create?: UserCreateWithoutPaymentInput
-  connect?: UserWhereUniqueInput
-  update?: UserUpdateWithoutPaymentDataInput
-  upsert?: UserUpsertWithoutPaymentInput
 }
 
 export interface UserUpdateWithoutPaymentDataInput {
@@ -1325,52 +1753,50 @@ export interface UserUpdateWithoutPaymentDataInput {
   subscription?: SubScriptionUpdateOneInput
 }
 
-export interface UserUpsertWithoutPaymentInput {
-  update: UserUpdateWithoutPaymentDataInput
-  create: UserCreateWithoutPaymentInput
-}
-
-export interface SubScriptionUpdateInput {
-  subscriptionId?: String
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String
-  password?: String
-  emailConfirmToken?: Float
-  emailConfirmed?: Boolean
-  permissions?: UserUpdatepermissionsInput
-}
-
-export interface PaymentUpdateManyMutationInput {
+export interface PaymentUpdateWithoutUserDataInput {
   customerId?: String
   methods?: PaymentUpdatemethodsInput
+}
+
+export interface FileSubscriptionWhereInput {
+  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: FileWhereInput
+}
+
+export interface SubScriptionCreateOneInput {
+  create?: SubScriptionCreateInput
+  connect?: SubScriptionWhereUniqueInput
 }
 
 export interface SubScriptionUpdateManyMutationInput {
   subscriptionId?: String
 }
 
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
+export interface SubScriptionCreateInput {
+  id?: ID_Input
+  subscriptionId: String
 }
 
-export interface PaymentSubscriptionWhereInput {
-  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PaymentWhereInput
+export interface FileWhereUniqueInput {
+  id?: ID_Input
+  url?: String
+}
+
+export interface PaymentCreateInput {
+  id?: ID_Input
+  customerId: String
+  methods?: PaymentCreatemethodsInput
+  user: UserCreateOneWithoutPaymentInput
+}
+
+export interface SubScriptionUpdateInput {
+  subscriptionId?: String
 }
 
 export interface SubScriptionSubscriptionWhereInput {
@@ -1384,6 +1810,143 @@ export interface SubScriptionSubscriptionWhereInput {
   node?: SubScriptionWhereInput
 }
 
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+  payment?: PaymentUpdateOneWithoutUserInput
+  subscription?: SubScriptionUpdateOneInput
+}
+
+export interface FileCreateInput {
+  id?: ID_Input
+  height?: Float
+  url: String
+  filename: String
+  mimetype: String
+  width?: Float
+}
+
+export interface PaymentUpdateOneWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput
+  connect?: PaymentWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: PaymentUpdateWithoutUserDataInput
+  upsert?: PaymentUpsertWithoutUserInput
+}
+
+export interface FileWhereInput {
+  AND?: FileWhereInput[] | FileWhereInput
+  OR?: FileWhereInput[] | FileWhereInput
+  NOT?: FileWhereInput[] | FileWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  height?: Float
+  height_not?: Float
+  height_in?: Float[] | Float
+  height_not_in?: Float[] | Float
+  height_lt?: Float
+  height_lte?: Float
+  height_gt?: Float
+  height_gte?: Float
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
+  filename?: String
+  filename_not?: String
+  filename_in?: String[] | String
+  filename_not_in?: String[] | String
+  filename_lt?: String
+  filename_lte?: String
+  filename_gt?: String
+  filename_gte?: String
+  filename_contains?: String
+  filename_not_contains?: String
+  filename_starts_with?: String
+  filename_not_starts_with?: String
+  filename_ends_with?: String
+  filename_not_ends_with?: String
+  mimetype?: String
+  mimetype_not?: String
+  mimetype_in?: String[] | String
+  mimetype_not_in?: String[] | String
+  mimetype_lt?: String
+  mimetype_lte?: String
+  mimetype_gt?: String
+  mimetype_gte?: String
+  mimetype_contains?: String
+  mimetype_not_contains?: String
+  mimetype_starts_with?: String
+  mimetype_not_starts_with?: String
+  mimetype_ends_with?: String
+  mimetype_not_ends_with?: String
+  width?: Float
+  width_not?: Float
+  width_in?: Float[] | Float
+  width_not_in?: Float[] | Float
+  width_lt?: Float
+  width_lte?: Float
+  width_gt?: Float
+  width_gte?: Float
+}
+
+export interface UserUpsertWithoutPaymentInput {
+  update: UserUpdateWithoutPaymentDataInput
+  create: UserCreateWithoutPaymentInput
+}
+
+export interface PaymentUpdateManyMutationInput {
+  customerId?: String
+  methods?: PaymentUpdatemethodsInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
 /*
  * An object with an ID
 
@@ -1392,27 +1955,7 @@ export interface Node {
   id: ID_Output
 }
 
-export interface User extends Node {
-  id: ID_Output
-  email: String
-  password: String
-  createdAt: DateTime
-  updatedAt: DateTime
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  payment?: Payment
-  permissions: Permission[]
-  subscription?: SubScription
-}
-
-export interface Payment extends Node {
-  id: ID_Output
-  customerId: String
-  methods: String[]
-  user: User
-}
-
-export interface SubScription extends Node {
+export interface SubScriptionPreviousValues {
   id: ID_Output
   subscriptionId: String
 }
@@ -1425,6 +1968,112 @@ export interface UserConnection {
   pageInfo: PageInfo
   edges: UserEdge[]
   aggregate: AggregateUser
+}
+
+export interface User extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  payment?: Payment
+  permissions: Permission[]
+  subscription?: SubScription
+}
+
+export interface BatchPayload {
+  count: Long
+}
+
+export interface PaymentPreviousValues {
+  id: ID_Output
+  customerId: String
+  methods: String[]
+}
+
+export interface SubScriptionSubscriptionPayload {
+  mutation: MutationType
+  node?: SubScription
+  updatedFields?: String[]
+  previousValues?: SubScriptionPreviousValues
+}
+
+export interface AggregateSubScription {
+  count: Int
+}
+
+export interface Payment extends Node {
+  id: ID_Output
+  customerId: String
+  methods: String[]
+  user: User
+}
+
+export interface AggregateFile {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface SubScriptionEdge {
+  node: SubScription
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface FileConnection {
+  pageInfo: PageInfo
+  edges: FileEdge[]
+  aggregate: AggregateFile
+}
+
+export interface File extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  height?: Float
+  url: String
+  filename: String
+  mimetype: String
+  width?: Float
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface PaymentEdge {
+  node: Payment
+  cursor: String
+}
+
+export interface FilePreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  height?: Float
+  url: String
+  filename: String
+  mimetype: String
+  width?: Float
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+export interface FileSubscriptionPayload {
+  mutation: MutationType
+  node?: File
+  updatedFields?: String[]
+  previousValues?: FilePreviousValues
 }
 
 /*
@@ -1442,32 +2091,39 @@ export interface PageInfo {
  * An edge in a connection.
 
  */
-export interface UserEdge {
-  node: User
+export interface FileEdge {
+  node: File
   cursor: String
 }
 
-export interface AggregateUser {
-  count: Int
+export interface PaymentSubscriptionPayload {
+  mutation: MutationType
+  node?: Payment
+  updatedFields?: String[]
+  previousValues?: PaymentPreviousValues
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface PaymentConnection {
-  pageInfo: PageInfo
-  edges: PaymentEdge[]
-  aggregate: AggregatePayment
+export interface SubScription extends Node {
+  id: ID_Output
+  subscriptionId: String
 }
 
-/*
- * An edge in a connection.
+export interface UserPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions: Permission[]
+}
 
- */
-export interface PaymentEdge {
-  node: Payment
-  cursor: String
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
 }
 
 export interface AggregatePayment {
@@ -1488,84 +2144,25 @@ export interface SubScriptionConnection {
  * An edge in a connection.
 
  */
-export interface SubScriptionEdge {
-  node: SubScription
+export interface UserEdge {
+  node: User
   cursor: String
 }
 
-export interface AggregateSubScription {
-  count: Int
-}
-
-export interface BatchPayload {
-  count: Long
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  email: String
-  password: String
-  createdAt: DateTime
-  updatedAt: DateTime
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  permissions: Permission[]
-}
-
-export interface PaymentSubscriptionPayload {
-  mutation: MutationType
-  node?: Payment
-  updatedFields?: String[]
-  previousValues?: PaymentPreviousValues
-}
-
-export interface PaymentPreviousValues {
-  id: ID_Output
-  customerId: String
-  methods: String[]
-}
-
-export interface SubScriptionSubscriptionPayload {
-  mutation: MutationType
-  node?: SubScription
-  updatedFields?: String[]
-  previousValues?: SubScriptionPreviousValues
-}
-
-export interface SubScriptionPreviousValues {
-  id: ID_Output
-  subscriptionId: String
-}
-
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number
-export type ID_Output = string
+ * A connection to a list of items.
+
+ */
+export interface PaymentConnection {
+  pageInfo: PageInfo
+  edges: PaymentEdge[]
+  aggregate: AggregatePayment
+}
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
-
-export type DateTime = Date | string
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1577,3 +2174,21 @@ The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 */
 export type Long = string
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number
+export type ID_Output = string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+*/
+export type Float = number
+
+export type DateTime = Date | string
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean

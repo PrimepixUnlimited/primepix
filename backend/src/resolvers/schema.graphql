@@ -4,9 +4,12 @@ type SuccessMessage {
   message: String
 }
 
+scalar Upload
+
 type Query {
   users: [User!]!
   me: User
+  image(id: String!): File
   payment: PaymentDetails
   plans(billingCycle: String!): [Plan]
 }
@@ -19,6 +22,10 @@ type Mutation {
   createPaymentMethod(tokenId: String!): User
   createSubscription(planId: String!): User
   updateSubscription(planId: String!): User
+  createImage: File!
+  getImage(id: String!): File
+  updateImage(file: FileUpdateInput): File
+  deleteImage(id: String!): SuccessMessage
 }
 
 type LoginResponse {
