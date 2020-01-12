@@ -109,11 +109,13 @@ type File implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
   width: Float
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -128,10 +130,27 @@ type FileConnection {
 
 input FileCreateInput {
   id: ID
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
+  width: Float
+  user: UserCreateOneWithoutFilesInput!
+}
+
+input FileCreateManyWithoutUserInput {
+  create: [FileCreateWithoutUserInput!]
+  connect: [FileWhereUniqueInput!]
+}
+
+input FileCreateWithoutUserInput {
+  id: ID
+  filename: String!
+  height: Float
+  mimetype: String!
+  encoding: String
+  url: String!
   width: Float
 }
 
@@ -151,14 +170,16 @@ enum FileOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  height_ASC
-  height_DESC
-  url_ASC
-  url_DESC
   filename_ASC
   filename_DESC
+  height_ASC
+  height_DESC
   mimetype_ASC
   mimetype_DESC
+  encoding_ASC
+  encoding_DESC
+  url_ASC
+  url_DESC
   width_ASC
   width_DESC
 }
@@ -167,11 +188,311 @@ type FilePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
   width: Float
+}
+
+input FileScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  width: Float
+
+  """All values that are not equal to given value."""
+  width_not: Float
+
+  """All values that are contained in given list."""
+  width_in: [Float!]
+
+  """All values that are not contained in given list."""
+  width_not_in: [Float!]
+
+  """All values less than the given value."""
+  width_lt: Float
+
+  """All values less than or equal the given value."""
+  width_lte: Float
+
+  """All values greater than the given value."""
+  width_gt: Float
+
+  """All values greater than or equal the given value."""
+  width_gte: Float
 }
 
 type FileSubscriptionPayload {
@@ -212,19 +533,68 @@ input FileSubscriptionWhereInput {
 }
 
 input FileUpdateInput {
-  height: Float
-  url: String
   filename: String
+  height: Float
   mimetype: String
+  encoding: String
+  url: String
+  width: Float
+  user: UserUpdateOneRequiredWithoutFilesInput
+}
+
+input FileUpdateManyDataInput {
+  filename: String
+  height: Float
+  mimetype: String
+  encoding: String
+  url: String
   width: Float
 }
 
 input FileUpdateManyMutationInput {
-  height: Float
-  url: String
   filename: String
+  height: Float
   mimetype: String
+  encoding: String
+  url: String
   width: Float
+}
+
+input FileUpdateManyWithoutUserInput {
+  create: [FileCreateWithoutUserInput!]
+  connect: [FileWhereUniqueInput!]
+  set: [FileWhereUniqueInput!]
+  disconnect: [FileWhereUniqueInput!]
+  delete: [FileWhereUniqueInput!]
+  update: [FileUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [FileUpdateManyWithWhereNestedInput!]
+  deleteMany: [FileScalarWhereInput!]
+  upsert: [FileUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input FileUpdateManyWithWhereNestedInput {
+  where: FileScalarWhereInput!
+  data: FileUpdateManyDataInput!
+}
+
+input FileUpdateWithoutUserDataInput {
+  filename: String
+  height: Float
+  mimetype: String
+  encoding: String
+  url: String
+  width: Float
+}
+
+input FileUpdateWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput!
+  data: FileUpdateWithoutUserDataInput!
+}
+
+input FileUpsertWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput!
+  update: FileUpdateWithoutUserDataInput!
+  create: FileCreateWithoutUserInput!
 }
 
 input FileWhereInput {
@@ -320,68 +690,6 @@ input FileWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  height: Float
-
-  """All values that are not equal to given value."""
-  height_not: Float
-
-  """All values that are contained in given list."""
-  height_in: [Float!]
-
-  """All values that are not contained in given list."""
-  height_not_in: [Float!]
-
-  """All values less than the given value."""
-  height_lt: Float
-
-  """All values less than or equal the given value."""
-  height_lte: Float
-
-  """All values greater than the given value."""
-  height_gt: Float
-
-  """All values greater than or equal the given value."""
-  height_gte: Float
-  url: String
-
-  """All values that are not equal to given value."""
-  url_not: String
-
-  """All values that are contained in given list."""
-  url_in: [String!]
-
-  """All values that are not contained in given list."""
-  url_not_in: [String!]
-
-  """All values less than the given value."""
-  url_lt: String
-
-  """All values less than or equal the given value."""
-  url_lte: String
-
-  """All values greater than the given value."""
-  url_gt: String
-
-  """All values greater than or equal the given value."""
-  url_gte: String
-
-  """All values containing the given string."""
-  url_contains: String
-
-  """All values not containing the given string."""
-  url_not_contains: String
-
-  """All values starting with the given string."""
-  url_starts_with: String
-
-  """All values not starting with the given string."""
-  url_not_starts_with: String
-
-  """All values ending with the given string."""
-  url_ends_with: String
-
-  """All values not ending with the given string."""
-  url_not_ends_with: String
   filename: String
 
   """All values that are not equal to given value."""
@@ -422,6 +730,28 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   filename_not_ends_with: String
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
   mimetype: String
 
   """All values that are not equal to given value."""
@@ -462,6 +792,86 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
   width: Float
 
   """All values that are not equal to given value."""
@@ -484,6 +894,7 @@ input FileWhereInput {
 
   """All values greater than or equal the given value."""
   width_gte: Float
+  user: UserWhereInput
 }
 
 input FileWhereUniqueInput {
@@ -1030,6 +1441,7 @@ type User implements Node {
   payment: Payment
   permissions: [Permission!]!
   subscription: SubScription
+  files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
 }
 
 """A connection to a list of items."""
@@ -1051,6 +1463,12 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
   payment: PaymentCreateOneWithoutUserInput
   subscription: SubScriptionCreateOneInput
+  files: FileCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutFilesInput {
+  create: UserCreateWithoutFilesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPaymentInput {
@@ -1062,6 +1480,17 @@ input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
+input UserCreateWithoutFilesInput {
+  id: ID
+  email: String!
+  password: String!
+  emailConfirmToken: Float!
+  emailConfirmed: Boolean
+  permissions: UserCreatepermissionsInput
+  payment: PaymentCreateOneWithoutUserInput
+  subscription: SubScriptionCreateOneInput
+}
+
 input UserCreateWithoutPaymentInput {
   id: ID
   email: String!
@@ -1070,6 +1499,7 @@ input UserCreateWithoutPaymentInput {
   emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
   subscription: SubScriptionCreateOneInput
+  files: FileCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -1154,6 +1584,7 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
   payment: PaymentUpdateOneWithoutUserInput
   subscription: SubScriptionUpdateOneInput
+  files: FileUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1162,6 +1593,13 @@ input UserUpdateManyMutationInput {
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredWithoutFilesInput {
+  create: UserCreateWithoutFilesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFilesDataInput
+  upsert: UserUpsertWithoutFilesInput
 }
 
 input UserUpdateOneRequiredWithoutPaymentInput {
@@ -1175,6 +1613,16 @@ input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
+input UserUpdateWithoutFilesDataInput {
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed: Boolean
+  permissions: UserUpdatepermissionsInput
+  payment: PaymentUpdateOneWithoutUserInput
+  subscription: SubScriptionUpdateOneInput
+}
+
 input UserUpdateWithoutPaymentDataInput {
   email: String
   password: String
@@ -1182,6 +1630,12 @@ input UserUpdateWithoutPaymentDataInput {
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
   subscription: SubScriptionUpdateOneInput
+  files: FileUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutFilesInput {
+  update: UserUpdateWithoutFilesDataInput!
+  create: UserCreateWithoutFilesInput!
 }
 
 input UserUpsertWithoutPaymentInput {
@@ -1390,6 +1844,9 @@ input UserWhereInput {
   emailConfirmed_not: Boolean
   payment: PaymentWhereInput
   subscription: SubScriptionWhereInput
+  files_every: FileWhereInput
+  files_some: FileWhereInput
+  files_none: FileWhereInput
 }
 
 input UserWhereUniqueInput {
@@ -1425,27 +1882,29 @@ export type Permission =   'SUPERADMIN' |
   'ARTIST' |
   'PERMISSIONUPDATE'
 
-export type PaymentOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'customerId_ASC' |
-  'customerId_DESC'
-
 export type FileOrderByInput =   'id_ASC' |
   'id_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
-  'height_ASC' |
-  'height_DESC' |
-  'url_ASC' |
-  'url_DESC' |
   'filename_ASC' |
   'filename_DESC' |
+  'height_ASC' |
+  'height_DESC' |
   'mimetype_ASC' |
   'mimetype_DESC' |
+  'encoding_ASC' |
+  'encoding_DESC' |
+  'url_ASC' |
+  'url_DESC' |
   'width_ASC' |
   'width_DESC'
+
+export type PaymentOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'customerId_ASC' |
+  'customerId_DESC'
 
 export type SubScriptionOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1455,10 +1914,6 @@ export type SubScriptionOrderByInput =   'id_ASC' |
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
-
-export interface PaymentCreatemethodsInput {
-  set?: String[] | String
-}
 
 export interface UserWhereInput {
   AND?: UserWhereInput[] | UserWhereInput
@@ -1534,77 +1989,9 @@ export interface UserWhereInput {
   emailConfirmed_not?: Boolean
   payment?: PaymentWhereInput
   subscription?: SubScriptionWhereInput
-}
-
-export interface UserCreateOneWithoutPaymentInput {
-  create?: UserCreateWithoutPaymentInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface SubScriptionWhereInput {
-  AND?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  OR?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  NOT?: SubScriptionWhereInput[] | SubScriptionWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  subscriptionId?: String
-  subscriptionId_not?: String
-  subscriptionId_in?: String[] | String
-  subscriptionId_not_in?: String[] | String
-  subscriptionId_lt?: String
-  subscriptionId_lte?: String
-  subscriptionId_gt?: String
-  subscriptionId_gte?: String
-  subscriptionId_contains?: String
-  subscriptionId_not_contains?: String
-  subscriptionId_starts_with?: String
-  subscriptionId_not_starts_with?: String
-  subscriptionId_ends_with?: String
-  subscriptionId_not_ends_with?: String
-}
-
-export interface UserUpdateOneRequiredWithoutPaymentInput {
-  create?: UserCreateWithoutPaymentInput
-  connect?: UserWhereUniqueInput
-  update?: UserUpdateWithoutPaymentDataInput
-  upsert?: UserUpsertWithoutPaymentInput
-}
-
-export interface UserUpdatepermissionsInput {
-  set?: Permission[] | Permission
-}
-
-export interface PaymentUpdateInput {
-  customerId?: String
-  methods?: PaymentUpdatemethodsInput
-  user?: UserUpdateOneRequiredWithoutPaymentInput
-}
-
-export interface UserCreateWithoutPaymentInput {
-  id?: ID_Input
-  email: String
-  password: String
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  permissions?: UserCreatepermissionsInput
-  subscription?: SubScriptionCreateOneInput
-}
-
-export interface SubScriptionUpsertNestedInput {
-  update: SubScriptionUpdateDataInput
-  create: SubScriptionCreateInput
+  files_every?: FileWhereInput
+  files_some?: FileWhereInput
+  files_none?: FileWhereInput
 }
 
 export interface PaymentWhereInput {
@@ -1642,200 +2029,38 @@ export interface PaymentWhereInput {
   user?: UserWhereInput
 }
 
-export interface SubScriptionUpdateDataInput {
+export interface SubScriptionWhereInput {
+  AND?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  OR?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  NOT?: SubScriptionWhereInput[] | SubScriptionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
   subscriptionId?: String
-}
-
-export interface PaymentSubscriptionWhereInput {
-  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PaymentWhereInput
-}
-
-export interface SubScriptionUpdateOneInput {
-  create?: SubScriptionCreateInput
-  connect?: SubScriptionWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: SubScriptionUpdateDataInput
-  upsert?: SubScriptionUpsertNestedInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface PaymentUpsertWithoutUserInput {
-  update: PaymentUpdateWithoutUserDataInput
-  create: PaymentCreateWithoutUserInput
-}
-
-export interface FileUpdateManyMutationInput {
-  height?: Float
-  url?: String
-  filename?: String
-  mimetype?: String
-  width?: Float
-}
-
-export interface PaymentUpdatemethodsInput {
-  set?: String[] | String
-}
-
-export interface PaymentWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreateInput {
-  id?: ID_Input
-  email: String
-  password: String
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  permissions?: UserCreatepermissionsInput
-  payment?: PaymentCreateOneWithoutUserInput
-  subscription?: SubScriptionCreateOneInput
-}
-
-export interface SubScriptionWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreatepermissionsInput {
-  set?: Permission[] | Permission
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String
-  password?: String
-  emailConfirmToken?: Float
-  emailConfirmed?: Boolean
-  permissions?: UserUpdatepermissionsInput
-}
-
-export interface PaymentCreateOneWithoutUserInput {
-  create?: PaymentCreateWithoutUserInput
-  connect?: PaymentWhereUniqueInput
-}
-
-export interface FileUpdateInput {
-  height?: Float
-  url?: String
-  filename?: String
-  mimetype?: String
-  width?: Float
-}
-
-export interface PaymentCreateWithoutUserInput {
-  id?: ID_Input
-  customerId: String
-  methods?: PaymentCreatemethodsInput
-}
-
-export interface UserUpdateWithoutPaymentDataInput {
-  email?: String
-  password?: String
-  emailConfirmToken?: Float
-  emailConfirmed?: Boolean
-  permissions?: UserUpdatepermissionsInput
-  subscription?: SubScriptionUpdateOneInput
-}
-
-export interface PaymentUpdateWithoutUserDataInput {
-  customerId?: String
-  methods?: PaymentUpdatemethodsInput
-}
-
-export interface FileSubscriptionWhereInput {
-  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: FileWhereInput
-}
-
-export interface SubScriptionCreateOneInput {
-  create?: SubScriptionCreateInput
-  connect?: SubScriptionWhereUniqueInput
-}
-
-export interface SubScriptionUpdateManyMutationInput {
-  subscriptionId?: String
-}
-
-export interface SubScriptionCreateInput {
-  id?: ID_Input
-  subscriptionId: String
-}
-
-export interface FileWhereUniqueInput {
-  id?: ID_Input
-  url?: String
-}
-
-export interface PaymentCreateInput {
-  id?: ID_Input
-  customerId: String
-  methods?: PaymentCreatemethodsInput
-  user: UserCreateOneWithoutPaymentInput
-}
-
-export interface SubScriptionUpdateInput {
-  subscriptionId?: String
-}
-
-export interface SubScriptionSubscriptionWhereInput {
-  AND?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
-  OR?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
-  NOT?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: SubScriptionWhereInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  emailConfirmToken?: Float
-  emailConfirmed?: Boolean
-  permissions?: UserUpdatepermissionsInput
-  payment?: PaymentUpdateOneWithoutUserInput
-  subscription?: SubScriptionUpdateOneInput
-}
-
-export interface FileCreateInput {
-  id?: ID_Input
-  height?: Float
-  url: String
-  filename: String
-  mimetype: String
-  width?: Float
-}
-
-export interface PaymentUpdateOneWithoutUserInput {
-  create?: PaymentCreateWithoutUserInput
-  connect?: PaymentWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: PaymentUpdateWithoutUserDataInput
-  upsert?: PaymentUpsertWithoutUserInput
+  subscriptionId_not?: String
+  subscriptionId_in?: String[] | String
+  subscriptionId_not_in?: String[] | String
+  subscriptionId_lt?: String
+  subscriptionId_lte?: String
+  subscriptionId_gt?: String
+  subscriptionId_gte?: String
+  subscriptionId_contains?: String
+  subscriptionId_not_contains?: String
+  subscriptionId_starts_with?: String
+  subscriptionId_not_starts_with?: String
+  subscriptionId_ends_with?: String
+  subscriptionId_not_ends_with?: String
 }
 
 export interface FileWhereInput {
@@ -1872,28 +2097,6 @@ export interface FileWhereInput {
   updatedAt_lte?: DateTime
   updatedAt_gt?: DateTime
   updatedAt_gte?: DateTime
-  height?: Float
-  height_not?: Float
-  height_in?: Float[] | Float
-  height_not_in?: Float[] | Float
-  height_lt?: Float
-  height_lte?: Float
-  height_gt?: Float
-  height_gte?: Float
-  url?: String
-  url_not?: String
-  url_in?: String[] | String
-  url_not_in?: String[] | String
-  url_lt?: String
-  url_lte?: String
-  url_gt?: String
-  url_gte?: String
-  url_contains?: String
-  url_not_contains?: String
-  url_starts_with?: String
-  url_not_starts_with?: String
-  url_ends_with?: String
-  url_not_ends_with?: String
   filename?: String
   filename_not?: String
   filename_in?: String[] | String
@@ -1908,6 +2111,14 @@ export interface FileWhereInput {
   filename_not_starts_with?: String
   filename_ends_with?: String
   filename_not_ends_with?: String
+  height?: Float
+  height_not?: Float
+  height_in?: Float[] | Float
+  height_not_in?: Float[] | Float
+  height_lt?: Float
+  height_lte?: Float
+  height_gt?: Float
+  height_gte?: Float
   mimetype?: String
   mimetype_not?: String
   mimetype_in?: String[] | String
@@ -1922,6 +2133,354 @@ export interface FileWhereInput {
   mimetype_not_starts_with?: String
   mimetype_ends_with?: String
   mimetype_not_ends_with?: String
+  encoding?: String
+  encoding_not?: String
+  encoding_in?: String[] | String
+  encoding_not_in?: String[] | String
+  encoding_lt?: String
+  encoding_lte?: String
+  encoding_gt?: String
+  encoding_gte?: String
+  encoding_contains?: String
+  encoding_not_contains?: String
+  encoding_starts_with?: String
+  encoding_not_starts_with?: String
+  encoding_ends_with?: String
+  encoding_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
+  width?: Float
+  width_not?: Float
+  width_in?: Float[] | Float
+  width_not_in?: Float[] | Float
+  width_lt?: Float
+  width_lte?: Float
+  width_gt?: Float
+  width_gte?: Float
+  user?: UserWhereInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface PaymentWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface FileWhereUniqueInput {
+  id?: ID_Input
+  url?: String
+}
+
+export interface SubScriptionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateInput {
+  id?: ID_Input
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions?: UserCreatepermissionsInput
+  payment?: PaymentCreateOneWithoutUserInput
+  subscription?: SubScriptionCreateOneInput
+  files?: FileCreateManyWithoutUserInput
+}
+
+export interface UserCreatepermissionsInput {
+  set?: Permission[] | Permission
+}
+
+export interface PaymentCreateOneWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput
+  connect?: PaymentWhereUniqueInput
+}
+
+export interface PaymentCreateWithoutUserInput {
+  id?: ID_Input
+  customerId: String
+  methods?: PaymentCreatemethodsInput
+}
+
+export interface PaymentCreatemethodsInput {
+  set?: String[] | String
+}
+
+export interface SubScriptionCreateOneInput {
+  create?: SubScriptionCreateInput
+  connect?: SubScriptionWhereUniqueInput
+}
+
+export interface SubScriptionCreateInput {
+  id?: ID_Input
+  subscriptionId: String
+}
+
+export interface FileCreateManyWithoutUserInput {
+  create?: FileCreateWithoutUserInput[] | FileCreateWithoutUserInput
+  connect?: FileWhereUniqueInput[] | FileWhereUniqueInput
+}
+
+export interface FileCreateWithoutUserInput {
+  id?: ID_Input
+  filename: String
+  height?: Float
+  mimetype: String
+  encoding?: String
+  url: String
+  width?: Float
+}
+
+export interface PaymentCreateInput {
+  id?: ID_Input
+  customerId: String
+  methods?: PaymentCreatemethodsInput
+  user: UserCreateOneWithoutPaymentInput
+}
+
+export interface UserCreateOneWithoutPaymentInput {
+  create?: UserCreateWithoutPaymentInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface UserCreateWithoutPaymentInput {
+  id?: ID_Input
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions?: UserCreatepermissionsInput
+  subscription?: SubScriptionCreateOneInput
+  files?: FileCreateManyWithoutUserInput
+}
+
+export interface FileCreateInput {
+  id?: ID_Input
+  filename: String
+  height?: Float
+  mimetype: String
+  encoding?: String
+  url: String
+  width?: Float
+  user: UserCreateOneWithoutFilesInput
+}
+
+export interface UserCreateOneWithoutFilesInput {
+  create?: UserCreateWithoutFilesInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface UserCreateWithoutFilesInput {
+  id?: ID_Input
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions?: UserCreatepermissionsInput
+  payment?: PaymentCreateOneWithoutUserInput
+  subscription?: SubScriptionCreateOneInput
+}
+
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+  payment?: PaymentUpdateOneWithoutUserInput
+  subscription?: SubScriptionUpdateOneInput
+  files?: FileUpdateManyWithoutUserInput
+}
+
+export interface UserUpdatepermissionsInput {
+  set?: Permission[] | Permission
+}
+
+export interface PaymentUpdateOneWithoutUserInput {
+  create?: PaymentCreateWithoutUserInput
+  connect?: PaymentWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: PaymentUpdateWithoutUserDataInput
+  upsert?: PaymentUpsertWithoutUserInput
+}
+
+export interface PaymentUpdateWithoutUserDataInput {
+  customerId?: String
+  methods?: PaymentUpdatemethodsInput
+}
+
+export interface PaymentUpdatemethodsInput {
+  set?: String[] | String
+}
+
+export interface PaymentUpsertWithoutUserInput {
+  update: PaymentUpdateWithoutUserDataInput
+  create: PaymentCreateWithoutUserInput
+}
+
+export interface SubScriptionUpdateOneInput {
+  create?: SubScriptionCreateInput
+  connect?: SubScriptionWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: SubScriptionUpdateDataInput
+  upsert?: SubScriptionUpsertNestedInput
+}
+
+export interface SubScriptionUpdateDataInput {
+  subscriptionId?: String
+}
+
+export interface SubScriptionUpsertNestedInput {
+  update: SubScriptionUpdateDataInput
+  create: SubScriptionCreateInput
+}
+
+export interface FileUpdateManyWithoutUserInput {
+  create?: FileCreateWithoutUserInput[] | FileCreateWithoutUserInput
+  connect?: FileWhereUniqueInput[] | FileWhereUniqueInput
+  set?: FileWhereUniqueInput[] | FileWhereUniqueInput
+  disconnect?: FileWhereUniqueInput[] | FileWhereUniqueInput
+  delete?: FileWhereUniqueInput[] | FileWhereUniqueInput
+  update?: FileUpdateWithWhereUniqueWithoutUserInput[] | FileUpdateWithWhereUniqueWithoutUserInput
+  updateMany?: FileUpdateManyWithWhereNestedInput[] | FileUpdateManyWithWhereNestedInput
+  deleteMany?: FileScalarWhereInput[] | FileScalarWhereInput
+  upsert?: FileUpsertWithWhereUniqueWithoutUserInput[] | FileUpsertWithWhereUniqueWithoutUserInput
+}
+
+export interface FileUpdateWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput
+  data: FileUpdateWithoutUserDataInput
+}
+
+export interface FileUpdateWithoutUserDataInput {
+  filename?: String
+  height?: Float
+  mimetype?: String
+  encoding?: String
+  url?: String
+  width?: Float
+}
+
+export interface FileUpdateManyWithWhereNestedInput {
+  where: FileScalarWhereInput
+  data: FileUpdateManyDataInput
+}
+
+export interface FileScalarWhereInput {
+  AND?: FileScalarWhereInput[] | FileScalarWhereInput
+  OR?: FileScalarWhereInput[] | FileScalarWhereInput
+  NOT?: FileScalarWhereInput[] | FileScalarWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  filename?: String
+  filename_not?: String
+  filename_in?: String[] | String
+  filename_not_in?: String[] | String
+  filename_lt?: String
+  filename_lte?: String
+  filename_gt?: String
+  filename_gte?: String
+  filename_contains?: String
+  filename_not_contains?: String
+  filename_starts_with?: String
+  filename_not_starts_with?: String
+  filename_ends_with?: String
+  filename_not_ends_with?: String
+  height?: Float
+  height_not?: Float
+  height_in?: Float[] | Float
+  height_not_in?: Float[] | Float
+  height_lt?: Float
+  height_lte?: Float
+  height_gt?: Float
+  height_gte?: Float
+  mimetype?: String
+  mimetype_not?: String
+  mimetype_in?: String[] | String
+  mimetype_not_in?: String[] | String
+  mimetype_lt?: String
+  mimetype_lte?: String
+  mimetype_gt?: String
+  mimetype_gte?: String
+  mimetype_contains?: String
+  mimetype_not_contains?: String
+  mimetype_starts_with?: String
+  mimetype_not_starts_with?: String
+  mimetype_ends_with?: String
+  mimetype_not_ends_with?: String
+  encoding?: String
+  encoding_not?: String
+  encoding_in?: String[] | String
+  encoding_not_in?: String[] | String
+  encoding_lt?: String
+  encoding_lte?: String
+  encoding_gt?: String
+  encoding_gte?: String
+  encoding_contains?: String
+  encoding_not_contains?: String
+  encoding_starts_with?: String
+  encoding_not_starts_with?: String
+  encoding_ends_with?: String
+  encoding_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
   width?: Float
   width_not?: Float
   width_in?: Float[] | Float
@@ -1932,9 +2491,91 @@ export interface FileWhereInput {
   width_gte?: Float
 }
 
+export interface FileUpdateManyDataInput {
+  filename?: String
+  height?: Float
+  mimetype?: String
+  encoding?: String
+  url?: String
+  width?: Float
+}
+
+export interface FileUpsertWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput
+  update: FileUpdateWithoutUserDataInput
+  create: FileCreateWithoutUserInput
+}
+
+export interface PaymentUpdateInput {
+  customerId?: String
+  methods?: PaymentUpdatemethodsInput
+  user?: UserUpdateOneRequiredWithoutPaymentInput
+}
+
+export interface UserUpdateOneRequiredWithoutPaymentInput {
+  create?: UserCreateWithoutPaymentInput
+  connect?: UserWhereUniqueInput
+  update?: UserUpdateWithoutPaymentDataInput
+  upsert?: UserUpsertWithoutPaymentInput
+}
+
+export interface UserUpdateWithoutPaymentDataInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+  subscription?: SubScriptionUpdateOneInput
+  files?: FileUpdateManyWithoutUserInput
+}
+
 export interface UserUpsertWithoutPaymentInput {
   update: UserUpdateWithoutPaymentDataInput
   create: UserCreateWithoutPaymentInput
+}
+
+export interface FileUpdateInput {
+  filename?: String
+  height?: Float
+  mimetype?: String
+  encoding?: String
+  url?: String
+  width?: Float
+  user?: UserUpdateOneRequiredWithoutFilesInput
+}
+
+export interface UserUpdateOneRequiredWithoutFilesInput {
+  create?: UserCreateWithoutFilesInput
+  connect?: UserWhereUniqueInput
+  update?: UserUpdateWithoutFilesDataInput
+  upsert?: UserUpsertWithoutFilesInput
+}
+
+export interface UserUpdateWithoutFilesDataInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
+  payment?: PaymentUpdateOneWithoutUserInput
+  subscription?: SubScriptionUpdateOneInput
+}
+
+export interface UserUpsertWithoutFilesInput {
+  update: UserUpdateWithoutFilesDataInput
+  create: UserCreateWithoutFilesInput
+}
+
+export interface SubScriptionUpdateInput {
+  subscriptionId?: String
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: String
+  password?: String
+  emailConfirmToken?: Float
+  emailConfirmed?: Boolean
+  permissions?: UserUpdatepermissionsInput
 }
 
 export interface PaymentUpdateManyMutationInput {
@@ -1942,9 +2583,61 @@ export interface PaymentUpdateManyMutationInput {
   methods?: PaymentUpdatemethodsInput
 }
 
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
+export interface FileUpdateManyMutationInput {
+  filename?: String
+  height?: Float
+  mimetype?: String
+  encoding?: String
+  url?: String
+  width?: Float
+}
+
+export interface SubScriptionUpdateManyMutationInput {
+  subscriptionId?: String
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface PaymentSubscriptionWhereInput {
+  AND?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  OR?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  NOT?: PaymentSubscriptionWhereInput[] | PaymentSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PaymentWhereInput
+}
+
+export interface FileSubscriptionWhereInput {
+  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: FileWhereInput
+}
+
+export interface SubScriptionSubscriptionWhereInput {
+  AND?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
+  OR?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
+  NOT?: SubScriptionSubscriptionWhereInput[] | SubScriptionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: SubScriptionWhereInput
 }
 
 /*
@@ -1953,21 +2646,6 @@ export interface UserWhereUniqueInput {
  */
 export interface Node {
   id: ID_Output
-}
-
-export interface SubScriptionPreviousValues {
-  id: ID_Output
-  subscriptionId: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
 }
 
 export interface User extends Node {
@@ -1981,27 +2659,7 @@ export interface User extends Node {
   payment?: Payment
   permissions: Permission[]
   subscription?: SubScription
-}
-
-export interface BatchPayload {
-  count: Long
-}
-
-export interface PaymentPreviousValues {
-  id: ID_Output
-  customerId: String
-  methods: String[]
-}
-
-export interface SubScriptionSubscriptionPayload {
-  mutation: MutationType
-  node?: SubScription
-  updatedFields?: String[]
-  previousValues?: SubScriptionPreviousValues
-}
-
-export interface AggregateSubScription {
-  count: Int
+  files?: File[]
 }
 
 export interface Payment extends Node {
@@ -2011,69 +2669,32 @@ export interface Payment extends Node {
   user: User
 }
 
-export interface AggregateFile {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface SubScriptionEdge {
-  node: SubScription
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface FileConnection {
-  pageInfo: PageInfo
-  edges: FileEdge[]
-  aggregate: AggregateFile
+export interface SubScription extends Node {
+  id: ID_Output
+  subscriptionId: String
 }
 
 export interface File extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  height?: Float
-  url: String
   filename: String
+  height?: Float
   mimetype: String
+  encoding?: String
+  url: String
   width?: Float
+  user: User
 }
 
 /*
- * An edge in a connection.
+ * A connection to a list of items.
 
  */
-export interface PaymentEdge {
-  node: Payment
-  cursor: String
-}
-
-export interface FilePreviousValues {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  height?: Float
-  url: String
-  filename: String
-  mimetype: String
-  width?: Float
-}
-
-export interface AggregateUser {
-  count: Int
-}
-
-export interface FileSubscriptionPayload {
-  mutation: MutationType
-  node?: File
-  updatedFields?: String[]
-  previousValues?: FilePreviousValues
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
 }
 
 /*
@@ -2091,42 +2712,58 @@ export interface PageInfo {
  * An edge in a connection.
 
  */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface PaymentConnection {
+  pageInfo: PageInfo
+  edges: PaymentEdge[]
+  aggregate: AggregatePayment
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface PaymentEdge {
+  node: Payment
+  cursor: String
+}
+
+export interface AggregatePayment {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface FileConnection {
+  pageInfo: PageInfo
+  edges: FileEdge[]
+  aggregate: AggregateFile
+}
+
+/*
+ * An edge in a connection.
+
+ */
 export interface FileEdge {
   node: File
   cursor: String
 }
 
-export interface PaymentSubscriptionPayload {
-  mutation: MutationType
-  node?: Payment
-  updatedFields?: String[]
-  previousValues?: PaymentPreviousValues
-}
-
-export interface SubScription extends Node {
-  id: ID_Output
-  subscriptionId: String
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  email: String
-  password: String
-  emailConfirmToken: Float
-  emailConfirmed?: Boolean
-  permissions: Permission[]
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
-}
-
-export interface AggregatePayment {
+export interface AggregateFile {
   count: Int
 }
 
@@ -2144,25 +2781,103 @@ export interface SubScriptionConnection {
  * An edge in a connection.
 
  */
-export interface UserEdge {
-  node: User
+export interface SubScriptionEdge {
+  node: SubScription
   cursor: String
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface PaymentConnection {
-  pageInfo: PageInfo
-  edges: PaymentEdge[]
-  aggregate: AggregatePayment
+export interface AggregateSubScription {
+  count: Int
 }
+
+export interface BatchPayload {
+  count: Long
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed?: Boolean
+  permissions: Permission[]
+}
+
+export interface PaymentSubscriptionPayload {
+  mutation: MutationType
+  node?: Payment
+  updatedFields?: String[]
+  previousValues?: PaymentPreviousValues
+}
+
+export interface PaymentPreviousValues {
+  id: ID_Output
+  customerId: String
+  methods: String[]
+}
+
+export interface FileSubscriptionPayload {
+  mutation: MutationType
+  node?: File
+  updatedFields?: String[]
+  previousValues?: FilePreviousValues
+}
+
+export interface FilePreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  filename: String
+  height?: Float
+  mimetype: String
+  encoding?: String
+  url: String
+  width?: Float
+}
+
+export interface SubScriptionSubscriptionPayload {
+  mutation: MutationType
+  node?: SubScription
+  updatedFields?: String[]
+  previousValues?: SubScriptionPreviousValues
+}
+
+export interface SubScriptionPreviousValues {
+  id: ID_Output
+  subscriptionId: String
+}
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number
+export type ID_Output = string
+
+export type DateTime = Date | string
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+*/
+export type Float = number
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -2174,21 +2889,3 @@ The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 */
 export type Long = string
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number
-export type ID_Output = string
-
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number
-
-export type DateTime = Date | string
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean

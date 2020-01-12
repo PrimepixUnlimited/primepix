@@ -17,6 +17,7 @@ type User {
   payment: Payment @relation(link: INLINE)
   permissions: [Permission]! @scalarList(strategy: RELATION)
   subscription: SubScription @relation(link: INLINE)
+  files: [File] @scalarList(strategy: RELATION)
 }
 
 type Payment {
@@ -32,13 +33,14 @@ type SubScription {
 }
 
 type File {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   filename: String!
   height: Float
   mimetype: String!
-  encoding: String!
+  encoding: String
   url: String! @unique
   width: Float
+  user: User!
 }

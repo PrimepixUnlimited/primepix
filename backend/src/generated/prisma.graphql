@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun Dec 15 2019 14:31:32 GMT+0000 (Greenwich Mean Time)
+# timestamp: Sun Jan 12 2020 13:10:59 GMT+0000 (Greenwich Mean Time)
 
 type AggregateFile {
   count: Int!
@@ -28,11 +28,13 @@ type File implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
   width: Float
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -47,10 +49,27 @@ type FileConnection {
 
 input FileCreateInput {
   id: ID
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
+  width: Float
+  user: UserCreateOneWithoutFilesInput!
+}
+
+input FileCreateManyWithoutUserInput {
+  create: [FileCreateWithoutUserInput!]
+  connect: [FileWhereUniqueInput!]
+}
+
+input FileCreateWithoutUserInput {
+  id: ID
+  filename: String!
+  height: Float
+  mimetype: String!
+  encoding: String
+  url: String!
   width: Float
 }
 
@@ -70,14 +89,16 @@ enum FileOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  height_ASC
-  height_DESC
-  url_ASC
-  url_DESC
   filename_ASC
   filename_DESC
+  height_ASC
+  height_DESC
   mimetype_ASC
   mimetype_DESC
+  encoding_ASC
+  encoding_DESC
+  url_ASC
+  url_DESC
   width_ASC
   width_DESC
 }
@@ -86,11 +107,311 @@ type FilePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  height: Float
-  url: String!
   filename: String!
+  height: Float
   mimetype: String!
+  encoding: String
+  url: String!
   width: Float
+}
+
+input FileScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  width: Float
+
+  """All values that are not equal to given value."""
+  width_not: Float
+
+  """All values that are contained in given list."""
+  width_in: [Float!]
+
+  """All values that are not contained in given list."""
+  width_not_in: [Float!]
+
+  """All values less than the given value."""
+  width_lt: Float
+
+  """All values less than or equal the given value."""
+  width_lte: Float
+
+  """All values greater than the given value."""
+  width_gt: Float
+
+  """All values greater than or equal the given value."""
+  width_gte: Float
 }
 
 type FileSubscriptionPayload {
@@ -131,19 +452,68 @@ input FileSubscriptionWhereInput {
 }
 
 input FileUpdateInput {
-  height: Float
-  url: String
   filename: String
+  height: Float
   mimetype: String
+  encoding: String
+  url: String
+  width: Float
+  user: UserUpdateOneRequiredWithoutFilesInput
+}
+
+input FileUpdateManyDataInput {
+  filename: String
+  height: Float
+  mimetype: String
+  encoding: String
+  url: String
   width: Float
 }
 
 input FileUpdateManyMutationInput {
-  height: Float
-  url: String
   filename: String
+  height: Float
   mimetype: String
+  encoding: String
+  url: String
   width: Float
+}
+
+input FileUpdateManyWithoutUserInput {
+  create: [FileCreateWithoutUserInput!]
+  connect: [FileWhereUniqueInput!]
+  set: [FileWhereUniqueInput!]
+  disconnect: [FileWhereUniqueInput!]
+  delete: [FileWhereUniqueInput!]
+  update: [FileUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [FileUpdateManyWithWhereNestedInput!]
+  deleteMany: [FileScalarWhereInput!]
+  upsert: [FileUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input FileUpdateManyWithWhereNestedInput {
+  where: FileScalarWhereInput!
+  data: FileUpdateManyDataInput!
+}
+
+input FileUpdateWithoutUserDataInput {
+  filename: String
+  height: Float
+  mimetype: String
+  encoding: String
+  url: String
+  width: Float
+}
+
+input FileUpdateWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput!
+  data: FileUpdateWithoutUserDataInput!
+}
+
+input FileUpsertWithWhereUniqueWithoutUserInput {
+  where: FileWhereUniqueInput!
+  update: FileUpdateWithoutUserDataInput!
+  create: FileCreateWithoutUserInput!
 }
 
 input FileWhereInput {
@@ -239,68 +609,6 @@ input FileWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  height: Float
-
-  """All values that are not equal to given value."""
-  height_not: Float
-
-  """All values that are contained in given list."""
-  height_in: [Float!]
-
-  """All values that are not contained in given list."""
-  height_not_in: [Float!]
-
-  """All values less than the given value."""
-  height_lt: Float
-
-  """All values less than or equal the given value."""
-  height_lte: Float
-
-  """All values greater than the given value."""
-  height_gt: Float
-
-  """All values greater than or equal the given value."""
-  height_gte: Float
-  url: String
-
-  """All values that are not equal to given value."""
-  url_not: String
-
-  """All values that are contained in given list."""
-  url_in: [String!]
-
-  """All values that are not contained in given list."""
-  url_not_in: [String!]
-
-  """All values less than the given value."""
-  url_lt: String
-
-  """All values less than or equal the given value."""
-  url_lte: String
-
-  """All values greater than the given value."""
-  url_gt: String
-
-  """All values greater than or equal the given value."""
-  url_gte: String
-
-  """All values containing the given string."""
-  url_contains: String
-
-  """All values not containing the given string."""
-  url_not_contains: String
-
-  """All values starting with the given string."""
-  url_starts_with: String
-
-  """All values not starting with the given string."""
-  url_not_starts_with: String
-
-  """All values ending with the given string."""
-  url_ends_with: String
-
-  """All values not ending with the given string."""
-  url_not_ends_with: String
   filename: String
 
   """All values that are not equal to given value."""
@@ -341,6 +649,28 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   filename_not_ends_with: String
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
   mimetype: String
 
   """All values that are not equal to given value."""
@@ -381,6 +711,86 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
   width: Float
 
   """All values that are not equal to given value."""
@@ -403,6 +813,7 @@ input FileWhereInput {
 
   """All values greater than or equal the given value."""
   width_gte: Float
+  user: UserWhereInput
 }
 
 input FileWhereUniqueInput {
@@ -949,6 +1360,7 @@ type User implements Node {
   payment: Payment
   permissions: [Permission!]!
   subscription: SubScription
+  files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
 }
 
 """A connection to a list of items."""
@@ -970,6 +1382,12 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
   payment: PaymentCreateOneWithoutUserInput
   subscription: SubScriptionCreateOneInput
+  files: FileCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutFilesInput {
+  create: UserCreateWithoutFilesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPaymentInput {
@@ -981,6 +1399,17 @@ input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
+input UserCreateWithoutFilesInput {
+  id: ID
+  email: String!
+  password: String!
+  emailConfirmToken: Float!
+  emailConfirmed: Boolean
+  permissions: UserCreatepermissionsInput
+  payment: PaymentCreateOneWithoutUserInput
+  subscription: SubScriptionCreateOneInput
+}
+
 input UserCreateWithoutPaymentInput {
   id: ID
   email: String!
@@ -989,6 +1418,7 @@ input UserCreateWithoutPaymentInput {
   emailConfirmed: Boolean
   permissions: UserCreatepermissionsInput
   subscription: SubScriptionCreateOneInput
+  files: FileCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -1073,6 +1503,7 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
   payment: PaymentUpdateOneWithoutUserInput
   subscription: SubScriptionUpdateOneInput
+  files: FileUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1081,6 +1512,13 @@ input UserUpdateManyMutationInput {
   emailConfirmToken: Float
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredWithoutFilesInput {
+  create: UserCreateWithoutFilesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFilesDataInput
+  upsert: UserUpsertWithoutFilesInput
 }
 
 input UserUpdateOneRequiredWithoutPaymentInput {
@@ -1094,6 +1532,16 @@ input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
+input UserUpdateWithoutFilesDataInput {
+  email: String
+  password: String
+  emailConfirmToken: Float
+  emailConfirmed: Boolean
+  permissions: UserUpdatepermissionsInput
+  payment: PaymentUpdateOneWithoutUserInput
+  subscription: SubScriptionUpdateOneInput
+}
+
 input UserUpdateWithoutPaymentDataInput {
   email: String
   password: String
@@ -1101,6 +1549,12 @@ input UserUpdateWithoutPaymentDataInput {
   emailConfirmed: Boolean
   permissions: UserUpdatepermissionsInput
   subscription: SubScriptionUpdateOneInput
+  files: FileUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutFilesInput {
+  update: UserUpdateWithoutFilesDataInput!
+  create: UserCreateWithoutFilesInput!
 }
 
 input UserUpsertWithoutPaymentInput {
@@ -1309,6 +1763,9 @@ input UserWhereInput {
   emailConfirmed_not: Boolean
   payment: PaymentWhereInput
   subscription: SubScriptionWhereInput
+  files_every: FileWhereInput
+  files_some: FileWhereInput
+  files_none: FileWhereInput
 }
 
 input UserWhereUniqueInput {
