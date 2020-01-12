@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { RNCamera } from 'react-native-camera'
 import { Text } from 'react-native-elements'
 import {
@@ -15,42 +15,83 @@ interface Props {
 
 const CapturePhotoScreen: NavigationStackScreenComponent<Props> = () => {
   let camera = useRef()
+  const [image, setImage] = useState(null)
+  // const [cameraOptions, setCameraOptions] = useState({})
+
   const takePicture = async () => {
     if (camera) {
-      const options = { quality: 0.5, base64: true }
+      const options = { quality: 0.7, base64: true }
       const data = await camera.takePictureAsync(options)
+      setImage(data.uri)
+      console.log(data)
     }
   }
 
+  const reTakePicture = () => {
+    if (image) {
+      setImage(null)
+    }
+  }
+
+  const renderCamera = (
+    <RNCamera
+      ref={ref => {
+        camera = ref
+      }}
+      style={s.preview}
+      type={RNCamera.Constants.Type.back}
+      flashMode={RNCamera.Constants.FlashMode.auto}
+      androidCameraPermissionOptions={{
+        title: 'Permission to use camera',
+        message: 'We need your permission to use your camera',
+        buttonPositive: 'Ok',
+        buttonNegative: 'Cancel'
+      }}
+      androidRecordAudioPermissionOptions={{
+        title: 'Permission to use audio recording',
+        message: 'We need your permission to use your audio',
+        buttonPositive: 'Ok',
+        buttonNegative: 'Cancel'
+      }}
+      onGoogleVisionBarcodesDetected={({ barcodes }) => {
+        console.log(barcodes)
+      }}
+    />
+  )
+
+  const renderCameraButtons = (
+    <TouchableOpacity onPress={takePicture} style={s.capture}>
+      <Text style={{ fontSize: 14 }}>CAPTURE</Text>
+    </TouchableOpacity>
+  )
+
+  const renderTakenPhoto = <Image source={{ uri: image }} style={s.preview} />
+
+  const renderTakenPhotoButtons = (
+    <View
+      style={{
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 20,
+        width: '100%'
+      }}
+    >
+      <TouchableOpacity onPress={reTakePicture} style={s.capture}>
+        <Text style={{ fontSize: 14 }}>RETAKE PHOTO</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={reTakePicture} style={s.capture}>
+        <Text style={{ fontSize: 14 }}>UPLOAD PHOTO</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
   return (
     <View style={s.container}>
-      <RNCamera
-        ref={ref => {
-          camera = ref
-        }}
-        style={s.preview}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.on}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel'
-        }}
-        androidRecordAudioPermissionOptions={{
-          title: 'Permission to use audio recording',
-          message: 'We need your permission to use your audio',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel'
-        }}
-        onGoogleVisionBarcodesDetected={({ barcodes }) => {
-          console.log(barcodes)
-        }}
-      />
-      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-        <TouchableOpacity onPress={takePicture} style={s.capture}>
-          <Text style={{ fontSize: 14 }}> SNAP </Text>
-        </TouchableOpacity>
+      {!image ? renderCamera : renderTakenPhoto}
+
+      <View style={{ position: 'absolute', bottom: 0 }}>
+        {!image ? renderCameraButtons : renderTakenPhotoButtons}
       </View>
     </View>
   )
@@ -67,21 +108,19 @@ const s = StyleSheet.create({
     flexDirection: 'column',
     height: '100%',
     backgroundColor: 'black',
-    width: '100%'
+    width: '100%',
+    zIndex: 99999
   },
   preview: {
     flex: 1,
-    justifyContent: 'flex-end',
     alignItems: 'center'
   },
   capture: {
-    flex: 0,
     backgroundColor: '#fff',
     borderRadius: 5,
+    margin: 10,
     padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20
+    paddingHorizontal: 20
   }
 })
 

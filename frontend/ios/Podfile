@@ -35,6 +35,7 @@ target 'primepix' do
 
   pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
 
 end
 
