@@ -16,8 +16,7 @@ const TileWrapper: FC<Props> = ({ caption, imageSrc, title }) => (
     imageProps={{ resizeMode: 'cover' }}
     title={title}
     contentContainerStyle={s.container}
-    titleStyle={s.titleText}
-  >
+    titleStyle={s.titleText}>
     <View style={s.description}>
       <Text style={s.captionText}>{caption}</Text>
     </View>

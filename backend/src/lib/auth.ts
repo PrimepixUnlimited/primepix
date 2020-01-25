@@ -7,6 +7,10 @@ export const userObj = `
   email,
   emailConfirmed,
   emailConfirmToken,
+  files {
+    filename
+    url
+  },
   password,
   payment {
     id

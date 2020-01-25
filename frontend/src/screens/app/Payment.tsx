@@ -2,16 +2,8 @@ import React, { useState } from 'react'
 import { Alert, StyleSheet } from 'react-native'
 import { useMutation } from '@apollo/react-hooks'
 import stripe from 'tipsi-stripe'
-import {
-  NavigationParams,
-  NavigationRoute,
-  NavigationScreenProp
-} from 'react-navigation'
+import { NavigationParams, NavigationRoute, NavigationScreenProp } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
-
-interface Props {
-  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
-}
 
 import {
   CREATE_PAYMENT_METHOD_MUTATION,
@@ -27,6 +19,10 @@ import Input from '../../components/Input'
 
 import styles from '../../constants/styles'
 import { formatNumber } from '../../lib/utils'
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
 
 const PaymentScreen: NavigationStackScreenComponent<Props> = ({
   navigation: { getParam, navigate }
@@ -67,72 +63,64 @@ const PaymentScreen: NavigationStackScreenComponent<Props> = ({
   }
 
   return (
-    <ScreenView heading="Add payment details">
+    <ScreenView heading='Add payment details'>
       <Input
         containerStyle={styles.space.m}
-        label="Cardholder name"
-        leftIconName="account-card-details"
-        leftIconType="material-community"
+        label='Cardholder name'
+        leftIconName='account-card-details'
+        leftIconType='material-community'
         onChangeText={val => setName(val)}
-        placeholder="Firstname Lastname"
+        placeholder='Firstname Lastname'
         value={name}
       />
       <Input
         containerStyle={styles.space.m}
-        label="Card number"
-        leftIconName="credit-card"
-        leftIconType="material-community"
+        label='Card number'
+        leftIconName='credit-card'
+        leftIconType='material-community'
         onChangeText={val => setNumber(formatNumber(val))}
-        placeholder="#### #### #### ####"
+        placeholder='#### #### #### ####'
         value={number}
       />
       <Input
         containerStyle={styles.space.s}
-        label="Expiry month"
-        leftIconName="calendar"
-        leftIconType="material-community"
+        label='Expiry month'
+        leftIconName='calendar'
+        leftIconType='material-community'
         onChangeText={val => setExpMonth(formatNumber(val))}
-        placeholder="MM"
+        placeholder='MM'
         value={expMonth}
       />
       <Input
         containerStyle={styles.space.s}
-        label="Expiry year"
-        leftIconName="calendar"
-        leftIconType="material-community"
+        label='Expiry year'
+        leftIconName='calendar'
+        leftIconType='material-community'
         onChangeText={val => setExpYear(formatNumber(val))}
-        placeholder="YYYY"
+        placeholder='YYYY'
         value={expYear}
       />
       <Input
         containerStyle={styles.space.s}
-        label="CVC"
-        leftIconName="lock"
+        label='CVC'
+        leftIconName='lock'
         onChangeText={val => setCvc(formatNumber(val))}
-        placeholder="***"
+        placeholder='***'
         value={cvc}
       />
       <Button
         loading={paymentMethodLoading || subscriptionLoading}
         onPress={onFormSubmit}
-        title="Add"
+        title='Add'
       />
-      <Button
-        onPress={e => navigate(ROUTES.SignIn)}
-        title="Privacy policy"
-        type="clear"
-      />
-      <Button
-        onPress={e => navigate(ROUTES.SignIn)}
-        title="Terms and conditions"
-        type="clear"
-      />
+      <Button onPress={e => navigate(ROUTES.SignIn)} title='Privacy policy' type='clear' />
+      <Button onPress={e => navigate(ROUTES.SignIn)} title='Terms and conditions' type='clear' />
     </ScreenView>
   )
 }
 
 PaymentScreen.navigationOptions = {
-  header: () => <Header showBack title="Plan" />
+  header: () => <Header showBack title='Plan' />
 }
 
 const s = StyleSheet.create({

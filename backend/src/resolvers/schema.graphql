@@ -9,6 +9,7 @@ scalar Upload
 type Query {
   users: [User!]!
   me: User
+  images: [File]
   image(id: String!): File
   payment: PaymentDetails
   plans(billingCycle: String!): [Plan]
@@ -22,7 +23,7 @@ type Mutation {
   createPaymentMethod(tokenId: String!): User
   createSubscription(planId: String!): User
   updateSubscription(planId: String!): User
-  createImage: File!
+  createImage(file: String!, filename: String!): File!
   getImage(id: String!): File
   updateImage(file: FileUpdateInput): File
   deleteImage(id: String!): SuccessMessage

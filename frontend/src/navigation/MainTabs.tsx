@@ -27,7 +27,7 @@ const MainTabs = createBottomTabNavigator(
         navigationOptions: {
           header: null,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="home" type="font-awesome" focused={focused} />
+            <TabBarIcon name='home' type='font-awesome' focused={focused} />
           ),
           tabBarLabel: 'Home'
         }
@@ -43,7 +43,7 @@ const MainTabs = createBottomTabNavigator(
         navigationOptions: {
           header: null,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="photo" type="font-awesome" focused={focused} />
+            <TabBarIcon name='photo' type='font-awesome' focused={focused} />
           ),
           tabBarLabel: 'Gallery'
         }
@@ -59,13 +59,7 @@ const MainTabs = createBottomTabNavigator(
         navigationOptions: {
           header: null,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-              name="camera"
-              type="font-awesome"
-              focused={focused}
-              raised
-              size={32}
-            />
+            <TabBarIcon name='camera' type='font-awesome' focused={focused} raised size={32} />
           ),
           tabBarLabel: 'Capture Photo'
         }
@@ -81,7 +75,7 @@ const MainTabs = createBottomTabNavigator(
         navigationOptions: {
           header: null,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name="ios-wallet" type="ionicon" focused={focused} />
+            <TabBarIcon name='ios-wallet' type='ionicon' focused={focused} />
           ),
           tabBarLabel: 'Wallet'
         }
@@ -98,12 +92,12 @@ const MainTabs = createBottomTabNavigator(
           header: null,
           tabBarIcon: ({ focused }) => (
             <View>
-              <TabBarIcon name="bell" type="font-awesome" focused={focused} />
+              <TabBarIcon name='bell' type='font-awesome' focused={focused} />
               <Badge
                 badgeStyle={{ borderWidth: 0 }}
-                status="error"
+                status='error'
                 containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-                value="9+"
+                value='9+'
               />
             </View>
           ),

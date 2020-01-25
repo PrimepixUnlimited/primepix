@@ -17,7 +17,7 @@ type User {
   payment: Payment @relation(link: INLINE)
   permissions: [Permission]! @scalarList(strategy: RELATION)
   subscription: SubScription @relation(link: INLINE)
-  files: [File] @scalarList(strategy: RELATION)
+  files: [File]! @scalarList(strategy: RELATION)
 }
 
 type Payment {

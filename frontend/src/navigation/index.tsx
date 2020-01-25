@@ -1,4 +1,8 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import React from 'react'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
+import { Transition } from 'react-native-reanimated'
 
 import ROUTES from './_routes'
 
@@ -9,18 +13,34 @@ import Loading from '../screens/auth/Loading'
 import App from './AppStack'
 import Auth from './AuthStack'
 
+const RootStack = createAnimatedSwitchNavigator(
+  {
+    [ROUTES.AuthLoading]: Loading,
+    [ROUTES.Auth]: Auth,
+    [ROUTES.App]: App
+  },
+  {
+    initialRouteName: ROUTES.AuthLoading,
+    transition: (
+      <Transition.Together>
+        <Transition.Out type='fade' durationMs={400} interpolation='easeIn' />
+        <Transition.In type='fade' durationMs={500} />
+      </Transition.Together>
+    )
+  }
+)
+
 const AppNavigator = createAppContainer(
-  createSwitchNavigator(
+  createStackNavigator(
     {
-      [ROUTES.AuthLoading]: Loading,
-      [ROUTES.Auth]: Auth,
-      [ROUTES.App]: App
+      Root: RootStack
     },
     {
-      initialRouteName: ROUTES.AuthLoading,
       navigationOptions: () => ({
         header: null
-      })
+      }),
+      mode: 'modal',
+      headerMode: 'none'
     }
   )
 )

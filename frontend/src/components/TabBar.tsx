@@ -1,11 +1,9 @@
 import React, { FC, ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import {
-  NavigationParams,
-  NavigationRoute,
-  NavigationScreenProp
-} from 'react-navigation'
+import { NavigationParams, NavigationRoute, NavigationScreenProp } from 'react-navigation'
 import { TabBarTopProps } from '@types/react-navigation'
+
+import ROUTES from '../navigation/_routes'
 
 interface Props extends TabBarTopProps {
   // custom props
@@ -23,7 +21,15 @@ const MainTabBar: FC<Props> = props => {
     const currentIndex = state.index
     const color = currentIndex === idx ? activeTintColor : inactiveTintColor
 
-    const handleTabPress = e => navigate(route.key)
+    const handleTabPress = e => {
+      if (route.key === 'capture-photo-tab') {
+        return navigate(ROUTES.CapturePhotoModal)
+        // navigate(ROUTES.CapturePhotoTab)
+        return
+      }
+      console.log(route.key)
+      return navigate(route.key)
+    }
 
     const TabBarIcon = () =>
       renderIcon({
@@ -34,11 +40,7 @@ const MainTabBar: FC<Props> = props => {
       })
 
     return (
-      <TouchableOpacity
-        style={s.tabBarButton}
-        key={route.routeName}
-        onPress={handleTabPress}
-      >
+      <TouchableOpacity style={s.tabBarButton} key={route.routeName} onPress={handleTabPress}>
         <TabBarIcon />
       </TouchableOpacity>
     )

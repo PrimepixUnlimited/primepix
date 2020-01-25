@@ -14,14 +14,14 @@ export const createImage = async (
     // get current user
     const user = await ctx.user
 
-    const mockFile =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAqgAwAEAAAAAQAAAAoAAAAACPeMwgAAAAlwSFlzAAALEwAACxMBAJqcGAAAABxJREFUGBlj/M/AAESEARNhJRAVowrxhhTRwQMAPZwCEtNsHpMAAAAASUVORK5CYII='
+    const base64data = new Buffer(args.file.replace(/^data:image\/\w+;base64,/, ''), 'base64')
 
     const file = await s3.upload({
-      Key: `${user.email}/filename.png`,
+      Key: `${user.email}/${args.filename}`,
       ACL: 'public-read',
-      Body: mockFile,
-      Bucket: process.env.S3_BUCKET_NAME
+      Body: base64data,
+      Bucket: process.env.S3_BUCKET_NAME,
+      ContentType: 'image/jpeg'
     })
     const promise = file.promise()
 
@@ -50,12 +50,20 @@ export const createImage = async (
   }
 }
 
-export const image = async (
-  parent: any,
-  args: any,
-  ctx: Context,
-  info: GraphQLResolveInfo
-) => {
+export const images = async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
+  try {
+    // get current user
+    const user = await ctx.user
+
+    console.log(user.files)
+
+    return user.files
+  } catch (e) {
+    throw new TypeError(e.message)
+  }
+}
+
+export const image = async (parent: any, args: any, ctx: Context, info: GraphQLResolveInfo) => {
   try {
     // get current user
     const user = await ctx.user

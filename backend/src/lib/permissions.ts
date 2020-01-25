@@ -32,7 +32,8 @@ const permissions = shield({
     users: and(isAuthenticated, isAdmin),
     me: and(isAuthenticated),
     payment: and(isAuthenticated),
-    plans: and(isAuthenticated, isArtist)
+    plans: and(isAuthenticated, isArtist),
+    images: and(isAuthenticated, isArtist)
   },
   Mutation: {
     signout: and(isAuthenticated),

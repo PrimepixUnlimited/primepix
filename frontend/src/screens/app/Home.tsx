@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Avatar, Divider, SearchBar, Text } from 'react-native-elements'
-import {
-  NavigationParams,
-  NavigationRoute,
-  NavigationScreenProp
-} from 'react-navigation'
+import { NavigationParams, NavigationRoute, NavigationScreenProp } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
-
-interface Props {
-  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
-}
 
 import Header from '../../components/Header'
 import Tile from '../../components/Tile'
@@ -91,6 +83,10 @@ const ARTISTS = [
   }
 ]
 
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute, NavigationParams>
+}
+
 const HomeScreen: NavigationStackScreenComponent<Props> = () => {
   const [search, setSearch] = useState('')
   const [showSearch, setShowSearch] = useState(false)
@@ -111,9 +107,7 @@ const HomeScreen: NavigationStackScreenComponent<Props> = () => {
       <View key={artist.id}>
         <View style={s.artistHeading}>
           <Avatar rounded source={{ uri: artist.avatarUrl }} />
-          <Text style={[styles.text.body, s.artistNameText]}>
-            {artist.name}
-          </Text>
+          <Text style={[styles.text.body, s.artistNameText]}>{artist.name}</Text>
         </View>
         <ScrollView key={artist.id} horizontal>
           {renderArtist(artist)}
@@ -129,15 +123,14 @@ const HomeScreen: NavigationStackScreenComponent<Props> = () => {
           backgroundColor: styles.greyScale.black2,
           flexDirection: 'row',
           justifyContent: 'space-between'
-        }}
-      >
+        }}>
         <SubHeading>Followed artists</SubHeading>
         <View style={{ top: 35, right: 10 }}>
           <Icon
-            color="white"
-            name="search"
+            color='white'
+            name='search'
             onPress={() => setShowSearch(!showSearch)}
-            type="font-awesome"
+            type='font-awesome'
             underlayColor={styles.greyScale.black2}
           />
         </View>
@@ -145,7 +138,7 @@ const HomeScreen: NavigationStackScreenComponent<Props> = () => {
       {showSearch && (
         <SearchBar
           containerStyle={{ backgroundColor: styles.greyScale.black1 }}
-          placeholder="Type here..."
+          placeholder='Type here...'
           inputStyle={{ color: 'white' }}
           onChangeText={updateSearch}
           value={search}
@@ -157,7 +150,7 @@ const HomeScreen: NavigationStackScreenComponent<Props> = () => {
 }
 
 HomeScreen.navigationOptions = {
-  header: () => <Header showProfile showMenu title="Home" />
+  header: () => <Header showProfile showMenu title='Home' />
 }
 
 const s = StyleSheet.create({
