@@ -21,6 +21,7 @@ export const createImage = async (
       ACL: 'public-read',
       Body: base64data,
       Bucket: process.env.S3_BUCKET_NAME,
+      ContentEncoding: 'base64',
       ContentType: 'image/jpeg'
     })
     const promise = file.promise()
@@ -54,8 +55,6 @@ export const images = async (parent: any, args: any, ctx: Context, info: GraphQL
   try {
     // get current user
     const user = await ctx.user
-
-    console.log(user.files)
 
     return user.files
   } catch (e) {

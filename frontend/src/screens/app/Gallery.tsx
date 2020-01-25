@@ -23,19 +23,14 @@ const GalleryScreen: NavigationStackScreenComponent<Props> = () => {
   const renderPhotos = photos =>
     photos.map((photo, idx) => (
       <View key={photo.filename} style={s.photo}>
-        <Tile imageSrc={photo.url} title={photo.filename} />
+        <Tile imageSrc={photo.url} title={photo.filename.replace(/^.*[\\\/]/, '')} />
       </View>
     ))
 
   return (
     <ScrollView style={styles.common.screenContainer}>
       <SubHeading>Your gallery</SubHeading>
-      {data && data.me && data.me.files && (
-        <View>
-          <Text>Your files</Text>
-          <ScrollView>{renderPhotos(data.me.files)}</ScrollView>
-        </View>
-      )}
+      {data && data.me && data.me.files && <View>{renderPhotos(data.me.files)}</View>}
       <Text style={styles.text.body}>Gallery Screen</Text>
     </ScrollView>
   )
