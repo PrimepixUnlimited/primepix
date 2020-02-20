@@ -23,7 +23,7 @@ type Mutation {
   createPaymentMethod(tokenId: String!): User
   createSubscription(planId: String!): User
   updateSubscription(planId: String!): User
-  createImage(file: String!, filename: String!): File!
+  createImage(file: Upload!): File!
   getImage(id: String!): File
   updateImage(file: FileUpdateInput): File
   deleteImage(id: String!): SuccessMessage

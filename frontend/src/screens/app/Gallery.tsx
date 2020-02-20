@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
 import { Text } from 'react-native-elements'

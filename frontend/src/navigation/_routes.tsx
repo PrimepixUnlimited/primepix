@@ -17,6 +17,7 @@ enum ROUTES {
   Gallery = 'gallery',
   CapturePhotoTab = 'capture-photo-tab',
   CapturePhotoModal = 'capture-photo-modal',
+  CameraRoll = 'camera-roll-modal',
   CapturePhoto = 'capture-photo',
   WalletTab = 'wallet-tab',
   Wallet = 'wallet',

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Alert, Dimensions, SafeAreaView, Text } from 'react-native'
+import { Alert, Dimensions, StatusBar } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
 
 import { ME_QUERY } from '../../graphql/queries'
@@ -32,13 +32,16 @@ const AuthLoadingScreen = ({ navigation: { navigate } }) => {
     checkAuth()
   }, [data, error, loading, navigate])
   return (
-    <Image
-      style={{
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT
-      }}
-      source={require('../../assets/images/splash.png')}
-    />
+    <>
+      <StatusBar barStyle='light-content' />
+      <Image
+        style={{
+          width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT
+        }}
+        source={require('../../assets/images/splash.png')}
+      />
+    </>
   )
 }
 

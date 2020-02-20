@@ -1,17 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useMutation } from '@apollo/react-hooks'
 import { RNCamera } from 'react-native-camera'
-import { Text } from 'react-native-elements'
+import CameraRoll from '@react-native-community/cameraroll'
 import { NavigationParams, NavigationRoute, NavigationScreenProp } from 'react-navigation'
 import { NavigationStackScreenComponent } from 'react-navigation-stack'
+import { ReactNativeFile } from 'apollo-upload-client'
 
 import { CREATE_IMAGE_MUTATION } from '../../graphql/mutations'
 
+import Button from '../../components/Button'
 import Icon from '../../components/Icon'
 
 import styles from '../../constants/styles'
-
 import ROUTES from '../../navigation/_routes'
 
 interface Props {
@@ -19,12 +20,29 @@ interface Props {
 }
 
 const CapturePhotoScreen: NavigationStackScreenComponent<Props> = ({
-  navigation: { goBack, navigate }
+  navigation: { goBack, navigate, getParam }
 }) => {
   let camera: RNCamera = useRef()
-  const [image, setImage] = useState(null)
-  // const [cameraOptions, setCameraOptions] = useState({})
+  const selectedImage = getParam('image', null)
+  const [image, setImage] = useState()
   const [createImage, { loading: imageUploading }] = useMutation(CREATE_IMAGE_MUTATION)
+  const [cameraRollImage, setCameraRollImage] = useState()
+
+  useEffect(() => {
+    const getPhotos = async () => {
+      try {
+        const photos = await CameraRoll.getPhotos({ first: 1, assetType: 'Photos' })
+        if (photos.edges.length > 0) {
+          setCameraRollImage(photos.edges[0].node.image.uri)
+        }
+      } catch (err) {
+        console.warn(err.message)
+      }
+    }
+
+    getPhotos()
+    if (selectedImage) setImage(selectedImage)
+  })
 
   const takePicture = async () => {
     if (camera) {
@@ -44,13 +62,15 @@ const CapturePhotoScreen: NavigationStackScreenComponent<Props> = ({
     try {
       if (!image) throw Error('there is no image')
 
-      const data = {
-        file: image.base64,
-        filename: image.uri.replace(/^.*[\\\/]/, '')
-      }
-      const res = await createImage({ variables: { file: data.file, filename: data.filename } })
+      const file = new ReactNativeFile({
+        uri: image.uri,
+        name: image.filename,
+        type: 'image/jpeg'
+      })
+
+      const res = await createImage({ variables: { file } })
       if (res.data && res.data.createImage) {
-        navigate(ROUTES.Gallery)
+        return navigate(ROUTES.Gallery)
       }
     } catch (e) {
       console.log(e.message)
@@ -100,12 +120,8 @@ const CapturePhotoScreen: NavigationStackScreenComponent<Props> = ({
         marginBottom: 20,
         width: '100%'
       }}>
-      <TouchableOpacity onPress={reTakePicture} style={s.capture}>
-        <Text style={{ fontSize: 14 }}>RETAKE PHOTO</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={uploadPicture} style={s.capture}>
-        <Text style={{ fontSize: 14 }}>UPLOAD PHOTO</Text>
-      </TouchableOpacity>
+      <Button onPress={reTakePicture} title='RETAKE PHOTO' />
+      <Button onPress={uploadPicture} title='UPLOAD PHOTO' />
     </View>
   )
 
@@ -113,6 +129,19 @@ const CapturePhotoScreen: NavigationStackScreenComponent<Props> = ({
     <View style={s.container}>
       {!image ? renderCamera : renderTakenPhoto}
 
+      <TouchableOpacity
+        onPress={() => navigate(ROUTES.CameraRoll)}
+        style={{
+          borderWidth: 2,
+          borderColor: 'white',
+          borderRadius: 5,
+          overflow: 'hidden',
+          position: 'absolute',
+          top: 60,
+          left: 20
+        }}>
+        <Image source={{ uri: cameraRollImage }} style={{ height: 40, width: 40 }} />
+      </TouchableOpacity>
       <View style={{ position: 'absolute', top: 60, right: 20 }}>
         <Icon
           color='white'

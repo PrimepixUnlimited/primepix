@@ -13,24 +13,26 @@ export const createImage = async (
   try {
     // get current user
     const user = await ctx.user
+    const file = await args.file
+    const { createReadStream, filename, mimetype, encoding } = file
+    const fileStream = createReadStream()
 
-    const base64data = new Buffer(args.file.replace(/^data:image\/\w+;base64,/, ''), 'base64')
-
-    const file = await s3.upload({
-      Key: `${user.email}/${args.filename}`,
+    const uploadParams = {
+      Key: `${user.email}/${filename}`,
       ACL: 'public-read',
-      Body: base64data,
+      Body: fileStream,
       Bucket: process.env.S3_BUCKET_NAME,
-      ContentEncoding: 'base64',
-      ContentType: 'image/jpeg'
-    })
-    const promise = file.promise()
+      ContentEncoding: encoding,
+      ContentType: mimetype
+    }
+    const result = await s3.upload(uploadParams)
+    const promise = result.promise()
 
     const uploadSuccess = async response => {
       // generate new image and connect it to the user
       const data: FileCreateInput = {
-        filename: response.key,
-        mimetype: 'image/png',
+        filename,
+        mimetype,
         url: response.Location,
         user: {
           connect: {
@@ -38,8 +40,8 @@ export const createImage = async (
           }
         }
       }
-      const file = await ctx.db.mutation.createFile({ data }, info)
-      return file
+      const dbFile = await ctx.db.mutation.createFile({ data }, info)
+      return dbFile
     }
     const uploadFailure = err => {
       throw new Error(err.message)

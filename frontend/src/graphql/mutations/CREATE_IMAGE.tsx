@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CREATE_IMAGE_MUTATION = gql`
-  mutation CREATE_IMAGE($file: String!, $filename: String!) {
-    createImage(file: $file, filename: $filename) {
+  mutation CREATE_IMAGE($file: Upload!) {
+    createImage(file: $file) {
       filename
       user {
         files {

@@ -1238,6 +1238,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.5.4":
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
+  integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.0.0", "@babel/template@^7.1.0", "@babel/template@^7.4.4", "@babel/template@^7.6.0":
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.6.0.tgz#7f0159c7f5012230dad64cca42ec9bdb5c9536e6"
@@ -1509,6 +1516,11 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
+
+"@react-native-community/cameraroll@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-1.3.1.tgz#cef9d7324597adacda8d197a4e800e4a32e07d1b"
+  integrity sha512-moo8Ag8+DHPll/tHeu1m2Gdkh7Xl0v5SKxJs63RzU1o0mQXRY/fcCO1WGNR71ScKsApN79RzOM9+zWXGjKGefA==
 
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
@@ -2231,7 +2243,7 @@ apollo-link-error@^1.0.3, apollo-link-error@^1.1.12:
     apollo-link-http-common "^0.2.15"
     tslib "^1.9.3"
 
-apollo-link-http-common@^0.2.15:
+apollo-link-http-common@^0.2.14, apollo-link-http-common@^0.2.15:
   version "0.2.15"
   resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.15.tgz#304e67705122bf69a9abaded4351b10bc5efd6d9"
   integrity sha512-+Heey4S2IPsPyTf8Ag3PugUupASJMW894iVps6hXbvwtg1aHSNMXUYO5VG7iRHkPzqpuzT4HMBanCTXPjtGzxg==
@@ -2249,7 +2261,7 @@ apollo-link-http@^1.3.1, apollo-link-http@^1.5.16:
     apollo-link-http-common "^0.2.15"
     tslib "^1.9.3"
 
-apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.13:
+apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.12, apollo-link@^1.2.13:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.13.tgz#dff00fbf19dfcd90fddbc14b6a3f9a771acac6c4"
   integrity sha512-+iBMcYeevMm1JpYgwDEIDt/y0BB7VWyvlm/7x+TIPNLHCTCMgcEgDuW5kH86iQZWo0I7mNwQiTOz+/3ShPFmBw==
@@ -2258,6 +2270,16 @@ apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.13:
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable-ts "^0.8.20"
+
+apollo-upload-client@^12.1.0:
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-12.1.0.tgz#7af32196feb1a72e4c4953887bb7c50eee7e06e0"
+  integrity sha512-pAWYDMU9aFZnPvj0g7+FPRCHcslBPwUpnFxSUWiPDJAGYPXzE5C5DKcvRSQMMyQ09akqU6wZsyVk8zhL7GFC8Q==
+  dependencies:
+    "@babel/runtime" "^7.5.4"
+    apollo-link "^1.2.12"
+    apollo-link-http-common "^0.2.14"
+    extract-files "^5.0.1"
 
 apollo-utilities@1.3.2, apollo-utilities@^1.3.0, apollo-utilities@^1.3.2:
   version "1.3.2"
@@ -4084,6 +4106,11 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+extract-files@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-5.0.1.tgz#c9492a8410be643e260a376f0151361993d5f659"
+  integrity sha512-qRW6y9eKF0VbCyOoOEtFhzJ3uykAw8GKwQVXyAIqwocyEWW4m+v+evec34RwtUkkxxHh7NKBLJ6AnXM8W4dH5w==
 
 extsprintf@1.3.0:
   version "1.3.0"
@@ -7363,6 +7390,11 @@ react-native-camera@^3.15.1:
   integrity sha512-xj1sljzFq8HVX22d2T945dsJdK/KFb3jaXUHEYGwMp/zz0ypIs3mY3NezdpyYpS1ioKKzdIcLrxz2VKzDCXaCg==
   dependencies:
     prop-types "^15.6.2"
+
+react-native-cameraroll@^1.0.0-alpha2:
+  version "1.0.0-alpha2"
+  resolved "https://registry.yarnpkg.com/react-native-cameraroll/-/react-native-cameraroll-1.0.0-alpha2.tgz#e16bf91ca37637fd91df772f44802f43bec5b193"
+  integrity sha1-4Wv5HKN2N/2R33cvRIAvQ77FsZM=
 
 react-native-config@^0.11.7:
   version "0.11.7"
