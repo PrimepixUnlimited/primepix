@@ -4,6 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios --simulator 'iPhone 11 Pro'",
     "web": "expo start --web",
+    "ios:beta": "cd ios && fastlane ios beta",
+    "android:beta": "fastlane android beta",
     "postinstall": "jetify",
     "test": "jest"
   },
