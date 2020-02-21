@@ -1,11 +1,5 @@
 fastlane_version '2.53.1'
 
-before_all do
-  ensure_git_branch
-  ensure_git_status_clean
-  git_pull
-end
-
 platform :ios do
   # iOS Lanes
   desc 'Fetch certificates and provisioning profiles'
@@ -17,15 +11,15 @@ platform :ios do
   desc 'Build the iOS application.'
   private_lane :build do
     certificates
-    increment_build_number(xcodeproj: './ios/primepix.xcodeproj')
-    gym(scheme: 'primepix', project: './ios/primepix.xcodeproj')
+    increment_build_number(xcodeproj: './primepix.xcodeproj')
+    gym(scheme: 'primepix', project: './primepix.xcodeproj')
   end
 
   desc 'Ship to Testflight.'
   lane :beta do
     build
     pilot
-    commit_version_bump(message: 'Bump build', xcodeproj: './ios/primepix.xcodeproj')
+    commit_version_bump(message: 'Bump build', xcodeproj: './primepix.xcodeproj')
     push_to_git_remote
   end
 end
