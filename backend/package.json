@@ -31,7 +31,7 @@
     "path": "^0.12.7",
     "prisma-binding": "2.1.0",
     "prisma-client-lib": "^1.34.8",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "stripe": "^7.10.0"
   },
   "devDependencies": {
