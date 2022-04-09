@@ -31,7 +31,7 @@
     "graphql-tag": "^2.10.1",
     "hex-to-rgba": "^2.0.1",
     "jest-cli": "^24.9.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.11.0",
